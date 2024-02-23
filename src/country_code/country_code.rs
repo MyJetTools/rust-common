@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use super::ErrorParsingCountryCode;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CountryCode {
     AFG,
     ALA,
@@ -285,7 +285,7 @@ impl CountryCode {
     pub fn to_string_as_iso3(&self) -> &str {
         for (key, value) in COUNTRIES_ISO_3_CODES.iter() {
             if self.equals_to(&value) {
-                return key.clone();
+                return key;
             }
         }
 
@@ -298,7 +298,7 @@ impl CountryCode {
     pub fn to_string_as_iso2(&self) -> &str {
         for (key, value) in COUNTRIES_ISO_2_CODES.iter() {
             if self.equals_to(&value) {
-                return key.clone();
+                return key;
             }
         }
 
@@ -831,6 +831,14 @@ lazy_static::lazy_static! {
 mod test {
 
     use super::*;
+
+    #[test]
+    fn test_derives() {
+        let left = CountryCode::CHE;
+        let right = CountryCode::CHE;
+        assert!(left == right)
+    }
+
     #[test]
     pub fn test_amounts() {
         assert!(COUNTRIES_ISO_3_CODES.len() == COUNTRIES_ISO_3_CODES.len())
