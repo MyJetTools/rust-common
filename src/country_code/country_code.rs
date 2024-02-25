@@ -345,6 +345,7 @@ lazy_static::lazy_static! {
         m.insert("BVT", CountryCode::BVT);
         m.insert("BRA", CountryCode::BRA);
         m.insert("IOT", CountryCode::IOT);
+        m.insert("VGB", CountryCode::VGB);
         m.insert("BRN", CountryCode::BRN);
         m.insert("BGR", CountryCode::BGR);
         m.insert("BFA", CountryCode::BFA);
@@ -376,6 +377,7 @@ lazy_static::lazy_static! {
         m.insert("DJI", CountryCode::DJI);
         m.insert("DMA", CountryCode::DMA);
         m.insert("DOM", CountryCode::DOM);
+        m.insert("TLS", CountryCode::TLS);
         m.insert("ECU", CountryCode::ECU);
         m.insert("EGY", CountryCode::EGY);
         m.insert("SLV", CountryCode::SLV);
@@ -605,6 +607,7 @@ lazy_static::lazy_static! {
         m.insert("BV", CountryCode::BVT);
         m.insert("BR", CountryCode::BRA);
         m.insert("IO", CountryCode::IOT);
+        m.insert("VG", CountryCode::VGB);
         m.insert("BN", CountryCode::BRN);
         m.insert("BG", CountryCode::BGR);
         m.insert("BF", CountryCode::BFA);
@@ -636,6 +639,7 @@ lazy_static::lazy_static! {
         m.insert("DJ", CountryCode::DJI);
         m.insert("DM", CountryCode::DMA);
         m.insert("DO", CountryCode::DOM);
+        m.insert("TL", CountryCode::TLS);
         m.insert("EC", CountryCode::ECU);
         m.insert("EG", CountryCode::EGY);
         m.insert("SV", CountryCode::SLV);
