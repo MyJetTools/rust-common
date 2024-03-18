@@ -121,7 +121,6 @@ pub enum CountryCode {
     KAZ,
     KEN,
     KIR,
-    XKX,
     KWT,
     KGZ,
     LAO,
@@ -160,7 +159,6 @@ pub enum CountryCode {
     NRU,
     NPL,
     NLD,
-    ANT,
     NCL,
     NZL,
     NIC,
@@ -432,7 +430,6 @@ lazy_static::lazy_static! {
         m.insert("KEN", CountryCode::KEN);
         m.insert("KIR", CountryCode::KIR);
         m.insert("PRK", CountryCode::PRK);
-        m.insert("KOR", CountryCode::KOR);
         m.insert("KWT", CountryCode::KWT);
         m.insert("KGZ", CountryCode::KGZ);
         m.insert("LAO", CountryCode::LAO);
@@ -555,7 +552,6 @@ lazy_static::lazy_static! {
         m.insert("URY", CountryCode::URY);
         m.insert("UZB", CountryCode::UZB);
         m.insert("VUT", CountryCode::VUT);
-        m.insert("VAT", CountryCode::VAT);
         m.insert("VEN", CountryCode::VEN);
         m.insert("VNM", CountryCode::VNM);
         m.insert("WLF", CountryCode::WLF);
@@ -773,7 +769,6 @@ lazy_static::lazy_static! {
         m.insert("SA", CountryCode::SAU);
         m.insert("SN", CountryCode::SEN);
         m.insert("RS", CountryCode::SRB);
-
         m.insert("SC", CountryCode::SYC);
         m.insert("SL", CountryCode::SLE);
         m.insert("SG", CountryCode::SGP);
@@ -784,7 +779,6 @@ lazy_static::lazy_static! {
         m.insert("SO", CountryCode::SOM);
         m.insert("ZA", CountryCode::ZAF);
         m.insert("GS", CountryCode::SGS);
-        m.insert("KR", CountryCode::KOR);
         m.insert("SS", CountryCode::SSD);
         m.insert("ES", CountryCode::ESP);
         m.insert("LK", CountryCode::LKA);
@@ -818,7 +812,6 @@ lazy_static::lazy_static! {
         m.insert("UY", CountryCode::URY);
         m.insert("UZ", CountryCode::UZB);
         m.insert("VU", CountryCode::VUT);
-        m.insert("VA", CountryCode::VAT);
         m.insert("VE", CountryCode::VEN);
         m.insert("VN", CountryCode::VNM);
         m.insert("WF", CountryCode::WLF);
