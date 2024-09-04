@@ -307,7 +307,7 @@ impl CountryCode {
     }
 }
 lazy_static::lazy_static! {
-    static ref COUNTRIES_ISO_3_CODES: HashMap<&'static str, CountryCode> = {
+    pub static ref COUNTRIES_ISO_3_CODES: HashMap<&'static str, CountryCode> = {
         let mut m = HashMap::new();
 
         m.insert("AFG", CountryCode::AFG);
@@ -566,7 +566,7 @@ lazy_static::lazy_static! {
 }
 
 lazy_static::lazy_static! {
-    static ref COUNTRIES_ISO_2_CODES: HashMap<&'static str, CountryCode> = {
+    pub static ref COUNTRIES_ISO_2_CODES: HashMap<&'static str, CountryCode> = {
         let mut m = HashMap::new();
 
         //Fill the map with the ISO 2 codes and CountryCode enums
