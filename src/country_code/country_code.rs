@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use super::ErrorParsingCountryCode;
 
@@ -307,8 +307,8 @@ impl CountryCode {
     }
 }
 lazy_static::lazy_static! {
-    pub static ref COUNTRIES_ISO_3_CODES: HashMap<&'static str, CountryCode> = {
-        let mut m = HashMap::new();
+    pub static ref COUNTRIES_ISO_3_CODES: BTreeMap<&'static str, CountryCode> = {
+        let mut m = BTreeMap::new();
 
         m.insert("AFG", CountryCode::AFG);
         m.insert("ALA", CountryCode::ALA);
@@ -566,8 +566,8 @@ lazy_static::lazy_static! {
 }
 
 lazy_static::lazy_static! {
-    pub static ref COUNTRIES_ISO_2_CODES: HashMap<&'static str, CountryCode> = {
-        let mut m = HashMap::new();
+    pub static ref COUNTRIES_ISO_2_CODES: BTreeMap<&'static str, CountryCode> = {
+        let mut m = BTreeMap::new();
 
         //Fill the map with the ISO 2 codes and CountryCode enums
         m.insert("AF", CountryCode::AFG);
