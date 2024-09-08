@@ -9,10 +9,12 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::AFG, "Afghanistan");
         result.insert(CountryCode::ALA, "Åland Islands");
         result.insert(CountryCode::ALB, "Albania");
+        result.insert(CountryCode::ARM, "Armenia");
+        result.insert(CountryCode::ARG, "Argentina");
         result.insert(CountryCode::DZA, "Algeria");
         result.insert(CountryCode::ASM, "American Samoa");
         result.insert(CountryCode::AND, "Andorra");
-        result.insert(CountryCode::AGO, "AGO");
+        result.insert(CountryCode::AGO, "Angola");
         result.insert(CountryCode::AIA, "Anguilla");
         result.insert(CountryCode::ATA, "Antarctica");
         result.insert(CountryCode::ATG, "Antigua and Barbuda");
@@ -51,8 +53,8 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::TCD, "Chad");
         result.insert(CountryCode::CHL, "Chile");
         result.insert(CountryCode::CHN, "China");
-        result.insert(CountryCode::HKG, "China, Hong Kong Special Administrative Region");
-        result.insert(CountryCode::MAC, "China, Macao Special Administrative Region");
+        result.insert(CountryCode::HKG, "Hong Kong Special Administrative Region, China");
+        result.insert(CountryCode::MAC, "Macao Special Administrative Region, China");
         result.insert(CountryCode::CXR, "Christmas Island");
         result.insert(CountryCode::CCK, "Cocos (Keeling) Islands");
         result.insert(CountryCode::COL, "Colombia");
