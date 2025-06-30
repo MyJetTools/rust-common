@@ -8,8 +8,8 @@ enum MarkDownToPush {
 impl MarkDownToPush {
     pub fn as_str(&self) -> &'static str {
         match self {
-            MarkDownToPush::BrOpen => "<br>",
-            MarkDownToPush::BrClose => "</br>",
+            MarkDownToPush::BrOpen => "<b>",
+            MarkDownToPush::BrClose => "</b>",
         }
     }
 }
