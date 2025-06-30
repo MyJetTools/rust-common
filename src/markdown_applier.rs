@@ -1,4 +1,4 @@
-use std::{cell::Cell, str::Chars};
+use std::str::Chars;
 
 enum MarkDownToPush {
     BrOpen,
@@ -17,7 +17,7 @@ impl MarkDownToPush {
 pub struct MarkdownApplier<'s> {
     text: &'s str,
     chars: Chars<'s>,
-    pos: Cell<usize>,
+    pos: usize,
     from_pos: usize,
     bold_open: bool,
     prev_char: Option<char>,
@@ -29,7 +29,7 @@ impl<'s> MarkdownApplier<'s> {
         Self {
             text,
             chars: text.chars(),
-            pos: Cell::new(0),
+            pos: 0,
             from_pos: 0,
             bold_open: true,
             prev_char: None,
@@ -42,7 +42,7 @@ impl<'s> MarkdownApplier<'s> {
             return Some(markdown_applier.as_str());
         }
 
-        let mut pos = self.pos.get();
+        let mut pos = self.pos;
 
         if pos >= self.text.len() {
             return None;
@@ -52,7 +52,7 @@ impl<'s> MarkdownApplier<'s> {
 
             if next_char.is_none() {
                 let result = &self.text[self.from_pos..pos];
-                self.pos.set(pos + 1);
+                self.pos = pos + 1;
                 return Some(result);
             }
 
@@ -71,7 +71,7 @@ impl<'s> MarkdownApplier<'s> {
 
                         let result = &self.text[self.from_pos..pos - 1];
 
-                        self.pos.set(pos + 1);
+                        self.pos = pos + 1;
                         self.from_pos = pos + 1;
 
                         return Some(result);
