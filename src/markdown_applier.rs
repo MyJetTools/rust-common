@@ -100,25 +100,25 @@ mod tests {
         assert_eq!("1. ", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<br>", item);
+        assert_eq!("<b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!("Text Title", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</br>", item);
+        assert_eq!("</b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!(" Other text ", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<br>", item);
+        assert_eq!("<b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!("TextTitle2", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</br>", item);
+        assert_eq!("</b>", item);
 
         assert!(markdown_applier.get_next().is_none())
     }
@@ -133,25 +133,25 @@ mod tests {
         assert_eq!("1. ", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<br>", item);
+        assert_eq!("<b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!("Text Title", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</br>", item);
+        assert_eq!("</b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!(" Other text ", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<br>", item);
+        assert_eq!("<b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!("TextTitle2", item);
 
         let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</br>", item);
+        assert_eq!("</b>", item);
 
         let item = markdown_applier.get_next().unwrap();
         assert_eq!(" Other text2", item);
