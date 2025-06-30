@@ -4,3 +4,6 @@ mod markdown_applier;
 #[cfg(feature = "validators")]
 pub mod validators;
 pub use markdown_applier::*;
+
+#[cfg(feature = "fuzzy_data")]
+pub mod fuzzy_data;

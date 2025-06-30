@@ -9,6 +9,7 @@ edition = "2021"
 default = []
 country-code = ["dep:lazy_static"]
 validators = []
+fuzzy_data = []
 
 [dependencies]
 lazy_static = { version = "*", optional = true }
