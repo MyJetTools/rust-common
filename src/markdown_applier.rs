@@ -52,6 +52,8 @@ impl<'s> MarkdownApplier<'s> {
 
             if next_char.is_none() {
                 let result = &self.text[self.from_pos..pos];
+
+                println!("Pos: {}. Chunk: {}", pos, result);
                 self.pos = pos + 1;
                 return Some(result);
             }
@@ -81,7 +83,7 @@ impl<'s> MarkdownApplier<'s> {
 
             self.prev_char = Some(next_char);
 
-            pos += 1;
+            pos += next_char.len_utf8();
         }
     }
 }
@@ -157,5 +159,21 @@ mod tests {
         assert_eq!(" Other text2", item);
 
         assert!(markdown_applier.get_next().is_none())
+    }
+
+    #[test]
+    fn test_apply_markdown_no_special_symbols() {
+        let text = "Hi, I’m Noor! Excited to help you.";
+
+        let mut markdown_applier = MarkdownApplier::new(text);
+
+        let item = markdown_applier.get_next().unwrap();
+        assert_eq!(text, item);
+
+        let item = markdown_applier.get_next();
+
+        assert!(item.is_none());
+
+        //assert!(item.is_none());
     }
 }
