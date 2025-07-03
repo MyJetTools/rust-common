@@ -53,7 +53,6 @@ impl<'s> MarkdownApplier<'s> {
             if next_char.is_none() {
                 let result = &self.text[self.from_pos..pos];
 
-                println!("Pos: {}. Chunk: {}", pos, result);
                 self.pos = pos + 1;
                 return Some(result);
             }
