@@ -108,6 +108,7 @@ fn preapply_markdown(src: &str) -> String {
         }
 
         result.push_str(line);
+        result.push_str("<br/>");
     }
 
     result
