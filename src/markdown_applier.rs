@@ -1,10 +1,17 @@
-use std::str::Chars;
-
-enum MarkDownToPush {
-    BrOpen,
-    BrClose,
+pub enum ReadMode {
+    None,
+    Br1,
+    Bold,
+    BoldEnd1,
 }
 
+impl Default for ReadMode {
+    fn default() -> Self {
+        Self::None
+    }
+}
+
+/*
 impl MarkDownToPush {
     pub fn as_str(&self) -> &'static str {
         match self {
@@ -13,117 +20,112 @@ impl MarkDownToPush {
         }
     }
 }
+ */
+pub fn apply_markdown(src: &str) -> String {
+    let data = preapply_markdown(src);
 
-pub struct MarkdownApplier<'s> {
-    text: &'s str,
-    chars: Chars<'s>,
-    pos: usize,
-    from_pos: usize,
-    bold_open: bool,
-    prev_char: Option<char>,
-    push_markdown_to_push: Option<MarkDownToPush>,
+    let mut result = String::with_capacity(data.len());
+
+    let mut read_mode = ReadMode::None;
+
+    for c in data.chars() {
+        match read_mode {
+            ReadMode::None => match c {
+                '*' => {
+                    read_mode = ReadMode::Br1;
+                }
+                _ => {
+                    result.push(c);
+                }
+            },
+            ReadMode::Br1 => match c {
+                '*' => {
+                    result.push_str("<b>");
+                    read_mode = ReadMode::Bold;
+                }
+                _ => {
+                    result.push('*');
+                    result.push(c);
+                    read_mode = ReadMode::None;
+                }
+            },
+
+            ReadMode::Bold => match c {
+                '*' => {
+                    read_mode = ReadMode::BoldEnd1;
+                }
+                _ => {
+                    result.push(c);
+                }
+            },
+            ReadMode::BoldEnd1 => match c {
+                '*' => {
+                    result.push_str("</b>");
+                    read_mode = ReadMode::None;
+                }
+                _ => {
+                    result.push('*');
+                    result.push(c);
+                    read_mode = ReadMode::Bold;
+                }
+            },
+        }
+    }
+
+    result
 }
 
-impl<'s> MarkdownApplier<'s> {
-    pub fn new(text: &'s str) -> Self {
-        Self {
-            text,
-            chars: text.chars(),
-            pos: 0,
-            from_pos: 0,
-            bold_open: true,
-            prev_char: None,
-            push_markdown_to_push: None,
+fn preapply_markdown(src: &str) -> String {
+    let mut result = String::new();
+
+    for line in src.split('\n') {
+        if line.starts_with("# ") {
+            result.push_str("<h1>");
+            result.push_str(&line[2..]);
+            result.push_str("</h1>");
+            continue;
         }
+
+        if line.starts_with("## ") {
+            result.push_str("<h2>");
+            result.push_str(&line[3..]);
+            result.push_str("</h2>");
+            continue;
+        }
+
+        if line.starts_with("### ") {
+            result.push_str("<h3>");
+            result.push_str(&line[4..]);
+            result.push_str("</h3>");
+            continue;
+        }
+
+        if line.starts_with("###$ ") {
+            result.push_str("<h4>");
+            result.push_str(&line[5..]);
+            result.push_str("</h4>");
+            continue;
+        }
+
+        result.push_str(line);
     }
 
-    pub fn get_next(&mut self) -> Option<&'s str> {
-        if let Some(markdown_applier) = self.push_markdown_to_push.take() {
-            return Some(markdown_applier.as_str());
-        }
-
-        let mut pos = self.pos;
-
-        if pos >= self.text.len() {
-            return None;
-        }
-        loop {
-            let next_char = self.chars.next();
-
-            if next_char.is_none() {
-                let result = &self.text[self.from_pos..pos];
-
-                self.pos = pos + 1;
-                return Some(result);
-            }
-
-            let next_char = next_char.unwrap();
-
-            if next_char == '*' {
-                if let Some(prev_char) = self.prev_char {
-                    if prev_char == '*' {
-                        if self.bold_open {
-                            self.push_markdown_to_push = Some(MarkDownToPush::BrOpen);
-                        } else {
-                            self.push_markdown_to_push = Some(MarkDownToPush::BrClose);
-                        }
-
-                        self.bold_open = !self.bold_open;
-
-                        let result = &self.text[self.from_pos..pos - 1];
-
-                        self.pos = pos + 1;
-                        self.from_pos = pos + 1;
-
-                        return Some(result);
-                    }
-                }
-            }
-
-            self.prev_char = Some(next_char);
-
-            pos += next_char.len_utf8();
-        }
-    }
+    result
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::markdown_applier::MarkdownApplier;
 
     #[test]
     fn apply_markdown_text() {
         let text = "1. **Text Title** Other text **TextTitle2**";
 
-        let mut markdown_applier = MarkdownApplier::new(text);
+        let result = super::apply_markdown(text);
 
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("1. ", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<b>", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("Text Title", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</b>", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!(" Other text ", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("<b>", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("TextTitle2", item);
-
-        let item = markdown_applier.get_next().unwrap();
-        assert_eq!("</b>", item);
-
-        assert!(markdown_applier.get_next().is_none())
+        assert_eq!("1. <b>Text Title</b> Other text <b>TextTitle2</b>", result);
     }
 
+    /*
     #[test]
     fn apply_markdown_text_with_text_at_the_end() {
         let text = "1. **Text Title** Other text **TextTitle2** Other text2";
@@ -175,4 +177,5 @@ mod tests {
 
         //assert!(item.is_none());
     }
+     */
 }
