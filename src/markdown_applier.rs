@@ -108,7 +108,7 @@ fn preapply_markdown(src: &str) -> String {
             continue;
         }
 
-        if line.starts_with("###$ ") {
+        if line.starts_with("#### ") {
             result.push_str("<h4>");
             result.push_str(&line[5..]);
             result.push_str("</h4>");
