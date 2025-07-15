@@ -78,11 +78,17 @@ pub fn apply_markdown(src: &str) -> String {
 fn preapply_markdown(src: &str) -> String {
     let mut result = String::new();
 
+    let mut add_br = false;
+
     for line in src.split('\n') {
+        if add_br {
+            result.push_str("<br/>");
+        }
         if line.starts_with("# ") {
             result.push_str("<h1>");
             result.push_str(&line[2..]);
             result.push_str("</h1>");
+            add_br = false;
             continue;
         }
 
@@ -90,6 +96,7 @@ fn preapply_markdown(src: &str) -> String {
             result.push_str("<h2>");
             result.push_str(&line[3..]);
             result.push_str("</h2>");
+            add_br = false;
             continue;
         }
 
@@ -97,6 +104,7 @@ fn preapply_markdown(src: &str) -> String {
             result.push_str("<h3>");
             result.push_str(&line[4..]);
             result.push_str("</h3>");
+            add_br = false;
             continue;
         }
 
@@ -104,11 +112,12 @@ fn preapply_markdown(src: &str) -> String {
             result.push_str("<h4>");
             result.push_str(&line[5..]);
             result.push_str("</h4>");
+            add_br = false;
             continue;
         }
 
         result.push_str(line);
-        result.push_str("<br/>");
+        add_br = true;
     }
 
     result
