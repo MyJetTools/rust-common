@@ -217,7 +217,7 @@ mod tests {
 
         assert_eq!(
             result,
-            "<h2>Key Features</h2><ul><li> List1</li><li> List2</li><li> List3</li></ul>"
+            "<h2>Key Features</h2><ul><li>List1</li><li>List2</li><li>List3</li></ul>"
         )
     }
 
@@ -225,7 +225,7 @@ mod tests {
     fn test_ul_with_enter_at_the_end() {
         let src = r#"## Key Features
 - List1
-- List2
+- **List2**
 - List3
 "#;
 
@@ -233,7 +233,7 @@ mod tests {
 
         assert_eq!(
             result,
-            "<h2>Key Features</h2><ul><li> List1</li><li> List2</li><li> List3</li></ul>"
+            "<h2>Key Features</h2><ul><li>List1</li><li><b>List2</b></li><li>List3</li></ul>"
         )
     }
 

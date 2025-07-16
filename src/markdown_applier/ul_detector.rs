@@ -2,6 +2,7 @@ pub struct UlDetector {
     enter: bool,
     dash: bool,
     ul_is_opened: bool,
+    content: String,
 }
 
 impl UlDetector {
@@ -10,7 +11,13 @@ impl UlDetector {
             enter: false,
             dash: false,
             ul_is_opened: false,
+            content: String::new(),
         }
+    }
+
+    fn flush_content(&mut self, out: &mut String) {
+        let to_push = super::apply_markdown(self.content.trim());
+        out.push_str(&to_push);
     }
 
     pub fn push_and_detect(&mut self, c: char, out: &mut String) -> bool {
@@ -25,11 +32,16 @@ impl UlDetector {
             true => {
                 if self.dash {
                     if c == '\n' {
+                        if self.content.len() > 0 {
+                            self.flush_content(out);
+                            self.content.clear();
+                        }
+
                         out.push_str("</li>");
                         self.enter = true;
                         self.dash = false;
                     } else {
-                        out.push(c);
+                        self.content.push(c);
                     }
                     return true;
                 } else {
@@ -57,8 +69,12 @@ impl UlDetector {
         false
     }
 
-    pub fn eof(self, out: &mut String) {
+    pub fn eof(mut self, out: &mut String) {
         if self.dash {
+            if self.content.len() > 0 {
+                self.flush_content(out);
+            }
+
             out.push_str("</li>");
         }
 
