@@ -41,7 +41,7 @@ pub fn apply_markdown(src: &str) -> String {
             }
         }
 
-        match header_detector.push_and_detect(c, &mut result) {
+        match header_detector.push_and_detect(c) {
             HeaderDetectionResult::None => {}
             HeaderDetectionResult::InDetection => {
                 continue;

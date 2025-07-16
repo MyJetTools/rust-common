@@ -18,7 +18,7 @@ impl HeaderDetector {
         self.value.push(c as u8);
     }
 
-    pub fn push_and_detect(&mut self, c: char, out: &mut String) -> HeaderDetectionResult {
+    pub fn push_and_detect(&mut self, c: char) -> HeaderDetectionResult {
         match c {
             '#' => {
                 self.push(c);
