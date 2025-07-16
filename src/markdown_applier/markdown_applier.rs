@@ -153,4 +153,37 @@ mod tests {
             "Hi, I’m Noor!<br/><h2>Prime Location Positioned in Business Bay</h2>Excited to help you."
         )
     }
+
+    #[test]
+    fn test_img_with_title() {
+        let text = "![A cat](https://example.com/cat.jpg \"Cat Image\")";
+
+        let result = super::apply_markdown(text);
+        assert_eq!(
+            result,
+            "<img src=\"https://example.com/cat.jpg\" title=\"Cat Image\" alt=\"A cat\">"
+        )
+    }
+
+    #[test]
+    fn test_img_with_no_title() {
+        let text = "![A cat](https://example.com/cat.jpg)";
+
+        let result = super::apply_markdown(text);
+        assert_eq!(
+            result,
+            "<img src=\"https://example.com/cat.jpg\" alt=\"A cat\">"
+        )
+    }
+
+    #[test]
+    fn test_img_with_other_content() {
+        let text = "Other content ![A cat](https://example.com/cat.jpg) Other content";
+
+        let result = super::apply_markdown(text);
+        assert_eq!(
+            result,
+            "Other content <img src=\"https://example.com/cat.jpg\" alt=\"A cat\"> Other content"
+        )
+    }
 }
