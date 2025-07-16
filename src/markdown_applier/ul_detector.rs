@@ -56,4 +56,14 @@ impl UlDetector {
 
         false
     }
+
+    pub fn eof(self, out: &mut String) {
+        if self.dash {
+            out.push_str("</li>");
+        }
+
+        if self.ul_is_opened {
+            out.push_str("</ul>");
+        }
+    }
 }

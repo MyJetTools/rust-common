@@ -101,6 +101,8 @@ pub fn apply_markdown(src: &str) -> String {
         super::html_renderer::render_header(header_size, false, &mut result);
     }
 
+    ul_detector.eof(&mut result);
+
     result
 }
 
@@ -201,6 +203,37 @@ mod tests {
         assert_eq!(
             result,
             "Other content <img src=\"https://example.com/cat.jpg\" alt=\"A cat\"> Other content"
+        )
+    }
+
+    #[test]
+    fn test_ul() {
+        let src = r#"## Key Features
+- List1
+- List2
+- List3"#;
+
+        let result = super::apply_markdown(src);
+
+        assert_eq!(
+            result,
+            "<h2>Key Features</h2><ul><li> List1</li><li> List2</li><li> List3</li></ul>"
+        )
+    }
+
+    #[test]
+    fn test_ul_with_enter_at_the_end() {
+        let src = r#"## Key Features
+- List1
+- List2
+- List3
+"#;
+
+        let result = super::apply_markdown(src);
+
+        assert_eq!(
+            result,
+            "<h2>Key Features</h2><ul><li> List1</li><li> List2</li><li> List3</li></ul>"
         )
     }
 
