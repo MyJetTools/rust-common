@@ -21,6 +21,15 @@ pub fn apply_markdown(src: &str) -> String {
         }
 
         let mut push_it = true;
+
+        img_detector.push(c);
+
+        if img_detector.is_image_in_process() {
+            push_it = false;
+        }
+
+        img_detector.try_render_image(&mut result);
+
         match c {
             ' ' => {
                 if last_chars.are("\n#") {
@@ -82,14 +91,6 @@ pub fn apply_markdown(src: &str) -> String {
         } else {
             push_it = false;
         }
-
-        img_detector.push(c);
-
-        if img_detector.is_image_in_process() {
-            push_it = false;
-        }
-
-        img_detector.try_render_image(&mut result);
 
         last_chars.push_char(c);
 

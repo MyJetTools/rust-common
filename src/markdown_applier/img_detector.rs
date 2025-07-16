@@ -12,7 +12,7 @@ impl ImgDetector {
     }
 
     pub fn is_image_in_process(&self) -> bool {
-        self.value.len() > 9
+        self.value.len() > 0
     }
 
     pub fn push(&mut self, c: char) {
@@ -26,7 +26,23 @@ impl ImgDetector {
         self.last = c;
     }
 
+    fn reset(&mut self) {
+        self.value.clear();
+        self.last = ' ';
+    }
+
     pub fn try_render_image(&mut self, out: &mut String) {
+        if self.value.len() == 2 && self.value != "![" {
+            if let Some(last) = self.value.chars().last() {
+                if last == '\n' {
+                    self.value.pop();
+                }
+            }
+
+            out.push_str(self.value.as_str());
+            self.reset();
+        }
+
         if self.last != ')' {
             return;
         }
@@ -48,8 +64,6 @@ impl ImgDetector {
                 }
             }
         }
-
-        self.value.clear();
-        self.last = ' ';
+        self.reset();
     }
 }
