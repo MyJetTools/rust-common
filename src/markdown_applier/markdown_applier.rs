@@ -7,11 +7,17 @@ pub fn apply_markdown(src: &str) -> String {
 
     let mut esc_mode = false;
 
-    let mut last_chars = LastChars::new();
-
     let mut text_decorators: Option<TextDecorators> = None;
 
     let mut img_detector = ImgDetector::new();
+
+    let mut header_detector = HeaderDetector::new();
+
+    let mut text_decorators_detector = TextDecoratorsDetector::new();
+
+    let mut ul_detector = UlDetector::new();
+
+    let mut charged_br = 0;
 
     for c in src.chars() {
         if esc_mode {
@@ -20,82 +26,70 @@ pub fn apply_markdown(src: &str) -> String {
             continue;
         }
 
-        let mut push_it = true;
+        let mut push_char = true;
 
-        img_detector.push(c);
-
-        if img_detector.is_image_in_process() {
-            push_it = false;
+        if img_detector.push_and_try_render(c, &mut result) {
+            if c != '\n' {
+                continue;
+            }
         }
 
-        img_detector.try_render_image(&mut result);
-
-        match c {
-            ' ' => {
-                if last_chars.are("\n#") {
-                    result.pop();
-                    super::html_renderer::render_tag("h1", Some(true), &mut result);
-                    header = Some(1);
-                    push_it = false;
-                }
-
-                if last_chars.are("\n##") {
-                    result.pop();
-                    result.pop();
-                    super::html_renderer::render_tag("h2", Some(true), &mut result);
-                    header = Some(2);
-                    push_it = false;
-                }
-                if last_chars.are("\n###") {
-                    result.pop();
-                    result.pop();
-                    result.pop();
-                    super::html_renderer::render_tag("h3", Some(true), &mut result);
-                    header = Some(3);
-                    push_it = false;
-                }
-                if last_chars.are("\n####") {
-                    result.pop();
-                    result.pop();
-                    result.pop();
-                    result.pop();
-                    super::html_renderer::render_tag("h4", Some(true), &mut result);
-                    header = Some(4);
-                    push_it = false;
-                }
+        if ul_detector.push_and_detect(c, &mut result) {
+            charged_br = 0;
+            if c != '\n' {
+                continue;
             }
-            '\n' => {
-                if let Some(header_size) = header.take() {
-                    super::html_renderer::render_header(header_size, false, &mut result);
-                } else {
+        }
+
+        match header_detector.push_and_detect(c, &mut result) {
+            HeaderDetectionResult::None => {}
+            HeaderDetectionResult::InDetection => {
+                continue;
+            }
+            HeaderDetectionResult::HasResult(header_size) => {
+                super::html_renderer::render_header(header_size, true, &mut result);
+                charged_br = 0;
+                header = Some(header_size);
+                push_char = false;
+            }
+        }
+
+        if c == '\n' {
+            if let Some(header_size) = header.take() {
+                super::html_renderer::render_header(header_size, false, &mut result);
+                charged_br = 0;
+                push_char = false;
+            } else {
+                if charged_br > 0 {
                     result.push_str("<br/>");
                 }
-                push_it = false;
+                charged_br = 2;
             }
-            '\\' => {
-                push_it = false;
-                esc_mode = true
-            }
-            _ => {}
         }
 
-        if !super::utils::is_decorator_symbol(c) {
-            if let Some(new_text_decorators) = last_chars.try_get_text_decorator() {
-                if let Some(text_decorators) = text_decorators.take() {
-                    text_decorators.render_tag(false, &mut result);
-                } else {
-                    new_text_decorators.render_tag(true, &mut result);
-                    text_decorators = Some(new_text_decorators);
+        if let Some(new_text_decorators) = text_decorators_detector.process_and_get_value(c) {
+            if let Some(text_decorators) = text_decorators.take() {
+                text_decorators.render_tag(false, &mut result);
+            } else {
+                new_text_decorators.render_tag(true, &mut result);
+                text_decorators = Some(new_text_decorators);
+            }
+        }
+        if text_decorators_detector.in_detection() {
+            push_char = false;
+        }
+
+        if push_char {
+            if c != '\n' {
+                if charged_br == 1 {
+                    result.push_str("<br/>");
                 }
+                result.push(c);
             }
-        } else {
-            push_it = false;
         }
 
-        last_chars.push_char(c);
-
-        if push_it {
-            result.push(c);
+        if charged_br > 0 {
+            charged_br -= 1;
         }
     }
 
@@ -108,6 +102,29 @@ pub fn apply_markdown(src: &str) -> String {
     }
 
     result
+}
+
+pub enum NotPrintedEnter {
+    Discharged,
+    Charged,
+    ToPrint,
+}
+
+impl NotPrintedEnter {
+    pub fn to_print(&self) -> bool {
+        match self {
+            Self::ToPrint => true,
+            _ => false,
+        }
+    }
+
+    pub fn mark_to_print(&mut self) {
+        match self {
+            NotPrintedEnter::Discharged => {}
+            NotPrintedEnter::Charged => *self = Self::ToPrint,
+            NotPrintedEnter::ToPrint => {}
+        }
+    }
 }
 
 #[cfg(test)]
@@ -150,7 +167,7 @@ mod tests {
         let result = super::apply_markdown(text);
         assert_eq!(
             result,
-            "Hi, I’m Noor!<br/><h2>Prime Location Positioned in Business Bay</h2>Excited to help you."
+            "Hi, I’m Noor!<h2>Prime Location Positioned in Business Bay</h2>Excited to help you."
         )
     }
 
@@ -185,5 +202,35 @@ mod tests {
             result,
             "Other content <img src=\"https://example.com/cat.jpg\" alt=\"A cat\"> Other content"
         )
+    }
+
+    #[test]
+    fn test_some_example() {
+        let text = r#"Comfort by Pagani.
+
+![Da Vinci Tower](https://cdn.darglobal.co.uk/small_04_Da_Vinci_1_bfcf45b97a.jpg)
+
+## Prime Location
+Positioned in Business Bay, you will have access to top-tier amenities and stunning views of downtown Dubai.
+
+## Key Features
+- **Size**: 1,605.65 sq. ft. with a spacious balcony of 420.65 sq. ft.
+- **Amenities**: State-of-the-art gym, rooftop pool, sauna, steam rooms, 24/7 concierge services, and exclusive residential access.
+- **Special Resident Offer**: 20% discount on the Insignia Royal Card
+
+## Project Update
+This off-plan project is scheduled for completion in 2024. Priced at AED 7,895,020 (approximately USD 2,131,655).
+
+Would you like more information, or would you like to explore further options?
+
+[ACTIONS]  
+[ACTION label="Financing Options"]Show me financing options[/ACTION]  
+[ACTION label="Book a Call"]Book a consultation call[/ACTION]  
+[ACTION label="More Properties"]Show me more properties[/ACTION]  
+[/ACTIONS]"#;
+
+        let result = super::apply_markdown(text);
+
+        println!("{}", result);
     }
 }

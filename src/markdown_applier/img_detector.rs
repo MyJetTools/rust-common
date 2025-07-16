@@ -1,52 +1,43 @@
 pub struct ImgDetector {
     value: String,
-    last: char,
 }
 
 impl ImgDetector {
     pub fn new() -> Self {
         Self {
             value: String::new(),
-            last: ' ',
         }
     }
 
-    pub fn is_image_in_process(&self) -> bool {
-        self.value.len() > 0
-    }
-
-    pub fn push(&mut self, c: char) {
+    pub fn push_and_try_render(&mut self, c: char, out: &mut String) -> bool {
         if self.value.len() == 0 {
-            if c != '!' {
-                return;
+            if c == '!' {
+                self.value.push(c);
             }
+            return false;
         }
 
+        if self.value.len() == 1 {
+            if c == '[' {
+                self.value.push(c);
+                out.pop();
+                return true;
+            } else {
+                self.value.clear();
+                return false;
+            }
+        }
         self.value.push(c);
-        self.last = c;
-    }
 
-    fn reset(&mut self) {
-        self.value.clear();
-        self.last = ' ';
-    }
-
-    pub fn try_render_image(&mut self, out: &mut String) {
-        if self.value.len() == 2 && self.value != "![" {
-            if let Some(last) = self.value.chars().last() {
-                if last == '\n' {
-                    self.value.pop();
-                }
-            }
-
-            out.push_str(self.value.as_str());
-            self.reset();
+        if c == ')' {
+            self.try_render_image(out);
+            self.value.clear();
         }
 
-        if self.last != ')' {
-            return;
-        }
+        return true;
+    }
 
+    fn try_render_image(&mut self, out: &mut String) {
         if let Some(mut index_alt_start) = self.value.find('[') {
             index_alt_start += 1;
             if let Some(index_alt_end) = self.value.find(']') {
@@ -89,6 +80,5 @@ impl ImgDetector {
                 }
             }
         }
-        self.reset();
     }
 }

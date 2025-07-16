@@ -9,3 +9,7 @@ pub use last_chars::*;
 mod img_detector;
 mod utils;
 pub use img_detector::*;
+mod header_detector;
+pub use header_detector::*;
+mod ul_detector;
+pub use ul_detector::*;

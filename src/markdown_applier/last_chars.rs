@@ -7,9 +7,13 @@ pub struct LastChars {
 
 impl LastChars {
     pub fn new() -> Self {
-        Self {
+        let mut result = Self {
             chars: Vec::with_capacity(MAX_CHARS),
-        }
+        };
+
+        result.chars.push(b'\n');
+
+        result
     }
 
     pub fn push_char(&mut self, c: char) {
