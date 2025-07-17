@@ -63,11 +63,6 @@ pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec
         let segment_text_start_index = src.find(']');
 
         let Some(mut segment_text_start_index) = segment_text_start_index else {
-            result.push(Segment::Segment(SegmentData {
-                params: HashMap::new(),
-                text: &src[start_index..],
-            }));
-
             return result;
         };
 
@@ -100,8 +95,6 @@ pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec
 
 fn extract_params<'s>(mut src: &'s str) -> HashMap<&'s str, &'s str> {
     let mut result = HashMap::new();
-
-    println!("Header to parse: {}", src);
 
     let Some(param_start) = src.find(' ') else {
         return result;
@@ -230,6 +223,21 @@ mod test {
         let result = itm.unwrap_as_segment();
         assert_eq!(result.params.len(), 0);
         assert_eq!("PitchText", result.text);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full() {
+        let src = "Before pitch[PITCH id";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
     }
 
     #[test]
