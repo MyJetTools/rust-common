@@ -241,6 +241,85 @@ mod test {
     }
 
     #[test]
+    fn test_when_pitch_is_loaded_not_full_2() {
+        let src = "Before pitch[PITCH id=";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_3() {
+        let src = "Before pitch[PITCH id=\"";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_4() {
+        let src = "Before pitch[PITCH id=\"sss";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_5() {
+        let src = "Before pitch[PITCH id=\"sss\"";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_6() {
+        let src = "Before pitch[PITCH id=\"sss\"]";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 2);
+
+        let itm = result.remove(0);
+
+        assert_eq!("Before pitch", itm.unwrap_as_text());
+
+        let itm = result.remove(0);
+
+        let segment = itm.unwrap_as_segment();
+
+        assert_eq!("", segment.text);
+    }
+
+    #[test]
     fn test_only_segment_two_parameters() {
         let src = r#"[PITCH param1="value 1" param2='value 2' param3=value3 param4=value4]PitchText[/PITCH]"#;
 
