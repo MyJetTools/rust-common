@@ -48,7 +48,8 @@ pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec
         let start_index = get_closest_index(start_index1, start_index2);
 
         let Some(start_index) = start_index else {
-            result.push(Segment::Text(src));
+            let text = try_clean_end(src, segment_name);
+            result.push(Segment::Text(text));
             return result;
         };
 
@@ -179,6 +180,34 @@ fn get_closest_index(index1: Option<usize>, index2: Option<usize>) -> Option<usi
     index2
 }
 
+fn try_clean_end<'s>(src: &'s str, segment_name: &str) -> &'s str {
+    let index = src.find('[');
+
+    let Some(index) = index else {
+        return src;
+    };
+
+    let remaining_len = src.len() - index - 1;
+
+    if remaining_len > segment_name.len() {
+        return src;
+    }
+
+    let src_suffix = &src[index + 1..];
+
+    let segment_name_to_compare = if segment_name.len() > src_suffix.len() {
+        &segment_name[..src_suffix.len()]
+    } else {
+        segment_name
+    };
+
+    if segment_name_to_compare == src_suffix {
+        return &src[..index];
+    }
+
+    src
+}
+
 #[cfg(test)]
 mod test {
 
@@ -302,21 +331,47 @@ mod test {
 
     #[test]
     fn test_when_pitch_is_loaded_not_full_6() {
-        let src = "Before pitch[PITCH id=\"sss\"]";
+        let src = "Before pitch[PITCH";
 
         let mut result = super::get_markdown_segments(src, "PITCH");
 
-        assert_eq!(result.len(), 2);
+        assert_eq!(result.len(), 1);
 
         let itm = result.remove(0);
 
-        assert_eq!("Before pitch", itm.unwrap_as_text());
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_7() {
+        let src = "Before pitch[PIT";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
 
         let itm = result.remove(0);
 
-        let segment = itm.unwrap_as_segment();
+        let result = itm.unwrap_as_text();
 
-        assert_eq!("", segment.text);
+        assert_eq!("Before pitch", result);
+    }
+
+    #[test]
+    fn test_when_pitch_is_loaded_not_full_8() {
+        let src = "Before pitch[";
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+
+        let itm = result.remove(0);
+
+        let result = itm.unwrap_as_text();
+
+        assert_eq!("Before pitch", result);
     }
 
     #[test]

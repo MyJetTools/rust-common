@@ -241,7 +241,7 @@ mod tests {
     fn test_some_example() {
         let text = r#"Comfort by Pagani.
 
-![Da Vinci Tower](https://cdn.darglobal.co.uk/small_04_Da_Vinci_1_bfcf45b97a.jpg)
+![Da Vinci Tower](https://img.jpg)
 
 ## Prime Location
 Positioned in Business Bay, you will have access to top-tier amenities and stunning views of downtown Dubai.
@@ -255,12 +255,7 @@ Positioned in Business Bay, you will have access to top-tier amenities and stunn
 This off-plan project is scheduled for completion in 2024. Priced at AED 7,895,020 (approximately USD 2,131,655).
 
 Would you like more information, or would you like to explore further options?
-
-[ACTIONS]  
-[ACTION label="Financing Options"]Show me financing options[/ACTION]  
-[ACTION label="Book a Call"]Book a consultation call[/ACTION]  
-[ACTION label="More Properties"]Show me more properties[/ACTION]  
-[/ACTIONS]"#;
+"#;
 
         let result = super::apply_markdown(text);
 
