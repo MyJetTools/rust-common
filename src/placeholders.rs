@@ -1,4 +1,4 @@
-use crate::slice_of_u8_utils::SliceOfU8Ext;
+use rust_extensions::slice_of_u8_utils::SliceOfU8Ext;
 
 pub enum ContentToken<'s> {
     Text(&'s str),

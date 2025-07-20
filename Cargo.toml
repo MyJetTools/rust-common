@@ -10,7 +10,9 @@ default = []
 country-code = ["dep:lazy_static"]
 validators = []
 fuzzy_data = []
-placeholders = []
+placeholders = ["rust-extensions"]
+
 
 [dependencies]
 lazy_static = { version = "*", optional = true }
+rust-extensions = { tag = "0.1.5", git = "https://github.com/MyJetTools/rust-extensions.git", optional = true }
