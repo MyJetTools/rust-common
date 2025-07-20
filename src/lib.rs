@@ -8,3 +8,6 @@ pub use markdown_applier::*;
 #[cfg(feature = "fuzzy_data")]
 pub mod fuzzy_data;
 pub mod markdown_segments;
+
+#[cfg(feature = "placeholders")]
+pub mod placeholders;

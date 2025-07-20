@@ -10,6 +10,7 @@ default = []
 country-code = ["dep:lazy_static"]
 validators = []
 fuzzy_data = []
+placeholders = []
 
 [dependencies]
 lazy_static = { version = "*", optional = true }
