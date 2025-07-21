@@ -417,4 +417,15 @@ mod test {
         let itm = result.remove(0);
         assert_eq!("AfterText", itm.unwrap_as_text());
     }
+
+    #[test]
+    fn test_example_from_real_life() {
+        let src = r#"I'm here to offer you a personalized experience with our luxurious properties. Could you please share your preferred location or budget? This will help me tailor the best options for you."#;
+
+        let mut result = super::get_markdown_segments(src, "PITCH");
+
+        assert_eq!(result.len(), 1);
+        let itm = result.remove(0);
+        assert_eq!(src, itm.unwrap_as_text());
+    }
 }

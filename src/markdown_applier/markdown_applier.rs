@@ -261,4 +261,13 @@ Would you like more information, or would you like to explore further options?
 
         println!("{}", result);
     }
+
+    #[test]
+    fn test_example_from_real_life() {
+        let src = r#"I'm here to offer you a personalized experience with our luxurious properties. Could you please share your preferred location or budget? This will help me tailor the best options for you."#;
+
+        let result = super::apply_markdown(src);
+
+        assert_eq!(src, result);
+    }
 }
