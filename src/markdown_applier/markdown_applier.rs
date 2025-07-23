@@ -174,7 +174,10 @@ mod tests {
 
         let result = super::apply_markdown(text);
 
-        assert_eq!("1. <b>Text Title</b> Other text <b>TextTitle2</b>", result);
+        assert_eq!(
+            "<p>1. <b>Text Title</b> Other text <b>TextTitle2</b></p>",
+            result
+        );
     }
 
     #[test]
@@ -184,7 +187,7 @@ mod tests {
         let result = super::apply_markdown(text);
 
         assert_eq!(
-            "1. <b>Text Title</b> Other text <b>TextTitle2</b> Other text2",
+            "<p>1. <b>Text Title</b> Other text <b>TextTitle2</b> Other text2</p>",
             result
         );
     }
@@ -194,7 +197,7 @@ mod tests {
         let text = "Hi, I’m Noor! Excited to help you.";
         let result = super::apply_markdown(text);
 
-        assert_eq!(result, text)
+        assert_eq!("<p>Hi, I’m Noor! Excited to help you.</p>", result)
     }
 
     #[test]
@@ -205,7 +208,7 @@ mod tests {
         let result = super::apply_markdown(text);
         assert_eq!(
             result,
-            "Hi, I’m Noor!<h2>Prime Location Positioned in Business Bay</h2>Excited to help you."
+            "<p>Hi, I’m Noor!</p><h2>Prime Location Positioned in Business Bay</h2><p>Excited to help you.</p>"
         )
     }
 
@@ -216,7 +219,7 @@ mod tests {
         let result = super::apply_markdown(text);
         assert_eq!(
             result,
-            "<img src=\"https://example.com/cat.jpg\" title=\"Cat Image\" alt=\"A cat\">"
+            "<p><img src=\"https://example.com/cat.jpg\" title=\"Cat Image\" alt=\"A cat\"></p>"
         )
     }
 
@@ -227,7 +230,7 @@ mod tests {
         let result = super::apply_markdown(text);
         assert_eq!(
             result,
-            "<img src=\"https://example.com/cat.jpg\" alt=\"A cat\">"
+            "<p><img src=\"https://example.com/cat.jpg\" alt=\"A cat\"></p>"
         )
     }
 
@@ -238,7 +241,7 @@ mod tests {
         let result = super::apply_markdown(text);
         assert_eq!(
             result,
-            "Other content <img src=\"https://example.com/cat.jpg\" alt=\"A cat\"> Other content"
+            "<p>Other content <img src=\"https://example.com/cat.jpg\" alt=\"A cat\"> Other content</p>"
         )
     }
 
@@ -304,7 +307,7 @@ Would you like more information, or would you like to explore further options?
 
         let result = super::apply_markdown(src);
 
-        assert_eq!(src, result);
+        assert_eq!(format!("<p>{}</p>", src), result);
     }
 
     #[test]
