@@ -1,77 +1,121 @@
 use super::*;
 
+#[derive(Debug, Clone, Copy)]
+enum LineMode {
+    None,
+    Ul,
+}
+
+impl LineMode {
+    pub fn is_none(&self) -> bool {
+        match self {
+            Self::None => true,
+            _ => false,
+        }
+    }
+}
+
 pub fn apply_markdown(src: &str) -> String {
+    let mut line_mode = LineMode::None;
     let mut result = String::with_capacity(src.len());
 
-    let mut header = None;
+    for line in src.lines() {
+        if line.starts_with("# ") {
+            result.push_str("<h1>");
+            apply_markdown_to_line(&line[2..], &mut result);
+            result.push_str("</h1>");
+            continue;
+        }
 
+        if line.starts_with("## ") {
+            result.push_str("<h2>");
+            apply_markdown_to_line(&line[3..], &mut result);
+            result.push_str("</h2>");
+            continue;
+        }
+
+        if line.starts_with("### ") {
+            result.push_str("<h3>");
+            apply_markdown_to_line(&line[4..], &mut result);
+            result.push_str("</h3>");
+            continue;
+        }
+
+        if line.starts_with("#### ") {
+            result.push_str("<h4>");
+            apply_markdown_to_line(&line[5..], &mut result);
+            result.push_str("</h4>");
+            continue;
+        }
+
+        if line.starts_with("- ") {
+            match line_mode {
+                LineMode::None => {
+                    result.push_str("<ul>");
+                    line_mode = LineMode::Ul;
+                }
+                LineMode::Ul => {}
+            }
+
+            result.push_str("<li>");
+            apply_markdown_to_line(&line[2..], &mut result);
+            result.push_str("</li>");
+            continue;
+        }
+
+        match line_mode {
+            LineMode::None => {}
+            LineMode::Ul => {
+                result.push_str("</ul>");
+            }
+        }
+
+        result.push_str("<p>");
+        apply_markdown_to_line(line, &mut result);
+        result.push_str("</p>");
+    }
+
+    match line_mode {
+        LineMode::None => {}
+        LineMode::Ul => {
+            result.push_str("</ul>");
+        }
+    }
+
+    result
+}
+
+fn apply_markdown_to_line(src: &str, out: &mut String) {
     let mut esc_mode = false;
 
     let mut text_decorators: Option<TextDecorators> = None;
 
     let mut img_detector = ImgDetector::new();
 
-    let mut header_detector = HeaderDetector::new();
-
     let mut text_decorators_detector = TextDecoratorsDetector::new();
-
-    let mut ul_detector = UlDetector::new();
 
     let mut charged_br = 0;
 
     for c in src.chars() {
         if esc_mode {
-            result.push(c);
+            out.push(c);
             esc_mode = false;
             continue;
         }
 
         let mut push_char = true;
 
-        if img_detector.push_and_try_render(c, &mut result) {
+        if img_detector.push_and_try_render(c, out) {
             if c != '\n' {
                 continue;
-            }
-        }
-
-        if ul_detector.push_and_detect(c, &mut result) {
-            charged_br = 0;
-            if c != '\n' {
-                continue;
-            }
-        }
-
-        match header_detector.push_and_detect(c) {
-            HeaderDetectionResult::None => {}
-            HeaderDetectionResult::InDetection => {
-                continue;
-            }
-            HeaderDetectionResult::HasResult(header_size) => {
-                super::html_renderer::render_header(header_size, true, &mut result);
-                charged_br = 0;
-                header = Some(header_size);
-                push_char = false;
-            }
-        }
-
-        if c == '\n' {
-            if let Some(header_size) = header.take() {
-                super::html_renderer::render_header(header_size, false, &mut result);
-                charged_br = 0;
-                push_char = false;
-            } else {
-                if charged_br > 0 {
-                    result.push_str("<br/>");
-                }
-                charged_br = 2;
             }
         }
 
         if let Some(new_text_decorators) = text_decorators_detector.process_and_get_value(c) {
             if let Some(text_decorators) = text_decorators.take() {
-                text_decorators.render_tag(false, &mut result);
+                text_decorators.render_tag(false, out);
             } else {
-                new_text_decorators.render_tag(true, &mut result);
+                new_text_decorators.render_tag(true, out);
                 text_decorators = Some(new_text_decorators);
             }
         }
@@ -82,9 +126,9 @@ pub fn apply_markdown(src: &str) -> String {
         if push_char {
             if c != '\n' {
                 if charged_br == 1 {
-                    result.push_str("<br/>");
+                    out.push_str("<br/>");
                 }
-                result.push(c);
+                out.push(c);
             }
         }
 
@@ -94,16 +138,8 @@ pub fn apply_markdown(src: &str) -> String {
     }
 
     if let Some(text_decorators) = text_decorators {
-        text_decorators.render_tag(false, &mut result);
+        text_decorators.render_tag(false, out);
     }
-
-    if let Some(header_size) = header {
-        super::html_renderer::render_header(header_size, false, &mut result);
-    }
-
-    ul_detector.eof(&mut result);
-
-    result
 }
 
 pub enum NotPrintedEnter {
@@ -269,5 +305,14 @@ Would you like more information, or would you like to explore further options?
         let result = super::apply_markdown(src);
 
         assert_eq!(src, result);
+    }
+
+    #[test]
+    fn test_example_from_real_life_2() {
+        let src = "Bt\n\n- **Bold**: Just text\n- **2-Bold**: 2-text\n- **3-Bold**: 3-text\n- **4-Bold**: 4-text\n\nAfter text";
+
+        let result = super::apply_markdown(src);
+
+        println!("{}", result);
     }
 }
