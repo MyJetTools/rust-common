@@ -216,6 +216,63 @@ impl NamedTimeZone {
             NamedTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
         }
     }
+
+    pub fn as_full_name(&self) -> StrOrString<'static> {
+        match self {
+            NamedTimeZone::EEST => "Eastern European Summer Time".into(),
+            NamedTimeZone::EET => "Eastern European Time".into(),
+            NamedTimeZone::CEST => "Central European Summer Time".into(),
+            NamedTimeZone::CET => "Central European Time".into(),
+            NamedTimeZone::IDLW => "International Date Line West".into(),
+            NamedTimeZone::SST => "Samoa Standard Time".into(),
+            NamedTimeZone::HST => "Hawaii Standard Time".into(),
+            NamedTimeZone::AKDT => "Alaska Daylight Time".into(),
+            NamedTimeZone::AKST => "Alaska Standard Time".into(),
+            NamedTimeZone::PDT => "Pacific Daylight Time".into(),
+            NamedTimeZone::PST => "Pacific Standard Time".into(),
+            NamedTimeZone::MDT => "Mountain Daylight Time".into(),
+            NamedTimeZone::MST => "Mountain Standard Time".into(),
+            NamedTimeZone::CDT => "Central Daylight Time".into(),
+            NamedTimeZone::CST => "Central Standard Time".into(),
+            NamedTimeZone::EDT => "Eastern Daylight Time".into(),
+            NamedTimeZone::EST => "Eastern Standard Time".into(),
+            NamedTimeZone::ADT => "Atlantic Daylight Time".into(),
+            NamedTimeZone::AST => "Atlantic Standard Time".into(),
+            NamedTimeZone::NDT => "Newfoundland Daylight Time".into(),
+            NamedTimeZone::NST => "Newfoundland Standard Time".into(),
+            NamedTimeZone::ART => "Argentina Time".into(),
+            NamedTimeZone::FNT => "Fernando de Noronha Time".into(),
+            NamedTimeZone::AZOST => "Azores Summer Time".into(),
+            NamedTimeZone::AZOT => "Azores Standard Time".into(),
+            NamedTimeZone::GMT => "Greenwich Mean Time".into(),
+            NamedTimeZone::WEST => "Western European Summer Time".into(),
+            NamedTimeZone::WET => "Western European Time".into(),
+            NamedTimeZone::AFT => "Afghanistan Time".into(),
+            NamedTimeZone::GST => "Gulf Standard Time".into(),
+            NamedTimeZone::IRST => "Iran Standard Time".into(),
+            NamedTimeZone::PKT => "Pakistan Standard Time".into(),
+            NamedTimeZone::IST => "India Standard Time".into(),
+            NamedTimeZone::NPT => "Nepal Time".into(),
+            NamedTimeZone::BST => "Bangladesh Standard Time".into(),
+            NamedTimeZone::MMT => "Myanmar Time".into(),
+            NamedTimeZone::ICT => "Indochina Time".into(),
+            NamedTimeZone::SGT => "Singapore Time".into(),
+            NamedTimeZone::JST => "Japan Standard Time".into(),
+            NamedTimeZone::ACDT => "Australian Central Daylight Time".into(),
+            NamedTimeZone::ACST => "Australian Central Standard Time".into(),
+            NamedTimeZone::AEDT => "Australian Eastern Daylight Time".into(),
+            NamedTimeZone::AEST => "Australian Eastern Standard Time".into(),
+            NamedTimeZone::SBT => "Solomon Islands Time".into(),
+            NamedTimeZone::NZDT => "New Zealand Daylight Time".into(),
+            NamedTimeZone::NZST => "New Zealand Standard Time".into(),
+            NamedTimeZone::TOT => "Tonga Time".into(),
+            NamedTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
+        }
+    }
+
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, NamedTimeZone::Unknown(_))
+    }
 }
 
 #[cfg(test)]
