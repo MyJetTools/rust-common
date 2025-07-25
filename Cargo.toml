@@ -8,6 +8,7 @@ edition = "2021"
 [features]
 default = []
 country-code = ["dep:lazy_static"]
+time-zones = ["dep:lazy_static", "chrono", "chrono-tz", "rust-extensions"]
 validators = []
 fuzzy_data = []
 placeholders = ["rust-extensions"]
@@ -16,3 +17,6 @@ placeholders = ["rust-extensions"]
 [dependencies]
 lazy_static = { version = "*", optional = true }
 rust-extensions = { tag = "0.1.5", git = "https://github.com/MyJetTools/rust-extensions.git", optional = true }
+
+chrono = { version = "*", optional = true }
+chrono-tz = { version = "*", optional = true }

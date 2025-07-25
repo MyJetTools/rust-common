@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
 
+use crate::country_code::TimeZoneByCountry;
+
 use super::ErrorParsingCountryCode;
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -314,6 +316,10 @@ impl CountryCode {
             "Somehow we can not find iso2 code for country code: {:?}",
             self
         );
+    }
+
+    pub fn get_time_zone_by_country(&self) -> TimeZoneByCountry {
+        TimeZoneByCountry::from_country_code(*self)
     }
 }
 lazy_static::lazy_static! {

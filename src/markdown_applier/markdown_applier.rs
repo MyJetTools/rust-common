@@ -6,15 +6,6 @@ enum LineMode {
     Ul,
 }
 
-impl LineMode {
-    pub fn is_none(&self) -> bool {
-        match self {
-            Self::None => true,
-            _ => false,
-        }
-    }
-}
-
 pub fn apply_markdown(src: &str) -> String {
     let mut line_mode = LineMode::None;
     let mut result = String::with_capacity(src.len());
