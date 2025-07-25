@@ -1,3 +1,5 @@
+use rust_extensions::ShortString;
+
 use crate::country_code::CountryCode;
 
 pub enum TimeZoneByCountry {
@@ -265,6 +267,61 @@ impl TimeZoneByCountry {
             CountryCode::YEM => Self::Asia("Aden"),        // Yemen
             CountryCode::ZMB => Self::Africa("Lusaka"),    // Zambia
             CountryCode::ZWE => Self::Africa("Harare"),    // Zimbabwe
+        }
+    }
+
+    pub fn as_str(&self) -> ShortString {
+        match self {
+            TimeZoneByCountry::Europe(country) => {
+                let mut result = ShortString::from_str("Europe/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Africa(country) => {
+                let mut result = ShortString::from_str("Africa/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Asia(country) => {
+                let mut result = ShortString::from_str("Asia/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::America(country) => {
+                let mut result = ShortString::from_str("America/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Antarctica(country) => {
+                let mut result = ShortString::from_str("Antarctica/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Arctic(country) => {
+                let mut result = ShortString::from_str("Arctic/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Atlantic(country) => {
+                let mut result = ShortString::from_str("Atlantic/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Australia(country) => {
+                let mut result = ShortString::from_str("Australia/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Indian(country) => {
+                let mut result = ShortString::from_str("Indian/").unwrap();
+                result.push_str(country);
+                result
+            }
+            TimeZoneByCountry::Pacific(country) => {
+                let mut result = ShortString::from_str("Pacific/").unwrap();
+                result.push_str(country);
+                result
+            }
         }
     }
 }
