@@ -19,7 +19,7 @@ pub enum IanaTimeZone {
 
 impl IanaTimeZone {
     #[cfg(feature = "time-zones")]
-    pub fn get_fallback_countries(time_zone: TimeZone) -> Self {
+    pub fn get_fallback_timezone(time_zone: TimeZone) -> Self {
         use crate::time_zones::*;
         let seconds = time_zone.as_seconds();
         match seconds {
