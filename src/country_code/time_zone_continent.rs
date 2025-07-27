@@ -19,6 +19,44 @@ pub enum IanaTimeZone {
 
 impl IanaTimeZone {
     #[cfg(feature = "time-zones")]
+    pub fn get_fallback_countries(time_zone: TimeZone) -> Self {
+        use crate::time_zones::*;
+        let seconds = time_zone.as_seconds();
+        match seconds {
+            UTC_MINUS_12 => IanaTimeZone::Pacific("Baker"),
+            UTC_MINUS_11 => IanaTimeZone::Pacific("Niue"),
+            UTC_MINUS_10 => IanaTimeZone::Pacific("Honolulu"),
+            UTC_MINUS_9 => IanaTimeZone::America("Adak"),
+            UTC_MINUS_8 => IanaTimeZone::America("Pitcairn"),
+            UTC_MINUS_7 => IanaTimeZone::America("Phoenix"),
+            UTC_MINUS_6 => IanaTimeZone::America("Regina"),
+            UTC_MINUS_5 => IanaTimeZone::America("Guayaquil"),
+            UTC_MINUS_4 => IanaTimeZone::America("La_Paz"),
+            UTC_MINUS_3 => IanaTimeZone::America("Argentina/Buenos_Aires"),
+            UTC_MINUS_2 => IanaTimeZone::America("South_Georgia"),
+            UTC_MINUS_1 => IanaTimeZone::Atlantic("Azores"),
+            UTC_0 => IanaTimeZone::Atlantic("Reykjavik"),
+            UTC_1 => IanaTimeZone::Europe("Algiers"),
+            UTC_2 => IanaTimeZone::Europe("Johannesburg"),
+            UTC_3 => IanaTimeZone::Africa("Moscow"),
+            UTC_4 => IanaTimeZone::Asia("Dubai"),
+            UTC_5 => IanaTimeZone::Asia("Karachi"),
+            UTC_5_30 => IanaTimeZone::Asia("Kolkata"),
+            UTC_6 => IanaTimeZone::Asia("Dhaka"),
+            UTC_7 => IanaTimeZone::Asia("Jakarta"),
+            UTC_8 => IanaTimeZone::Asia("Shanghai"),
+            UTC_8_45 => IanaTimeZone::Australia("Ecula"),
+            UTC_9 => IanaTimeZone::Asia("Tokyo"),
+            UTC_10 => IanaTimeZone::Australia("Brisbane"),
+            UTC_11 => IanaTimeZone::Pacific("Noumea"),
+            UTC_12 => IanaTimeZone::Pacific("Fiji"),
+            UTC_13 => IanaTimeZone::Pacific("Tongatapu"),
+            UTC_14 => IanaTimeZone::Pacific("Kiritimati"),
+            _ => IanaTimeZone::Europe("Dubai"),
+        }
+    }
+
+    #[cfg(feature = "time-zones")]
     pub fn from_country_code(
         country_code: CountryCode,
         time_zone: TimeZone,

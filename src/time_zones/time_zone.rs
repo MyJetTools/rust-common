@@ -7,6 +7,7 @@ pub const UTC_2: i32 = 2 * 3600;
 pub const UTC_3: i32 = 3 * 3600;
 pub const UTC_4: i32 = 4 * 3600;
 pub const UTC_5: i32 = 5 * 3600;
+pub const UTC_5_30: i32 = 5 * 3600 + MIN_30;
 pub const UTC_6: i32 = 6 * 3600;
 pub const UTC_7: i32 = 7 * 3600;
 pub const UTC_8: i32 = 8 * 3600;
@@ -17,6 +18,8 @@ pub const UTC_10: i32 = 10 * 3600;
 pub const UTC_10_30: i32 = UTC_10 + MIN_30;
 pub const UTC_11: i32 = 11 * 3600;
 pub const UTC_12: i32 = 12 * 3600;
+pub const UTC_13: i32 = 13 * 3600;
+pub const UTC_14: i32 = 14 * 3600;
 
 pub const UTC_MINUS_1: i32 = -UTC_1;
 pub const UTC_MINUS_2: i32 = -UTC_2;
