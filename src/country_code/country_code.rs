@@ -321,7 +321,7 @@ impl CountryCode {
     #[cfg(feature = "time-zones")]
     pub fn get_iana_time_zone(
         &self,
-        time_zone: crate::time_zones::TimeZone,
+        time_zone: crate::time_zones::TimeZoneOffset,
         is_day_saving_time: bool,
     ) -> Option<IanaTimeZone> {
         IanaTimeZone::from_country_code(*self, time_zone, is_day_saving_time)

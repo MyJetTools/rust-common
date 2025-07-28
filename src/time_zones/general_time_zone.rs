@@ -1,9 +1,9 @@
 use rust_extensions::{date_time::DateTimeAsMicroseconds, StrOrString};
 
-use crate::{country_code::CountryCode, time_zones::TimeZone};
+use crate::{country_code::CountryCode, time_zones::TimeZoneOffset};
 
 #[derive(Debug, Clone, Copy)]
-pub enum NamedTimeZone {
+pub enum GeneralTimeZone {
     EEST, // UTC+03:00, Eastern European Summer Time
     EET,  // UTC+02:00, Eastern European Time
 
@@ -73,10 +73,10 @@ pub enum NamedTimeZone {
     Unknown(i32),
 }
 
-impl NamedTimeZone {
+impl GeneralTimeZone {
     pub fn from_client_time(
         client_time: DateTimeAsMicroseconds,
-        mut time_zone: TimeZone,
+        mut time_zone: TimeZoneOffset,
         country_code: CountryCode,
     ) -> Self {
         let day_saving_time = super::is_summer_time::is_day_saving_time(client_time, country_code);
@@ -86,7 +86,7 @@ impl NamedTimeZone {
         Self::create(time_zone, country_code)
     }
 
-    pub fn create(time_zone: TimeZone, country_code: CountryCode) -> Self {
+    pub fn create(time_zone: TimeZoneOffset, country_code: CountryCode) -> Self {
         let seconds = time_zone.as_seconds();
         let is_day_saving_time = time_zone.get_day_saving_time();
         match (seconds, is_day_saving_time) {
@@ -166,112 +166,112 @@ impl NamedTimeZone {
 
     pub fn as_str(&self) -> StrOrString<'static> {
         match self {
-            NamedTimeZone::EEST => "EEST".into(),
-            NamedTimeZone::EET => "EET".into(),
-            NamedTimeZone::CEST => "CEST".into(),
-            NamedTimeZone::CET => "CET".into(),
-            NamedTimeZone::IDLW => "IDLW".into(),
-            NamedTimeZone::SST => "SST".into(),
-            NamedTimeZone::HST => "HST".into(),
-            NamedTimeZone::AKDT => "AKDT".into(),
-            NamedTimeZone::AKST => "AKST".into(),
-            NamedTimeZone::PDT => "PDT".into(),
-            NamedTimeZone::PST => "PST".into(),
-            NamedTimeZone::MDT => "MDT".into(),
-            NamedTimeZone::MST => "MST".into(),
-            NamedTimeZone::CDT => "CDT".into(),
-            NamedTimeZone::CST => "CST".into(),
-            NamedTimeZone::EDT => "EDT".into(),
-            NamedTimeZone::EST => "EST".into(),
-            NamedTimeZone::ADT => "ADT".into(),
-            NamedTimeZone::AST => "AST".into(),
-            NamedTimeZone::NDT => "NDT".into(),
-            NamedTimeZone::NST => "NST".into(),
-            NamedTimeZone::ART => "ART".into(),
-            NamedTimeZone::FNT => "FNT".into(),
-            NamedTimeZone::AZOST => "AZOST".into(),
-            NamedTimeZone::AZOT => "AZOT".into(),
-            NamedTimeZone::GMT => "GMT".into(),
-            NamedTimeZone::WEST => "WEST".into(),
-            NamedTimeZone::WET => "WET".into(),
-            NamedTimeZone::AFT => "AFT".into(),
-            NamedTimeZone::GST => "GST".into(),
-            NamedTimeZone::IRST => "IRST".into(),
-            NamedTimeZone::PKT => "PKT".into(),
-            NamedTimeZone::IST => "IST".into(),
-            NamedTimeZone::NPT => "NPT".into(),
-            NamedTimeZone::BST => "BST".into(),
-            NamedTimeZone::MMT => "MMT".into(),
-            NamedTimeZone::ICT => "ICT".into(),
-            NamedTimeZone::SGT => "SGT".into(),
-            NamedTimeZone::JST => "JST".into(),
-            NamedTimeZone::ACDT => "ACDT".into(),
-            NamedTimeZone::ACST => "ACST".into(),
-            NamedTimeZone::AEDT => "AEDT".into(),
-            NamedTimeZone::AEST => "AEST".into(),
-            NamedTimeZone::SBT => "SBT".into(),
-            NamedTimeZone::NZDT => "NZDT".into(),
-            NamedTimeZone::NZST => "NZST".into(),
-            NamedTimeZone::TOT => "TOT".into(),
-            NamedTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
+            GeneralTimeZone::EEST => "EEST".into(),
+            GeneralTimeZone::EET => "EET".into(),
+            GeneralTimeZone::CEST => "CEST".into(),
+            GeneralTimeZone::CET => "CET".into(),
+            GeneralTimeZone::IDLW => "IDLW".into(),
+            GeneralTimeZone::SST => "SST".into(),
+            GeneralTimeZone::HST => "HST".into(),
+            GeneralTimeZone::AKDT => "AKDT".into(),
+            GeneralTimeZone::AKST => "AKST".into(),
+            GeneralTimeZone::PDT => "PDT".into(),
+            GeneralTimeZone::PST => "PST".into(),
+            GeneralTimeZone::MDT => "MDT".into(),
+            GeneralTimeZone::MST => "MST".into(),
+            GeneralTimeZone::CDT => "CDT".into(),
+            GeneralTimeZone::CST => "CST".into(),
+            GeneralTimeZone::EDT => "EDT".into(),
+            GeneralTimeZone::EST => "EST".into(),
+            GeneralTimeZone::ADT => "ADT".into(),
+            GeneralTimeZone::AST => "AST".into(),
+            GeneralTimeZone::NDT => "NDT".into(),
+            GeneralTimeZone::NST => "NST".into(),
+            GeneralTimeZone::ART => "ART".into(),
+            GeneralTimeZone::FNT => "FNT".into(),
+            GeneralTimeZone::AZOST => "AZOST".into(),
+            GeneralTimeZone::AZOT => "AZOT".into(),
+            GeneralTimeZone::GMT => "GMT".into(),
+            GeneralTimeZone::WEST => "WEST".into(),
+            GeneralTimeZone::WET => "WET".into(),
+            GeneralTimeZone::AFT => "AFT".into(),
+            GeneralTimeZone::GST => "GST".into(),
+            GeneralTimeZone::IRST => "IRST".into(),
+            GeneralTimeZone::PKT => "PKT".into(),
+            GeneralTimeZone::IST => "IST".into(),
+            GeneralTimeZone::NPT => "NPT".into(),
+            GeneralTimeZone::BST => "BST".into(),
+            GeneralTimeZone::MMT => "MMT".into(),
+            GeneralTimeZone::ICT => "ICT".into(),
+            GeneralTimeZone::SGT => "SGT".into(),
+            GeneralTimeZone::JST => "JST".into(),
+            GeneralTimeZone::ACDT => "ACDT".into(),
+            GeneralTimeZone::ACST => "ACST".into(),
+            GeneralTimeZone::AEDT => "AEDT".into(),
+            GeneralTimeZone::AEST => "AEST".into(),
+            GeneralTimeZone::SBT => "SBT".into(),
+            GeneralTimeZone::NZDT => "NZDT".into(),
+            GeneralTimeZone::NZST => "NZST".into(),
+            GeneralTimeZone::TOT => "TOT".into(),
+            GeneralTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
         }
     }
 
     pub fn as_full_name(&self) -> StrOrString<'static> {
         match self {
-            NamedTimeZone::EEST => "Eastern European Summer Time".into(),
-            NamedTimeZone::EET => "Eastern European Time".into(),
-            NamedTimeZone::CEST => "Central European Summer Time".into(),
-            NamedTimeZone::CET => "Central European Time".into(),
-            NamedTimeZone::IDLW => "International Date Line West".into(),
-            NamedTimeZone::SST => "Samoa Standard Time".into(),
-            NamedTimeZone::HST => "Hawaii Standard Time".into(),
-            NamedTimeZone::AKDT => "Alaska Daylight Time".into(),
-            NamedTimeZone::AKST => "Alaska Standard Time".into(),
-            NamedTimeZone::PDT => "Pacific Daylight Time".into(),
-            NamedTimeZone::PST => "Pacific Standard Time".into(),
-            NamedTimeZone::MDT => "Mountain Daylight Time".into(),
-            NamedTimeZone::MST => "Mountain Standard Time".into(),
-            NamedTimeZone::CDT => "Central Daylight Time".into(),
-            NamedTimeZone::CST => "Central Standard Time".into(),
-            NamedTimeZone::EDT => "Eastern Daylight Time".into(),
-            NamedTimeZone::EST => "Eastern Standard Time".into(),
-            NamedTimeZone::ADT => "Atlantic Daylight Time".into(),
-            NamedTimeZone::AST => "Atlantic Standard Time".into(),
-            NamedTimeZone::NDT => "Newfoundland Daylight Time".into(),
-            NamedTimeZone::NST => "Newfoundland Standard Time".into(),
-            NamedTimeZone::ART => "Argentina Time".into(),
-            NamedTimeZone::FNT => "Fernando de Noronha Time".into(),
-            NamedTimeZone::AZOST => "Azores Summer Time".into(),
-            NamedTimeZone::AZOT => "Azores Standard Time".into(),
-            NamedTimeZone::GMT => "Greenwich Mean Time".into(),
-            NamedTimeZone::WEST => "Western European Summer Time".into(),
-            NamedTimeZone::WET => "Western European Time".into(),
-            NamedTimeZone::AFT => "Afghanistan Time".into(),
-            NamedTimeZone::GST => "Gulf Standard Time".into(),
-            NamedTimeZone::IRST => "Iran Standard Time".into(),
-            NamedTimeZone::PKT => "Pakistan Standard Time".into(),
-            NamedTimeZone::IST => "India Standard Time".into(),
-            NamedTimeZone::NPT => "Nepal Time".into(),
-            NamedTimeZone::BST => "Bangladesh Standard Time".into(),
-            NamedTimeZone::MMT => "Myanmar Time".into(),
-            NamedTimeZone::ICT => "Indochina Time".into(),
-            NamedTimeZone::SGT => "Singapore Time".into(),
-            NamedTimeZone::JST => "Japan Standard Time".into(),
-            NamedTimeZone::ACDT => "Australian Central Daylight Time".into(),
-            NamedTimeZone::ACST => "Australian Central Standard Time".into(),
-            NamedTimeZone::AEDT => "Australian Eastern Daylight Time".into(),
-            NamedTimeZone::AEST => "Australian Eastern Standard Time".into(),
-            NamedTimeZone::SBT => "Solomon Islands Time".into(),
-            NamedTimeZone::NZDT => "New Zealand Daylight Time".into(),
-            NamedTimeZone::NZST => "New Zealand Standard Time".into(),
-            NamedTimeZone::TOT => "Tonga Time".into(),
-            NamedTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
+            GeneralTimeZone::EEST => "Eastern European Summer Time".into(),
+            GeneralTimeZone::EET => "Eastern European Time".into(),
+            GeneralTimeZone::CEST => "Central European Summer Time".into(),
+            GeneralTimeZone::CET => "Central European Time".into(),
+            GeneralTimeZone::IDLW => "International Date Line West".into(),
+            GeneralTimeZone::SST => "Samoa Standard Time".into(),
+            GeneralTimeZone::HST => "Hawaii Standard Time".into(),
+            GeneralTimeZone::AKDT => "Alaska Daylight Time".into(),
+            GeneralTimeZone::AKST => "Alaska Standard Time".into(),
+            GeneralTimeZone::PDT => "Pacific Daylight Time".into(),
+            GeneralTimeZone::PST => "Pacific Standard Time".into(),
+            GeneralTimeZone::MDT => "Mountain Daylight Time".into(),
+            GeneralTimeZone::MST => "Mountain Standard Time".into(),
+            GeneralTimeZone::CDT => "Central Daylight Time".into(),
+            GeneralTimeZone::CST => "Central Standard Time".into(),
+            GeneralTimeZone::EDT => "Eastern Daylight Time".into(),
+            GeneralTimeZone::EST => "Eastern Standard Time".into(),
+            GeneralTimeZone::ADT => "Atlantic Daylight Time".into(),
+            GeneralTimeZone::AST => "Atlantic Standard Time".into(),
+            GeneralTimeZone::NDT => "Newfoundland Daylight Time".into(),
+            GeneralTimeZone::NST => "Newfoundland Standard Time".into(),
+            GeneralTimeZone::ART => "Argentina Time".into(),
+            GeneralTimeZone::FNT => "Fernando de Noronha Time".into(),
+            GeneralTimeZone::AZOST => "Azores Summer Time".into(),
+            GeneralTimeZone::AZOT => "Azores Standard Time".into(),
+            GeneralTimeZone::GMT => "Greenwich Mean Time".into(),
+            GeneralTimeZone::WEST => "Western European Summer Time".into(),
+            GeneralTimeZone::WET => "Western European Time".into(),
+            GeneralTimeZone::AFT => "Afghanistan Time".into(),
+            GeneralTimeZone::GST => "Gulf Standard Time".into(),
+            GeneralTimeZone::IRST => "Iran Standard Time".into(),
+            GeneralTimeZone::PKT => "Pakistan Standard Time".into(),
+            GeneralTimeZone::IST => "India Standard Time".into(),
+            GeneralTimeZone::NPT => "Nepal Time".into(),
+            GeneralTimeZone::BST => "Bangladesh Standard Time".into(),
+            GeneralTimeZone::MMT => "Myanmar Time".into(),
+            GeneralTimeZone::ICT => "Indochina Time".into(),
+            GeneralTimeZone::SGT => "Singapore Time".into(),
+            GeneralTimeZone::JST => "Japan Standard Time".into(),
+            GeneralTimeZone::ACDT => "Australian Central Daylight Time".into(),
+            GeneralTimeZone::ACST => "Australian Central Standard Time".into(),
+            GeneralTimeZone::AEDT => "Australian Eastern Daylight Time".into(),
+            GeneralTimeZone::AEST => "Australian Eastern Standard Time".into(),
+            GeneralTimeZone::SBT => "Solomon Islands Time".into(),
+            GeneralTimeZone::NZDT => "New Zealand Daylight Time".into(),
+            GeneralTimeZone::NZST => "New Zealand Standard Time".into(),
+            GeneralTimeZone::TOT => "Tonga Time".into(),
+            GeneralTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
         }
     }
 
     pub fn is_unknown(&self) -> bool {
-        matches!(self, NamedTimeZone::Unknown(_))
+        matches!(self, GeneralTimeZone::Unknown(_))
     }
 }
 
@@ -283,13 +283,13 @@ mod test {
         use rust_extensions::date_time::DateTimeAsMicroseconds;
 
         let dt = DateTimeAsMicroseconds::create(2025, 08, 10, 2, 0, 0, 0);
-        let time_zone = super::TimeZone::try_from_str("UTC+2:00").unwrap();
+        let time_zone = super::TimeZoneOffset::try_from_str("UTC+2:00").unwrap();
 
         let named_time_zone =
-            super::NamedTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);
+            super::GeneralTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);
 
         match named_time_zone {
-            super::NamedTimeZone::CEST => {}
+            super::GeneralTimeZone::CEST => {}
             _ => panic!("Expected CEST, got {:?}", named_time_zone),
         }
     }
@@ -299,13 +299,13 @@ mod test {
         use rust_extensions::date_time::DateTimeAsMicroseconds;
 
         let dt = DateTimeAsMicroseconds::create(2025, 02, 10, 2, 0, 0, 0);
-        let time_zone = super::TimeZone::try_from_str("UTC+1:00").unwrap();
+        let time_zone = super::TimeZoneOffset::try_from_str("UTC+1:00").unwrap();
 
         let named_time_zone =
-            super::NamedTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);
+            super::GeneralTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);
 
         match named_time_zone {
-            super::NamedTimeZone::CET => {}
+            super::GeneralTimeZone::CET => {}
             _ => panic!("Expected CET, got {:?}", named_time_zone),
         }
     }

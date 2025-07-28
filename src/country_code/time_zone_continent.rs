@@ -2,7 +2,7 @@ use rust_extensions::ShortString;
 
 use crate::country_code::CountryCode;
 #[cfg(feature = "time-zones")]
-use crate::time_zones::TimeZone;
+use crate::time_zones::TimeZoneOffset;
 
 const EUROPE_PREFIX: &str = "Europe/";
 const AFRICA_PREFIX: &str = "Africa/";
@@ -50,7 +50,7 @@ impl<'s> IanaTimeZone<'s> {
     }
 
     #[cfg(feature = "time-zones")]
-    pub fn get_fallback_timezone(time_zone: TimeZone) -> Self {
+    pub fn get_fallback_timezone(time_zone: TimeZoneOffset) -> Self {
         use crate::time_zones::*;
         let seconds = time_zone.as_seconds();
         match seconds {
@@ -90,7 +90,7 @@ impl<'s> IanaTimeZone<'s> {
     #[cfg(feature = "time-zones")]
     pub fn from_country_code(
         country_code: CountryCode,
-        time_zone: TimeZone,
+        time_zone: TimeZoneOffset,
         is_day_light_saving: bool,
     ) -> Option<Self> {
         match country_code {
@@ -403,7 +403,7 @@ impl<'s> IanaTimeZone<'s> {
 }
 
 #[cfg(feature = "time-zones")]
-fn get_rus_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
+fn get_rus_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_2 => IanaTimeZone::Europe("Kaliningrad").into(), // Kaliningrad
@@ -422,7 +422,7 @@ fn get_rus_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
 }
 
 fn get_us_time_zone(
-    time_zone: TimeZone,
+    time_zone: TimeZoneOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
@@ -450,7 +450,7 @@ fn get_us_time_zone(
 }
 
 fn get_canada_time_zone(
-    time_zone: TimeZone,
+    time_zone: TimeZoneOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
@@ -478,7 +478,7 @@ fn get_canada_time_zone(
 }
 
 fn get_australia_time_zone(
-    time_zone: TimeZone,
+    time_zone: TimeZoneOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
@@ -502,7 +502,7 @@ fn get_australia_time_zone(
     }
 }
 
-fn get_brazil_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
+fn get_brazil_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_MINUS_2 => Some(IanaTimeZone::America("Noronha")), // Fernando de Noronha
@@ -513,7 +513,7 @@ fn get_brazil_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     }
 }
 
-fn get_indonesia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
+fn get_indonesia_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia("Jakarta")), // Western Indonesia Time
@@ -523,7 +523,7 @@ fn get_indonesia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>>
     }
 }
 
-fn get_china_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
+fn get_china_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_8 => Some(IanaTimeZone::Asia("Shanghai")), // China Standard Time
@@ -533,7 +533,7 @@ fn get_china_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
 }
 
 fn get_mexico_time_zone(
-    time_zone: TimeZone,
+    time_zone: TimeZoneOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
@@ -557,7 +557,7 @@ fn get_mexico_time_zone(
 }
 
 fn get_chile_time_zone(
-    time_zone: TimeZone,
+    time_zone: TimeZoneOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
@@ -575,7 +575,7 @@ fn get_chile_time_zone(
     }
 }
 
-fn get_mongolia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
+fn get_mongolia_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia("Hovd")),
