@@ -4,20 +4,51 @@ use crate::country_code::CountryCode;
 #[cfg(feature = "time-zones")]
 use crate::time_zones::TimeZone;
 
-pub enum IanaTimeZone {
-    Europe(&'static str),
-    Africa(&'static str),
-    Asia(&'static str),
-    America(&'static str),
-    Antarctica(&'static str),
-    Arctic(&'static str),
-    Atlantic(&'static str),
-    Australia(&'static str),
-    Indian(&'static str),
-    Pacific(&'static str),
+const EUROPE_PREFIX: &str = "Europe/";
+const AFRICA_PREFIX: &str = "Africa/";
+const ASIA_PREFIX: &str = "Asia/";
+const AMERICA_PREFIX: &str = "America/";
+const ANTARCTICA_PREFIX: &str = "Antarctica/";
+const ARCTIC_PREFIX: &str = "Arctic/";
+const ATLANTIC_PREFIX: &str = "Atlantic/";
+const AUSTRALIA_PREFIX: &str = "Australia/";
+const INDIAN_PREFIX: &str = "Indian/";
+const PACIFIC_PREFIX: &str = "Pacific/";
+
+pub enum IanaTimeZone<'s> {
+    Europe(&'s str),
+    Africa(&'s str),
+    Asia(&'s str),
+    America(&'s str),
+    Antarctica(&'s str),
+    Arctic(&'s str),
+    Atlantic(&'s str),
+    Australia(&'s str),
+    Indian(&'s str),
+    Pacific(&'s str),
 }
 
-impl IanaTimeZone {
+impl<'s> IanaTimeZone<'s> {
+    pub fn try_from_str(src: &'s str) -> Option<Self> {
+        let slash_index = src.find('/')?;
+
+        let (continent, country) = src.split_at(slash_index + 1);
+
+        match continent {
+            EUROPE_PREFIX => Some(IanaTimeZone::Europe(country)),
+            AFRICA_PREFIX => Some(IanaTimeZone::Africa(country)),
+            ASIA_PREFIX => Some(IanaTimeZone::Asia(country)),
+            AMERICA_PREFIX => Some(IanaTimeZone::America(country)),
+            ANTARCTICA_PREFIX => Some(IanaTimeZone::Antarctica(country)),
+            ARCTIC_PREFIX => Some(IanaTimeZone::Arctic(country)),
+            ATLANTIC_PREFIX => Some(IanaTimeZone::Atlantic(country)),
+            AUSTRALIA_PREFIX => Some(IanaTimeZone::Australia(country)),
+            INDIAN_PREFIX => Some(IanaTimeZone::Indian(country)),
+            PACIFIC_PREFIX => Some(IanaTimeZone::Pacific(country)),
+            _ => None,
+        }
+    }
+
     #[cfg(feature = "time-zones")]
     pub fn get_fallback_timezone(time_zone: TimeZone) -> Self {
         use crate::time_zones::*;
@@ -318,52 +349,52 @@ impl IanaTimeZone {
     pub fn as_str(&self) -> ShortString {
         match self {
             IanaTimeZone::Europe(country) => {
-                let mut result = ShortString::from_str("Europe/").unwrap();
+                let mut result = ShortString::from_str(EUROPE_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Africa(country) => {
-                let mut result = ShortString::from_str("Africa/").unwrap();
+                let mut result = ShortString::from_str(AFRICA_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Asia(country) => {
-                let mut result = ShortString::from_str("Asia/").unwrap();
+                let mut result = ShortString::from_str(ASIA_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::America(country) => {
-                let mut result = ShortString::from_str("America/").unwrap();
+                let mut result = ShortString::from_str(AMERICA_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Antarctica(country) => {
-                let mut result = ShortString::from_str("Antarctica/").unwrap();
+                let mut result = ShortString::from_str(ANTARCTICA_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Arctic(country) => {
-                let mut result = ShortString::from_str("Arctic/").unwrap();
+                let mut result = ShortString::from_str(ARCTIC_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Atlantic(country) => {
-                let mut result = ShortString::from_str("Atlantic/").unwrap();
+                let mut result = ShortString::from_str(ATLANTIC_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Australia(country) => {
-                let mut result = ShortString::from_str("Australia/").unwrap();
+                let mut result = ShortString::from_str(AUSTRALIA_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Indian(country) => {
-                let mut result = ShortString::from_str("Indian/").unwrap();
+                let mut result = ShortString::from_str(INDIAN_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
             IanaTimeZone::Pacific(country) => {
-                let mut result = ShortString::from_str("Pacific/").unwrap();
+                let mut result = ShortString::from_str(PACIFIC_PREFIX).unwrap();
                 result.push_str(country);
                 result
             }
@@ -372,7 +403,7 @@ impl IanaTimeZone {
 }
 
 #[cfg(feature = "time-zones")]
-fn get_rus_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
+fn get_rus_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_2 => IanaTimeZone::Europe("Kaliningrad").into(), // Kaliningrad
@@ -390,7 +421,10 @@ fn get_rus_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
     }
 }
 
-fn get_us_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_us_time_zone(
+    time_zone: TimeZone,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
@@ -415,7 +449,10 @@ fn get_us_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<Ia
     }
 }
 
-fn get_canada_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_canada_time_zone(
+    time_zone: TimeZone,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
@@ -440,7 +477,10 @@ fn get_canada_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Optio
     }
 }
 
-fn get_australia_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_australia_time_zone(
+    time_zone: TimeZone,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
@@ -462,7 +502,7 @@ fn get_australia_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Op
     }
 }
 
-fn get_brazil_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
+fn get_brazil_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_MINUS_2 => Some(IanaTimeZone::America("Noronha")), // Fernando de Noronha
@@ -473,7 +513,7 @@ fn get_brazil_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
     }
 }
 
-fn get_indonesia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
+fn get_indonesia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia("Jakarta")), // Western Indonesia Time
@@ -483,7 +523,7 @@ fn get_indonesia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
     }
 }
 
-fn get_china_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
+fn get_china_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_8 => Some(IanaTimeZone::Asia("Shanghai")), // China Standard Time
@@ -492,7 +532,10 @@ fn get_china_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
     }
 }
 
-fn get_mexico_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_mexico_time_zone(
+    time_zone: TimeZone,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
 
     if is_day_light_saving {
@@ -513,7 +556,10 @@ fn get_mexico_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Optio
     }
 }
 
-fn get_chile_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_chile_time_zone(
+    time_zone: TimeZone,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
@@ -529,11 +575,28 @@ fn get_chile_time_zone(time_zone: TimeZone, is_day_light_saving: bool) -> Option
     }
 }
 
-fn get_mongolia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone> {
+fn get_mongolia_time_zone(time_zone: TimeZone) -> Option<IanaTimeZone<'static>> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia("Hovd")),
         UTC_8 => Some(IanaTimeZone::Asia("Ulaanbaatar")), // Ulaanbaatar Time
         _ => None,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test_from_str() {
+        use super::*;
+
+        let time_zone = IanaTimeZone::try_from_str("Asia/Dubai").unwrap();
+        match time_zone {
+            IanaTimeZone::Asia(country) => assert_eq!(country, "Dubai"),
+            _ => panic!("Expected Asia time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Asia/Dubai");
     }
 }
