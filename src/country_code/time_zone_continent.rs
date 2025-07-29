@@ -89,10 +89,11 @@ impl<'s> IanaTimeZone<'s> {
 
     #[cfg(feature = "time-zones")]
     pub fn from_country_code(
-        country_code: CountryCode,
+        country_code: crate::country_code::CountryCode,
         time_zone: TimeZoneOffset,
         is_day_light_saving: bool,
     ) -> Option<Self> {
+        use crate::country_code::CountryCode;
         match country_code {
             CountryCode::AFG => Self::Asia("Kabul").into(), // Afghanistan
             CountryCode::ALA => Self::Europe("Mariehamn").into(), // Åland Islands
