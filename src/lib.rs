@@ -14,3 +14,5 @@ pub mod markdown_segments;
 
 #[cfg(feature = "placeholders")]
 pub mod placeholders;
+
+pub mod user_agent;
