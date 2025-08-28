@@ -1,4 +1,5 @@
-use super::super::*;
+use crate::country_code::CountryCode;
+
 #[derive(Debug, Clone, Copy)]
 pub enum PhoneCountryCode {
     CountryCode(CountryCode),

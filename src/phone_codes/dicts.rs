@@ -1,4 +1,5 @@
-use super::super::*;
+use crate::country_code::CountryCode;
+
 use super::*;
 
 pub const USA_PREFIX: &str = "+1";

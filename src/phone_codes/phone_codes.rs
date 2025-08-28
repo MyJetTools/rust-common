@@ -1,6 +1,5 @@
-use crate::country_code::phone_codes::dicts::USA_PREFIX;
+use crate::{country_code::*, phone_codes::dicts::USA_PREFIX};
 
-use super::super::*;
 use super::*;
 use rust_extensions::ShortString;
 
@@ -241,6 +240,7 @@ fn format_number(number: &str) -> Option<ShortString> {
 
 #[cfg(test)]
 mod test {
+    use crate::country_code::CountryCode;
 
     #[test]
     fn test_bgr() {
@@ -264,7 +264,7 @@ mod test {
         assert!(result
             .country_code
             .unwrap_as_country_code()
-            .equals_to(super::CountryCode::RUS),);
+            .equals_to(CountryCode::RUS),);
         assert_eq!(result.phone_code, "+7");
 
         println!("Result: {}", result.as_str());
@@ -279,7 +279,7 @@ mod test {
         assert!(result
             .country_code
             .unwrap_as_country_code()
-            .equals_to(super::CountryCode::UKR),);
+            .equals_to(CountryCode::UKR),);
         assert_eq!(result.phone_code, "+380");
 
         println!("Result: {}", result.as_str());

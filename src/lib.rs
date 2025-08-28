@@ -16,3 +16,6 @@ pub mod markdown_segments;
 pub mod placeholders;
 
 pub mod user_agent;
+
+#[cfg(feature = "phone-code")]
+pub mod phone_codes;
