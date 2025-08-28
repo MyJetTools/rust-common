@@ -50,7 +50,6 @@ impl<'s> IanaTimeZone<'s> {
 
     #[cfg(feature = "time-zones")]
     pub fn get_fallback_timezone(time_zone: TimeZoneOffset) -> Self {
-        use crate::country_code::CountryCode;
         use crate::time_zones::*;
         let seconds = time_zone.as_seconds();
         match seconds {
@@ -292,6 +291,7 @@ impl<'s> IanaTimeZone<'s> {
             CountryCode::SAU => Self::Asia("Riyadh").into(),        // Saudi Arabia
             CountryCode::SEN => Self::Africa("Dakar").into(),       // Senegal
             CountryCode::SRB => Self::Europe("Belgrade").into(),    // Serbia
+            CountryCode::XKX => Self::Europe("Belgrade").into(),    // Kosovo
             CountryCode::SYC => Self::Indian("Mahe").into(),        // Seychelles
             CountryCode::SLE => Self::Africa("Freetown").into(),    // Sierra Leone
             CountryCode::SGP => Self::Asia("Singapore").into(),     // Singapore
