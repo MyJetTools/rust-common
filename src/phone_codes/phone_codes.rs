@@ -3,6 +3,10 @@ use crate::{country_code::*, phone_codes::dicts::USA_PREFIX};
 use super::*;
 use rust_extensions::ShortString;
 
+pub fn find_by_phone_number(number: &str) -> Option<PhoneNumber> {
+    PHONE_CODES.find_by_phone_number(number)
+}
+
 lazy_static::lazy_static! {
     pub static ref PHONE_CODES: PhoneCodes = PhoneCodes::new();
 }
@@ -55,7 +59,7 @@ impl PhoneCodes {
         }
     }
 
-    pub fn find_by_phone(&self, number: &str) -> Option<PhoneNumber> {
+    pub fn find_by_phone_number(&self, number: &str) -> Option<PhoneNumber> {
         if number.len() < 7 {
             return None;
         }
@@ -244,7 +248,9 @@ mod test {
 
     #[test]
     fn test_bgr() {
-        let result = super::PHONE_CODES.find_by_phone("+359896401234").unwrap();
+        let result = super::PHONE_CODES
+            .find_by_phone_number("+359896401234")
+            .unwrap();
 
         assert!(result
             .country_code
@@ -258,7 +264,7 @@ mod test {
     #[test]
     fn test_rus() {
         let result = super::PHONE_CODES
-            .find_by_phone("+7-495 974-35-81")
+            .find_by_phone_number("+7-495 974-35-81")
             .unwrap();
 
         assert!(result
@@ -273,7 +279,7 @@ mod test {
     #[test]
     fn test_ua() {
         let result = super::PHONE_CODES
-            .find_by_phone("+38 (048) 716-42-89 (176)")
+            .find_by_phone_number("+38 (048) 716-42-89 (176)")
             .unwrap();
 
         assert!(result
