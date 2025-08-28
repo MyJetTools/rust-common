@@ -1,6 +1,6 @@
-use std::collections::BTreeMap;
-
+#[cfg(feature = "time-zones")]
 use crate::country_code::IanaTimeZone;
+use std::collections::BTreeMap;
 
 use super::ErrorParsingCountryCode;
 
@@ -255,6 +255,7 @@ pub enum CountryCode {
     YEM,
     ZMB,
     ZWE,
+    XKX,
 }
 
 impl CountryCode {
@@ -276,9 +277,9 @@ impl CountryCode {
         })
     }
 
-    pub fn equals_to(&self, other: &CountryCode) -> bool {
+    pub fn equals_to(&self, other: CountryCode) -> bool {
         let src = *self as u16;
-        let dest = *other as u16;
+        let dest = other as u16;
         src == dest
     }
 
@@ -289,7 +290,7 @@ impl CountryCode {
 
     pub fn as_iso3_str(&self) -> &str {
         for (key, value) in COUNTRIES_ISO_3_CODES.iter() {
-            if self.equals_to(&value) {
+            if self.equals_to(*value) {
                 return key;
             }
         }
@@ -307,7 +308,7 @@ impl CountryCode {
 
     pub fn as_iso2_str(&self) -> &str {
         for (key, value) in COUNTRIES_ISO_2_CODES.iter() {
-            if self.equals_to(&value) {
+            if self.equals_to(*value) {
                 return key;
             }
         }
@@ -580,6 +581,7 @@ lazy_static::lazy_static! {
         m.insert("YEM", CountryCode::YEM);
         m.insert("ZMB", CountryCode::ZMB);
         m.insert("ZWE", CountryCode::ZWE);
+        m.insert("XKX", CountryCode::XKX);
 
 
         m
@@ -840,6 +842,7 @@ lazy_static::lazy_static! {
         m.insert("YE", CountryCode::YEM);
         m.insert("ZM", CountryCode::ZMB);
         m.insert("ZW", CountryCode::ZWE);
+        m.insert("XK", CountryCode::XKX);
 
         m
     };
@@ -873,7 +876,7 @@ mod test {
 
     fn find_iso_2_code(code: &CountryCode) -> bool {
         for code_2 in COUNTRIES_ISO_2_CODES.values() {
-            if code.equals_to(code_2) {
+            if code.equals_to(*code_2) {
                 return true;
             }
         }

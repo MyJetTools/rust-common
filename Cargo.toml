@@ -8,6 +8,7 @@ edition = "2021"
 [features]
 default = []
 country-code = ["dep:lazy_static"]
+phone-code = []
 time-zones = ["dep:lazy_static", "chrono", "chrono-tz"]
 validators = []
 fuzzy_data = []
