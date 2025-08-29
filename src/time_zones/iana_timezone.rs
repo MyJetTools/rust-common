@@ -15,6 +15,8 @@ const INDIAN_PREFIX: &str = "Indian/";
 const PACIFIC_PREFIX: &str = "Pacific/";
 
 use super::*;
+
+#[derive(Debug, Clone, Copy)]
 pub enum IanaTimeZone {
     Europe(IanaEurope),
     Africa(IanaAfrica),

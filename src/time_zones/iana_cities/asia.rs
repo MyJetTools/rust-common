@@ -77,6 +77,19 @@ pub enum IanaAsia {
     Kolkata,
     HoChiMinh,
     Yangon,
+    // Added missing timezones
+    Chongqing,
+    Harbin,
+    Kashgar,
+    UlanBator,
+    Barnaul,
+    Anadyr,
+    Famagusta,
+    Kuching,
+    Macau,
+    Oral,
+    Samarkand,
+    UstNera,
 }
 
 impl IanaAsia {
@@ -159,6 +172,17 @@ impl IanaAsia {
             "Phnom_Penh" => Some(Self::PhnomPenh),
             "Ho_Chi_Minh" => Some(Self::HoChiMinh),
             "Yangon" => Some(Self::Yangon),
+            "Chongqing" => Some(Self::Chongqing),
+            "Harbin" => Some(Self::Harbin),
+            "Kashgar" => Some(Self::Kashgar),
+            "UlanBator" => Some(Self::UlanBator),
+            "Barnaul" => Some(Self::Barnaul),
+            "Anadyr" => Some(Self::Anadyr),
+            "Famagusta" => Some(Self::Famagusta),
+            "Kuching" => Some(Self::Kuching),
+            "Oral" => Some(Self::Oral),
+            "Samarkand" => Some(Self::Samarkand),
+            "UstNera" => Some(Self::UstNera),
             _ => None,
         }
     }
@@ -242,6 +266,18 @@ impl IanaAsia {
             Self::PhnomPenh => "Phnom_Penh",
             Self::HoChiMinh => "Ho_Chi_Minh",
             Self::Yangon => "Yangon",
+            Self::Chongqing => "Chongqing",
+            Self::Harbin => "Harbin",
+            Self::Kashgar => "Kashgar",
+            Self::UlanBator => "UlanBator",
+            Self::Barnaul => "Barnaul",
+            Self::Anadyr => "Anadyr",
+            Self::Famagusta => "Famagusta",
+            Self::Kuching => "Kuching",
+            Self::Macau => "Macau",
+            Self::Oral => "Oral",
+            Self::Samarkand => "Samarkand",
+            Self::UstNera => "UstNera",
         }
     }
 }

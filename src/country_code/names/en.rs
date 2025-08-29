@@ -16,7 +16,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::AND, "Andorra");
         result.insert(CountryCode::AGO, "Angola");
         //result.insert(CountryCode::AIA, "Anguilla");
-        //result.insert(CountryCode::ATA, "Antarctica");
+        result.insert(CountryCode::ATA, "Antarctica");
         result.insert(CountryCode::ATG, "Antigua and Barbuda");
         result.insert(CountryCode::ABW, "Aruba");
         result.insert(CountryCode::AUS, "Australia");

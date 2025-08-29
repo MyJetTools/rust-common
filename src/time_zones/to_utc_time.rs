@@ -3,37 +3,27 @@ use core::panic;
 use rust_extensions::date_time::DateTimeAsMicroseconds;
 
 use crate::{
-    country_code::IANA_TO_COUNTRY_CODE,
-    time_zones::{IanaTimeZone, TimeZoneOffset},
+    country_code::CountryCode,
+    time_zones::{IanaTimeZone, TimeZone},
 };
 
 pub fn to_utc_time(
     mut local_time: DateTimeAsMicroseconds,
-    time_zone: &str,
+    time_zone: impl Into<TimeZone>,
 ) -> DateTimeAsMicroseconds {
-    let offset = if let Some(offset) = TimeZoneOffset::try_from_str(time_zone) {
-        offset.as_minutes() as i64
-    } else {
-        get_offset_from_iana(local_time, time_zone)
+    let time_zone: TimeZone = time_zone.into();
+    let offset = match time_zone {
+        TimeZone::UTC(offset) => offset.as_minutes(),
+        TimeZone::Iana(iana) => get_offset_from_iana(local_time, iana),
+        TimeZone::General(general) => general.get_offset_in_minutes(),
     };
 
-    local_time.add_minutes(-offset);
-
+    local_time.add_minutes(-offset as i64);
     local_time
 }
 
-fn get_offset_from_iana(local_time: DateTimeAsMicroseconds, time_zone: &str) -> i64 {
-    let iana_time_zone = IanaTimeZone::try_from_str(time_zone);
-
-    let Some(iana_time_zone) = iana_time_zone else {
-        panic!("Invalid iana time-zone: {}", time_zone);
-    };
-
-    let country_code = IANA_TO_COUNTRY_CODE.get(time_zone).cloned();
-
-    let Some(country_code) = country_code else {
-        panic!("Invalid time-zone: {}", time_zone);
-    };
+fn get_offset_from_iana(local_time: DateTimeAsMicroseconds, time_zone: IanaTimeZone) -> i32 {
+    let country_code: CountryCode = time_zone.into();
 
     let has_dst = match super::dst::DST.get(&country_code) {
         Some(value) => *value,
@@ -43,18 +33,18 @@ fn get_offset_from_iana(local_time: DateTimeAsMicroseconds, time_zone: &str) -> 
     };
 
     let offset = if !has_dst {
-        iana_time_zone.to_no_dst_offset_in_minutes()
+        time_zone.to_no_dst_offset_in_minutes()
     } else {
         let is_dst = super::is_day_saving_time(local_time, country_code);
 
         if is_dst {
-            iana_time_zone.to_dst_offset_in_minutes()
+            time_zone.to_dst_offset_in_minutes()
         } else {
-            iana_time_zone.to_no_dst_offset_in_minutes()
+            time_zone.to_no_dst_offset_in_minutes()
         }
     };
 
-    offset as i64
+    offset
 }
 
 #[cfg(test)]

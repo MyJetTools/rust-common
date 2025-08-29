@@ -74,6 +74,59 @@ pub enum GeneralTimeZone {
 }
 
 impl GeneralTimeZone {
+    pub fn try_from_str(src: &str) -> Option<Self> {
+        match src {
+            "EEST" => Some(Self::EEST),
+            "EET" => Some(Self::EET),
+            "CEST" => Some(Self::CEST),
+            "CET" => Some(Self::CET),
+            "IDLW" => Some(Self::IDLW),
+            "SST" => Some(Self::SST),
+            "HST" => Some(Self::HST),
+            "AKDT" => Some(Self::AKDT),
+            "AKST" => Some(Self::AKST),
+            "PDT" => Some(Self::PDT),
+            "PST" => Some(Self::PST),
+            "MDT" => Some(Self::MDT),
+            "MST" => Some(Self::MST),
+            "CDT" => Some(Self::CDT),
+            "CST" => Some(Self::CST),
+            "EDT" => Some(Self::EDT),
+            "EST" => Some(Self::EST),
+            "ADT" => Some(Self::ADT),
+            "AST" => Some(Self::AST),
+            "NDT" => Some(Self::NDT),
+            "NST" => Some(Self::NST),
+            "ART" => Some(Self::ART),
+            "FNT" => Some(Self::FNT),
+            "AZOST" => Some(Self::AZOST),
+            "AZOT" => Some(Self::AZOT),
+            "GMT" => Some(Self::GMT),
+            "WEST" => Some(Self::WEST),
+            "WET" => Some(Self::WET),
+            "AFT" => Some(Self::AFT),
+            "GST" => Some(Self::GST),
+            "IRST" => Some(Self::IRST),
+            "PKT" => Some(Self::PKT),
+            "IST" => Some(Self::IST),
+            "NPT" => Some(Self::NPT),
+            "BST" => Some(Self::BST),
+            "MMT" => Some(Self::MMT),
+            "ICT" => Some(Self::ICT),
+            "SGT" => Some(Self::SGT),
+            "JST" => Some(Self::JST),
+            "ACDT" => Some(Self::ACDT),
+            "ACST" => Some(Self::ACST),
+            "AEDT" => Some(Self::AEDT),
+            "AEST" => Some(Self::AEST),
+            "SBT" => Some(Self::SBT),
+            "NZDT" => Some(Self::NZDT),
+            "NZST" => Some(Self::NZST),
+            "TOT" => Some(Self::TOT),
+            _ => None,
+        }
+    }
+
     pub fn from_client_time(
         client_time: DateTimeAsMicroseconds,
         mut time_zone: TimeZoneOffset,
@@ -164,6 +217,63 @@ impl GeneralTimeZone {
         }
     }
 
+    pub fn get_offset_in_minutes(&self) -> i32 {
+        self.get_offset_in_seconds() / 60
+    }
+
+    pub fn get_offset_in_seconds(&self) -> i32 {
+        match self {
+            GeneralTimeZone::EEST => 10800,
+            GeneralTimeZone::EET => 7200,
+            GeneralTimeZone::CEST => 7200,
+            GeneralTimeZone::CET => 3600,
+            GeneralTimeZone::IDLW => -43200,
+            GeneralTimeZone::SST => -39600,
+            GeneralTimeZone::HST => -36000,
+            GeneralTimeZone::AKDT => -28800,
+            GeneralTimeZone::AKST => -32400,
+            GeneralTimeZone::PDT => -25200,
+            GeneralTimeZone::PST => -28800,
+            GeneralTimeZone::MDT => -21600,
+            GeneralTimeZone::MST => -25200,
+            GeneralTimeZone::CDT => -18000,
+            GeneralTimeZone::CST => -21600,
+            GeneralTimeZone::EDT => -14400,
+            GeneralTimeZone::EST => -18000,
+            GeneralTimeZone::ADT => -10800,
+            GeneralTimeZone::AST => -14400,
+            GeneralTimeZone::NDT => -9000,
+            GeneralTimeZone::NST => -12600,
+            GeneralTimeZone::ART => -10800,
+            GeneralTimeZone::FNT => -7200,
+            GeneralTimeZone::AZOST => 0,
+            GeneralTimeZone::AZOT => -3600,
+            GeneralTimeZone::GMT => 0,
+            GeneralTimeZone::WEST => 3600,
+            GeneralTimeZone::WET => 0,
+            GeneralTimeZone::AFT => 12600,
+            GeneralTimeZone::GST => 14400,
+            GeneralTimeZone::IRST => 16200,
+            GeneralTimeZone::PKT => 18000,
+            GeneralTimeZone::IST => 19800,
+            GeneralTimeZone::NPT => 20700,
+            GeneralTimeZone::BST => 21600,
+            GeneralTimeZone::MMT => 23400,
+            GeneralTimeZone::ICT => 25200,
+            GeneralTimeZone::SGT => 28800,
+            GeneralTimeZone::JST => 32400,
+            GeneralTimeZone::ACDT => 37800,
+            GeneralTimeZone::ACST => 34200,
+            GeneralTimeZone::AEDT => 39600,
+            GeneralTimeZone::AEST => 36000,
+            GeneralTimeZone::SBT => 46800,
+            GeneralTimeZone::NZDT => 46800,
+            GeneralTimeZone::NZST => 43200,
+            GeneralTimeZone::TOT => 46800,
+            GeneralTimeZone::Unknown(seconds) => *seconds,
+        }
+    }
+
     pub fn as_str(&self) -> StrOrString<'static> {
         match self {
             GeneralTimeZone::EEST => "EEST".into(),
@@ -213,7 +323,9 @@ impl GeneralTimeZone {
             GeneralTimeZone::NZDT => "NZDT".into(),
             GeneralTimeZone::NZST => "NZST".into(),
             GeneralTimeZone::TOT => "TOT".into(),
-            GeneralTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
+            GeneralTimeZone::Unknown(seconds) => {
+                super::utils::seconds_to_string(*seconds).to_string().into()
+            }
         }
     }
 
@@ -266,7 +378,9 @@ impl GeneralTimeZone {
             GeneralTimeZone::NZDT => "New Zealand Daylight Time".into(),
             GeneralTimeZone::NZST => "New Zealand Standard Time".into(),
             GeneralTimeZone::TOT => "Tonga Time".into(),
-            GeneralTimeZone::Unknown(seconds) => super::utils::seconds_to_string(*seconds).into(),
+            GeneralTimeZone::Unknown(seconds) => {
+                super::utils::seconds_to_string(*seconds).to_string().into()
+            }
         }
     }
 

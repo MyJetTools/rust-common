@@ -205,6 +205,18 @@ impl IanaTimeZone {
                 IanaAsia::Vientiane => 420,     // UTC+07:00, no DST
                 IanaAsia::HoChiMinh => 420,     // UTC+07:00, no DST
                 IanaAsia::Yangon => 420,        // UTC+07:00, no DST
+                IanaAsia::Chongqing => 480,     // UTC+08:00, no DST
+                IanaAsia::Harbin => 480,        // UTC+08:00, no DST
+                IanaAsia::Kashgar => 360,       // UTC+06:00, no DST
+                IanaAsia::UlanBator => 480,     // UTC+08:00, no DST
+                IanaAsia::Barnaul => 420,       // UTC+07:00, no DST
+                IanaAsia::Anadyr => 720,        // UTC+12:00, no DST
+                IanaAsia::Famagusta => 180,     // UTC+03:00, DST active
+                IanaAsia::Kuching => 480,       // UTC+08:00, no DST
+                IanaAsia::Macau => 480,         // UTC+08:00, no DST
+                IanaAsia::Oral => 300,          // UTC+05:00, no DST
+                IanaAsia::Samarkand => 300,     // UTC+05:00, no DST
+                IanaAsia::UstNera => 600,       // UTC+10:00, no DST
             },
             IanaTimeZone::America(city) => match city {
                 IanaAmerica::Adak => -540,
@@ -284,6 +296,17 @@ impl IanaTimeZone {
             },
             IanaTimeZone::Antarctica(city) => match city {
                 IanaAntarctica::McMurdo => 780,
+                IanaAntarctica::Palmer => -180,
+                IanaAntarctica::Rothera => -60,
+                IanaAntarctica::Syowa => 180,
+                IanaAntarctica::Troll => 0,
+                IanaAntarctica::Vostok => 360,
+                IanaAntarctica::SouthPole => 0,
+                IanaAntarctica::Casey => 600,
+                IanaAntarctica::Davis => 600,
+                IanaAntarctica::DumontDUrville => 600,
+                IanaAntarctica::Macquarie => 600,
+                IanaAntarctica::Mawson => 600,
             },
             IanaTimeZone::Arctic(city) => match city {
                 IanaArctic::Longyearbyen => 120,
@@ -297,12 +320,19 @@ impl IanaTimeZone {
                 IanaAtlantic::SouthGeorgia => -120,
                 IanaAtlantic::Stanley => -180,
                 IanaAtlantic::StHelena => 0,
+                IanaAtlantic::Canary => 0,
+                IanaAtlantic::Madeira => 0,
+                IanaAtlantic::Faroe => 0,
             },
             IanaTimeZone::Australia(city) => match city {
                 IanaAustralia::Adelaide => 630,
                 IanaAustralia::Brisbane => 600,
+                IanaAustralia::Darwin => 570,
                 IanaAustralia::Ecula => 525,
+                IanaAustralia::Hobart => 660,
+                IanaAustralia::Lindeman => 600,
                 IanaAustralia::LordHowe => 660,
+                IanaAustralia::Melbourne => 660,
                 IanaAustralia::Perth => 480,
                 IanaAustralia::Sydney => 660,
             },
