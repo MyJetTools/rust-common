@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = []
+default = ["time-zones"]
 country-code = ["dep:lazy_static"]
 phone-code = ["country-code"]
-time-zones = ["dep:lazy_static", "chrono", "chrono-tz"]
+time-zones = ["dep:lazy_static", "chrono", "chrono-tz", "country-code"]
 validators = []
 fuzzy_data = []
 placeholders = []

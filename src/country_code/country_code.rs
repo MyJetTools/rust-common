@@ -1,5 +1,3 @@
-#[cfg(feature = "time-zones")]
-use crate::country_code::IanaTimeZone;
 use std::collections::BTreeMap;
 
 use super::ErrorParsingCountryCode;
@@ -324,8 +322,8 @@ impl CountryCode {
         &'s self,
         time_zone: crate::time_zones::TimeZoneOffset,
         is_day_saving_time: bool,
-    ) -> Option<IanaTimeZone<'s>> {
-        IanaTimeZone::from_country_code(*self, time_zone, is_day_saving_time)
+    ) -> Option<crate::time_zones::IanaTimeZone> {
+        crate::time_zones::IanaTimeZone::from_country_code(*self, time_zone, is_day_saving_time)
     }
 }
 lazy_static::lazy_static! {

@@ -89,6 +89,10 @@ impl TimeZoneOffset {
         self.seconds
     }
 
+    pub fn as_minutes(&self) -> i32 {
+        self.seconds / 60
+    }
+
     pub fn get_day_saving_time(&self) -> bool {
         self.day_saving_time
     }

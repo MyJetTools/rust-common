@@ -4,5 +4,6 @@ pub use country_code::*;
 pub use error::ErrorParsingCountryCode;
 
 pub mod names;
-mod time_zone_continent;
-pub use time_zone_continent::*;
+
+mod iana_to_country;
+pub use iana_to_country::*;
