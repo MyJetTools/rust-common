@@ -12,7 +12,6 @@ mod to_utc_time;
 mod utils;
 pub use to_utc_time::*;
 mod dst;
-pub use dst::*;
 mod iana_cities;
 mod iana_timezone;
 pub use iana_cities::*;
