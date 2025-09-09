@@ -215,6 +215,7 @@ impl IanaTimeZone {
                 IanaAsia::Oral => 300,
                 IanaAsia::Samarkand => 300,
                 IanaAsia::UstNera => 600,
+                IanaAsia::Calcutta => 330, // UTC+5:30, no DST (same as Kolkata)
             },
             IanaTimeZone::America(city) => match city {
                 IanaAmerica::Adak => -600,

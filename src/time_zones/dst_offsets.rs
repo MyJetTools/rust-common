@@ -217,6 +217,7 @@ impl IanaTimeZone {
                 IanaAsia::Oral => 300,          // UTC+05:00, no DST
                 IanaAsia::Samarkand => 300,     // UTC+05:00, no DST
                 IanaAsia::UstNera => 600,       // UTC+10:00, no DST
+                IanaAsia::Calcutta => 330,      // UTC+5:30, no DST (same as Kolkata)
             },
             IanaTimeZone::America(city) => match city {
                 IanaAmerica::Adak => -540,
@@ -295,34 +296,34 @@ impl IanaTimeZone {
                 IanaAmerica::Panama => -300,
             },
             IanaTimeZone::Antarctica(city) => match city {
-                IanaAntarctica::McMurdo => 780,        // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
-                IanaAntarctica::Palmer => -180,        // UTC-03:00, no DST
-                IanaAntarctica::Rothera => -60,        // UTC-01:00, no DST
-                IanaAntarctica::Syowa => 180,          // UTC+03:00, no DST
-                IanaAntarctica::Troll => 0,            // UTC+00:00, no DST
-                IanaAntarctica::Vostok => 360,         // UTC+06:00, no DST
-                IanaAntarctica::SouthPole => 0,        // UTC+00:00, no DST
-                IanaAntarctica::Casey => 600,          // UTC+10:00, no DST
-                IanaAntarctica::Davis => 600,          // UTC+10:00, no DST
+                IanaAntarctica::McMurdo => 780, // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
+                IanaAntarctica::Palmer => -180, // UTC-03:00, no DST
+                IanaAntarctica::Rothera => -60, // UTC-01:00, no DST
+                IanaAntarctica::Syowa => 180,   // UTC+03:00, no DST
+                IanaAntarctica::Troll => 0,     // UTC+00:00, no DST
+                IanaAntarctica::Vostok => 360,  // UTC+06:00, no DST
+                IanaAntarctica::SouthPole => 0, // UTC+00:00, no DST
+                IanaAntarctica::Casey => 600,   // UTC+10:00, no DST
+                IanaAntarctica::Davis => 600,   // UTC+10:00, no DST
                 IanaAntarctica::DumontDUrville => 600, // UTC+10:00, no DST
-                IanaAntarctica::Macquarie => 600,      // UTC+10:00, no DST
-                IanaAntarctica::Mawson => 600,         // UTC+10:00, no DST
+                IanaAntarctica::Macquarie => 600, // UTC+10:00, no DST
+                IanaAntarctica::Mawson => 600,  // UTC+10:00, no DST
             },
             IanaTimeZone::Arctic(city) => match city {
                 IanaArctic::Longyearbyen => 120, // UTC+02:00, DST active (Mar 30–Oct 26, 2025)
             },
             IanaTimeZone::Atlantic(city) => match city {
-                IanaAtlantic::Azores => 0,      // UTC+00:00, DST active (Mar 30–Oct 26, 2025)
-                IanaAtlantic::Bermuda => -180,  // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAtlantic::Azores => 0, // UTC+00:00, DST active (Mar 30–Oct 26, 2025)
+                IanaAtlantic::Bermuda => -180, // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
                 IanaAtlantic::CapeVerde => -60, // UTC-01:00, no DST
-                IanaAtlantic::Faeroe => 60,     // UTC+01:00, DST active (Mar 30–Oct 26, 2025)
-                IanaAtlantic::Reykjavik => 0,   // UTC+00:00, no DST
+                IanaAtlantic::Faeroe => 60, // UTC+01:00, DST active (Mar 30–Oct 26, 2025)
+                IanaAtlantic::Reykjavik => 0, // UTC+00:00, no DST
                 IanaAtlantic::SouthGeorgia => -120, // UTC-02:00, no DST
-                IanaAtlantic::Stanley => -180,  // UTC-03:00, no DST
-                IanaAtlantic::StHelena => 0,    // UTC+00:00, no DST
-                IanaAtlantic::Canary => 0,      // UTC+00:00, no DST
-                IanaAtlantic::Madeira => 0,     // UTC+00:00, no DST
-                IanaAtlantic::Faroe => 0,       // UTC+00:00, no DST
+                IanaAtlantic::Stanley => -180, // UTC-03:00, no DST
+                IanaAtlantic::StHelena => 0, // UTC+00:00, no DST
+                IanaAtlantic::Canary => 0, // UTC+00:00, no DST
+                IanaAtlantic::Madeira => 0, // UTC+00:00, no DST
+                IanaAtlantic::Faroe => 0,  // UTC+00:00, no DST
             },
             IanaTimeZone::Australia(city) => match city {
                 IanaAustralia::Adelaide => 630, // UTC+10:30, DST active (Oct 5–Apr 6, 2025)
@@ -350,34 +351,34 @@ impl IanaTimeZone {
                 IanaIndian::Reunion => 240,      // UTC+04:00, no DST
             },
             IanaTimeZone::Pacific(city) => match city {
-                IanaPacific::Apia => 780,        // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
-                IanaPacific::Auckland => 780,    // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
-                IanaPacific::Baker => -720,      // UTC-12:00, no DST
-                IanaPacific::Efate => 660,       // UTC+11:00, no DST
-                IanaPacific::Fakaofo => 780,     // UTC+13:00, no DST
-                IanaPacific::Fiji => 720,        // UTC+12:00, no DST
-                IanaPacific::Funafuti => 720,    // UTC+12:00, no DST
-                IanaPacific::Guam => 600,        // UTC+10:00, no DST
+                IanaPacific::Apia => 780,     // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
+                IanaPacific::Auckland => 780, // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
+                IanaPacific::Baker => -720,   // UTC-12:00, no DST
+                IanaPacific::Efate => 660,    // UTC+11:00, no DST
+                IanaPacific::Fakaofo => 780,  // UTC+13:00, no DST
+                IanaPacific::Fiji => 720,     // UTC+12:00, no DST
+                IanaPacific::Funafuti => 720, // UTC+12:00, no DST
+                IanaPacific::Guam => 600,     // UTC+10:00, no DST
                 IanaPacific::Guadalcanal => 660, // UTC+11:00, no DST
-                IanaPacific::Honolulu => -600,   // UTC-10:00, no DST
-                IanaPacific::Kiritimati => 840,  // UTC+14:00, no DST
-                IanaPacific::Majuro => 720,      // UTC+12:00, no DST
-                IanaPacific::Midway => -660,     // UTC-11:00, no DST
-                IanaPacific::Nauru => 720,       // UTC+12:00, no DST
-                IanaPacific::Niue => -660,       // UTC-11:00, no DST
-                IanaPacific::Norfolk => 660,     // UTC+11:00, no DST
-                IanaPacific::Noumea => 660,      // UTC+11:00, no DST
-                IanaPacific::Palau => 540,       // UTC+09:00, no DST
-                IanaPacific::Pitcairn => -480,   // UTC-08:00, no DST
-                IanaPacific::Pohnpei => 660,     // UTC+11:00, no DST
+                IanaPacific::Honolulu => -600, // UTC-10:00, no DST
+                IanaPacific::Kiritimati => 840, // UTC+14:00, no DST
+                IanaPacific::Majuro => 720,   // UTC+12:00, no DST
+                IanaPacific::Midway => -660,  // UTC-11:00, no DST
+                IanaPacific::Nauru => 720,    // UTC+12:00, no DST
+                IanaPacific::Niue => -660,    // UTC-11:00, no DST
+                IanaPacific::Norfolk => 660,  // UTC+11:00, no DST
+                IanaPacific::Noumea => 660,   // UTC+11:00, no DST
+                IanaPacific::Palau => 540,    // UTC+09:00, no DST
+                IanaPacific::Pitcairn => -480, // UTC-08:00, no DST
+                IanaPacific::Pohnpei => 660,  // UTC+11:00, no DST
                 IanaPacific::PortMoresby => 600, // UTC+10:00, no DST
-                IanaPacific::Rarotonga => -600,  // UTC-10:00, no DST
-                IanaPacific::Saipan => 600,      // UTC+10:00, no DST
-                IanaPacific::Tahiti => -600,     // UTC-10:00, no DST
-                IanaPacific::Tarawa => 720,      // UTC+12:00, no DST
-                IanaPacific::Tongatapu => 780,   // UTC+13:00, no DST
-                IanaPacific::Wallis => 720,      // UTC+12:00, no DST
-                IanaPacific::PagoPago => -660,   // UTC-11:00, no DST
+                IanaPacific::Rarotonga => -600, // UTC-10:00, no DST
+                IanaPacific::Saipan => 600,   // UTC+10:00, no DST
+                IanaPacific::Tahiti => -600,  // UTC-10:00, no DST
+                IanaPacific::Tarawa => 720,   // UTC+12:00, no DST
+                IanaPacific::Tongatapu => 780, // UTC+13:00, no DST
+                IanaPacific::Wallis => 720,   // UTC+12:00, no DST
+                IanaPacific::PagoPago => -660, // UTC-11:00, no DST
             },
         };
 

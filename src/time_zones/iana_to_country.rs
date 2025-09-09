@@ -254,6 +254,7 @@ impl Into<IanaCountry> for IanaTimeZone {
                 IanaAsia::Harbin => CountryCode::CHN,
                 IanaAsia::Kashgar => CountryCode::CHN,
                 IanaAsia::UlanBator => CountryCode::MNG,
+                IanaAsia::Calcutta => CountryCode::IND,
             }
             .into(),
             IanaTimeZone::Atlantic(country) => match country {

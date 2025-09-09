@@ -1,6 +1,6 @@
 use rust_extensions::{date_time::DateTimeAsMicroseconds, StrOrString};
 
-use crate::{country_code::CountryCode, time_zones::TimeZoneOffset};
+use crate::{country_code::CountryCode, time_zones::TimeZoneGmtOffset};
 
 #[derive(Debug, Clone, Copy)]
 pub enum GeneralTimeZone {
@@ -129,7 +129,7 @@ impl GeneralTimeZone {
 
     pub fn from_client_time(
         client_time: DateTimeAsMicroseconds,
-        mut time_zone: TimeZoneOffset,
+        mut time_zone: TimeZoneGmtOffset,
         country_code: CountryCode,
     ) -> Self {
         let day_saving_time = super::is_summer_time::is_day_saving_time(client_time, country_code);
@@ -139,7 +139,7 @@ impl GeneralTimeZone {
         Self::create(time_zone, country_code)
     }
 
-    pub fn create(time_zone: TimeZoneOffset, country_code: CountryCode) -> Self {
+    pub fn create(time_zone: TimeZoneGmtOffset, country_code: CountryCode) -> Self {
         let seconds = time_zone.as_seconds();
         let is_day_saving_time = time_zone.get_day_saving_time();
         match (seconds, is_day_saving_time) {
@@ -397,7 +397,7 @@ mod test {
         use rust_extensions::date_time::DateTimeAsMicroseconds;
 
         let dt = DateTimeAsMicroseconds::create(2025, 08, 10, 2, 0, 0, 0);
-        let time_zone = super::TimeZoneOffset::try_from_str("UTC+2:00").unwrap();
+        let time_zone = super::TimeZoneGmtOffset::try_from_str("UTC+2:00").unwrap();
 
         let named_time_zone =
             super::GeneralTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);
@@ -413,7 +413,7 @@ mod test {
         use rust_extensions::date_time::DateTimeAsMicroseconds;
 
         let dt = DateTimeAsMicroseconds::create(2025, 02, 10, 2, 0, 0, 0);
-        let time_zone = super::TimeZoneOffset::try_from_str("UTC+1:00").unwrap();
+        let time_zone = super::TimeZoneGmtOffset::try_from_str("UTC+1:00").unwrap();
 
         let named_time_zone =
             super::GeneralTimeZone::from_client_time(dt, time_zone, super::CountryCode::DEU);

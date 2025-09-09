@@ -1,7 +1,7 @@
 use rust_extensions::ShortString;
 
 #[cfg(feature = "time-zones")]
-use crate::time_zones::TimeZoneOffset;
+use crate::time_zones::TimeZoneGmtOffset;
 
 const EUROPE_PREFIX: &str = "Europe/";
 const AFRICA_PREFIX: &str = "Africa/";
@@ -56,7 +56,7 @@ impl IanaTimeZone {
     }
 
     #[cfg(feature = "time-zones")]
-    pub fn get_fallback_timezone(time_zone: TimeZoneOffset) -> Self {
+    pub fn get_fallback_timezone(time_zone: TimeZoneGmtOffset) -> Self {
         use crate::time_zones::*;
         let seconds = time_zone.as_seconds();
         match seconds {
@@ -98,7 +98,7 @@ impl IanaTimeZone {
     #[cfg(feature = "time-zones")]
     pub fn from_country_code(
         country_code: crate::country_code::CountryCode,
-        time_zone: TimeZoneOffset,
+        time_zone: TimeZoneGmtOffset,
         is_day_light_saving: bool,
     ) -> Option<Self> {
         use crate::country_code::CountryCode;
@@ -415,7 +415,7 @@ impl IanaTimeZone {
 }
 
 #[cfg(feature = "time-zones")]
-fn get_rus_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
+fn get_rus_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_2 => Some(IanaTimeZone::Europe(IanaEurope::Kaliningrad)), // Kaliningrad
@@ -433,7 +433,10 @@ fn get_rus_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
     }
 }
 #[cfg(feature = "time-zones")]
-fn get_us_time_zone(time_zone: TimeZoneOffset, is_day_light_saving: bool) -> Option<IanaTimeZone> {
+fn get_us_time_zone(
+    time_zone: TimeZoneGmtOffset,
+    is_day_light_saving: bool,
+) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
@@ -459,7 +462,7 @@ fn get_us_time_zone(time_zone: TimeZoneOffset, is_day_light_saving: bool) -> Opt
 }
 #[cfg(feature = "time-zones")]
 fn get_canada_time_zone(
-    time_zone: TimeZoneOffset,
+    time_zone: TimeZoneGmtOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
@@ -487,7 +490,7 @@ fn get_canada_time_zone(
 }
 #[cfg(feature = "time-zones")]
 fn get_australia_time_zone(
-    time_zone: TimeZoneOffset,
+    time_zone: TimeZoneGmtOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
@@ -511,7 +514,7 @@ fn get_australia_time_zone(
     }
 }
 #[cfg(feature = "time-zones")]
-fn get_brazil_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
+fn get_brazil_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_MINUS_2 => Some(IanaTimeZone::America(IanaAmerica::Noronha)), // Fernando de Noronha
@@ -522,7 +525,7 @@ fn get_brazil_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
     }
 }
 #[cfg(feature = "time-zones")]
-fn get_indonesia_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
+fn get_indonesia_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia(IanaAsia::Jakarta)), // Western Indonesia Time
@@ -532,7 +535,7 @@ fn get_indonesia_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
     }
 }
 #[cfg(feature = "time-zones")]
-fn get_china_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
+fn get_china_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_8 => Some(IanaTimeZone::Asia(IanaAsia::Shanghai)), // China Standard Time
@@ -542,7 +545,7 @@ fn get_china_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
 }
 #[cfg(feature = "time-zones")]
 fn get_mexico_time_zone(
-    time_zone: TimeZoneOffset,
+    time_zone: TimeZoneGmtOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
@@ -566,7 +569,7 @@ fn get_mexico_time_zone(
 }
 #[cfg(feature = "time-zones")]
 fn get_chile_time_zone(
-    time_zone: TimeZoneOffset,
+    time_zone: TimeZoneGmtOffset,
     is_day_light_saving: bool,
 ) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
@@ -584,7 +587,7 @@ fn get_chile_time_zone(
     }
 }
 #[cfg(feature = "time-zones")]
-fn get_mongolia_time_zone(time_zone: TimeZoneOffset) -> Option<IanaTimeZone> {
+fn get_mongolia_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
     match time_zone.as_seconds() {
         UTC_7 => Some(IanaTimeZone::Asia(IanaAsia::Hovd)),

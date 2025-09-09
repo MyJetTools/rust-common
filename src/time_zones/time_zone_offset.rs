@@ -1,10 +1,10 @@
 #[derive(Debug, Clone, Copy)]
-pub struct TimeZoneOffset {
+pub struct TimeZoneGmtOffset {
     seconds: i32,
     day_saving_time: bool,
 }
 
-impl TimeZoneOffset {
+impl TimeZoneGmtOffset {
     pub fn try_from_str(src: &str) -> Option<Self> {
         let src = if src.starts_with("UTC") {
             &src[3..]
@@ -97,11 +97,11 @@ fn parse_h_m(src: &str) -> Option<(i32, i32)> {
 
 #[cfg(test)]
 mod tests {
-    use crate::time_zones::TimeZoneOffset;
+    use crate::time_zones::TimeZoneGmtOffset;
 
     #[test]
     fn parse_positive_tz() {
-        let tz = TimeZoneOffset::try_from_str("+2:00").unwrap();
+        let tz = TimeZoneGmtOffset::try_from_str("+2:00").unwrap();
         assert_eq!(tz.as_seconds(), 7200);
 
         assert_eq!("UTC+2:00", tz.to_string());
@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn parse_negative_tz() {
-        let tz = TimeZoneOffset::try_from_str("-2:00").unwrap();
+        let tz = TimeZoneGmtOffset::try_from_str("-2:00").unwrap();
         assert_eq!(tz.as_seconds(), -7200);
 
         assert_eq!("UTC-2:00", tz.to_string());
@@ -117,7 +117,7 @@ mod tests {
 
     #[test]
     fn parse_zero_tz() {
-        let tz = TimeZoneOffset::try_from_str("0:00").unwrap();
+        let tz = TimeZoneGmtOffset::try_from_str("0:00").unwrap();
         assert_eq!(tz.as_seconds(), 0);
         assert_eq!("UTC 0:00", tz.to_string());
     }

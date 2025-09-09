@@ -40,7 +40,7 @@ pub const UTC_MINUS_12: i32 = -UTC_12;
 
 #[derive(Debug, Clone, Copy)]
 pub enum TimeZone {
-    UTC(super::TimeZoneOffset),
+    UTC(super::TimeZoneGmtOffset),
     Iana(super::IanaTimeZone),
     General(super::GeneralTimeZone),
 }
@@ -61,7 +61,7 @@ impl TimeZone {
             return Self::General(general);
         }
 
-        Self::UTC(super::TimeZoneOffset::try_from_str(src).unwrap())
+        Self::UTC(super::TimeZoneGmtOffset::try_from_str(src).unwrap())
     }
 
     pub fn as_str(&self) -> StrOrString<'static> {
