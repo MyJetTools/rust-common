@@ -21,3 +21,5 @@ pub mod no_dst_offsets;
 mod time_zone_offset;
 pub use time_zone_offset::*;
 pub mod iana_to_country;
+#[cfg(test)]
+mod test_all_time_zones_summer;

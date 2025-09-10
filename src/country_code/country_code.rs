@@ -286,7 +286,7 @@ impl CountryCode {
         self.as_iso3_str()
     }
 
-    pub fn as_iso3_str(&self) -> &str {
+    pub fn as_iso3_str(&self) -> &'static str {
         for (key, value) in COUNTRIES_ISO_3_CODES.iter() {
             if self.equals_to(*value) {
                 return key;
