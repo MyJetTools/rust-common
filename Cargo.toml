@@ -13,6 +13,7 @@ time-zones = ["dep:lazy_static", "chrono", "chrono-tz", "country-code"]
 validators = []
 fuzzy_data = []
 placeholders = []
+markdown = []
 
 
 [dependencies]
