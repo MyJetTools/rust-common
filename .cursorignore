@@ -1,0 +1,18 @@
+# Ignore GitHub workflow files and folders
+.github/
+
+# Ignore build artifacts
+target/
+Cargo.lock
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.temp

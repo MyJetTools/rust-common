@@ -6,6 +6,7 @@ pub enum IanaAfrica {
     Algiers,
     Antananarivo,
     Asmara,
+    Asmera,
     Bamako,
     Bangui,
     Banjul,
@@ -55,6 +56,7 @@ pub enum IanaAfrica {
     Ouagadougou,
     Tripoli,
     Tunis,
+    Timbuktu,
     Windhoek,
 }
 
@@ -117,6 +119,8 @@ impl IanaAfrica {
             "Tunis" => Some(Self::Tunis),
             "Windhoek" => Some(Self::Windhoek),
             "Ouagadougou" => Some(Self::Ouagadougou),
+            "Asmera" => Some(Self::Asmera),
+            "Timbuktu" => Some(Self::Timbuktu),
             _ => None,
         }
     }
@@ -179,6 +183,8 @@ impl IanaAfrica {
             IanaAfrica::Tripoli => "Tripoli",
             IanaAfrica::Tunis => "Tunis",
             IanaAfrica::Windhoek => "Windhoek",
+            IanaAfrica::Asmera => "Asmera",
+            IanaAfrica::Timbuktu => "Timbuktu",
         }
     }
 }

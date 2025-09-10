@@ -1,6 +1,7 @@
 use crate::time_zones::{
     IanaAfrica, IanaAmerica, IanaAntarctica, IanaArctic, IanaAsia, IanaAtlantic, IanaAustralia,
-    IanaEurope, IanaIndian, IanaPacific, IanaTimeZone,
+    IanaBrazil, IanaCanada, IanaChile, IanaEurope, IanaIndian, IanaMexico, IanaPacific,
+    IanaTimeZone, IanaUS,
 };
 
 impl IanaTimeZone {
@@ -68,6 +69,10 @@ impl IanaTimeZone {
                 IanaEurope::Zagreb => 120,    // UTC+02:00, DST active (Mar 30–Oct 26, 2025)
                 IanaEurope::Zurich => 120,    // UTC+02:00, DST active (Mar 30–Oct 26, 2025)
                 IanaEurope::Nicosia => 180,   // UTC+03:00, DST active (Mar 30–Oct 26, 2025)
+                IanaEurope::Belfast => 60,    // UTC+01:00, DST active (Mar 30–Oct 26, 2025)
+                IanaEurope::Tiraspol => 180,  // UTC+03:00, DST active (Mar 30–Oct 26, 2025)
+                IanaEurope::Uzhgorod => 180,  // UTC+03:00, DST active (Mar 30–Oct 26, 2025)
+                IanaEurope::Zaporozhye => 180, // UTC+03:00, DST active (Mar 30–Oct 26, 2025)
             },
             IanaTimeZone::Africa(city) => match city {
                 IanaAfrica::Abidjan => 0,
@@ -126,6 +131,8 @@ impl IanaTimeZone {
                 IanaAfrica::Mamoudzou => 180,
                 IanaAfrica::PortLouis => 240,
                 IanaAfrica::Ouagadougou => 0,
+                IanaAfrica::Asmera => 0,
+                IanaAfrica::Timbuktu => 0,
             },
             IanaTimeZone::Asia(city) => match city {
                 IanaAsia::Aden => 180,
@@ -218,6 +225,15 @@ impl IanaTimeZone {
                 IanaAsia::Samarkand => 300,     // UTC+05:00, no DST
                 IanaAsia::UstNera => 600,       // UTC+10:00, no DST
                 IanaAsia::Calcutta => 330,      // UTC+5:30, no DST (same as Kolkata)
+                IanaAsia::Chungking => 480,     // UTC+08:00, no DST
+                IanaAsia::Dacca => 360,         // UTC+06:00, no DST
+                IanaAsia::Istanbul => 180,      // UTC+03:00, no DST
+                IanaAsia::TelAviv => 120,       // UTC+02:00, no DST
+                IanaAsia::UjungPandang => 480,  // UTC+08:00, no DST
+                IanaAsia::Katmandu => 345,      // UTC+05:45, no DST
+                IanaAsia::Thimbu => 360,        // UTC+06:00, no DST
+                IanaAsia::Rangoon => 390,       // UTC+06:30, no DST
+                IanaAsia::Saigon => 420,        // UTC+07:00, no DST
             },
             IanaTimeZone::America(city) => match city {
                 IanaAmerica::Adak => -540,
@@ -294,6 +310,81 @@ impl IanaTimeZone {
                 IanaAmerica::Montserrat => -240,
                 IanaAmerica::Noronha => -120,
                 IanaAmerica::Panama => -300,
+                IanaAmerica::Araguaina => -180,
+                IanaAmerica::Atikokan => -300,
+                IanaAmerica::Atka => -600,
+                IanaAmerica::Bahia => -180,
+                IanaAmerica::BahiaBanderas => -360,
+                IanaAmerica::Belem => -180,
+                IanaAmerica::BlancSablon => -240,
+                IanaAmerica::BoaVista => -240,
+                IanaAmerica::BuenosAires => -180,
+                IanaAmerica::CambridgeBay => -420,
+                IanaAmerica::CampoGrande => -240,
+                IanaAmerica::Catamarca => -180,
+                IanaAmerica::Chihuahua => -420,
+                IanaAmerica::CiudadJuarez => -420,
+                IanaAmerica::CoralHarbour => -300,
+                IanaAmerica::Coyhaique => -180,
+                IanaAmerica::Creston => -480,
+                IanaAmerica::Cuiaba => -240,
+                IanaAmerica::Cordoba => -180,
+                IanaAmerica::Boise => -420,
+                IanaAmerica::Danmarkshavn => 0,   // UTC+00:00, no DST
+                IanaAmerica::Dawson => -420,      // UTC-07:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::DawsonCreek => -420, // UTC-07:00, no DST
+                IanaAmerica::Detroit => -240,     // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Eirunepe => -300,    // UTC-05:00, no DST
+                IanaAmerica::Ensenada => -420,    // UTC-07:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::FortNelson => -420,  // UTC-07:00, no DST
+                IanaAmerica::FortWayne => -240,   // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Fortaleza => -180,   // UTC-03:00, no DST
+                IanaAmerica::Hermosillo => -420,  // UTC-07:00, no DST
+                IanaAmerica::GlaceBay => -180,    // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Godthab => -120,     // UTC-02:00, DST active (Mar 30–Oct 26, 2025)
+                IanaAmerica::GooseBay => -180,    // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Indiana(_) => -240,  // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Indianapolis => -240, // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Inuvik => -360,      // UTC-06:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Iqaluit => -240,     // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Juneau => -480,      // UTC-08:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Jujuy => -180,       // UTC-03:00, no DST
+                IanaAmerica::KnoxIN => -300,      // UTC-05:00, no DST
+                IanaAmerica::Louisville => -240,  // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Maceio => -180,      // UTC-03:00, no DST
+                IanaAmerica::Matamoros => -300,   // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Mendoza => -180,     // UTC-03:00, no DST
+                IanaAmerica::Menominee => -240,   // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Merida => -300,      // UTC-05:00, no DST
+                IanaAmerica::Metlakatla => -480,  // UTC-08:00, no DST
+                IanaAmerica::Moncton => -180,     // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Monterrey => -300,   // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Montreal => -240,    // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Nipigon => -240,     // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Nome => -480,        // UTC-08:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Ojinaga => -300,     // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Pangnirtung => -240, // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::PortoAcre => -300,   // UTC-05:00, no DST
+                IanaAmerica::PortoVelho => -240,  // UTC-04:00, no DST
+                IanaAmerica::RainyRiver => -300,  // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::RankinInlet => -300, // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Recife => -180,      // UTC-03:00, no DST
+                IanaAmerica::Resolute => -300,    // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Rosario => -180,     // UTC-03:00, no DST
+                IanaAmerica::SantaIsabel => -420, // UTC-07:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Santarem => -180,    // UTC-03:00, no DST
+                IanaAmerica::Scoresbysund => -120, // UTC-02:00, DST active (Mar 30–Oct 26, 2025)
+                IanaAmerica::Shiprock => -360,    // UTC-06:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Sitka => -480,       // UTC-08:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::SwiftCurrent => -360, // UTC-06:00, no DST
+                IanaAmerica::Thule => -120,       // UTC-02:00, DST active (Mar 30–Oct 26, 2025)
+                IanaAmerica::ThunderBay => -240,  // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Virgin => -240,      // UTC-04:00, no DST
+                IanaAmerica::Whitehorse => -420,  // UTC-07:00, no DST
+                IanaAmerica::Yakutat => -480,     // UTC-08:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::Yellowknife => -360, // UTC-06:00, no DST
+                IanaAmerica::Kentucky(_) => -300, // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaAmerica::NorthDakota(_) => -300, // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
             },
             IanaTimeZone::Antarctica(city) => match city {
                 IanaAntarctica::McMurdo => 780, // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
@@ -324,18 +415,31 @@ impl IanaTimeZone {
                 IanaAtlantic::Canary => 0, // UTC+00:00, no DST
                 IanaAtlantic::Madeira => 0, // UTC+00:00, no DST
                 IanaAtlantic::Faroe => 0,  // UTC+00:00, no DST
+                IanaAtlantic::JanMayen => 0, // UTC+00:00, no DST
             },
             IanaTimeZone::Australia(city) => match city {
                 IanaAustralia::Adelaide => 630, // UTC+10:30, DST active (Oct 5–Apr 6, 2025)
                 IanaAustralia::Brisbane => 600, // UTC+10:00, no DST
                 IanaAustralia::Darwin => 570,   // UTC+09:30, no DST
-                IanaAustralia::Ecula => 525,    // UTC+08:45, no DST
+                IanaAustralia::Eucla => 525,    // UTC+08:45, no DST
                 IanaAustralia::Hobart => 660,   // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
                 IanaAustralia::Lindeman => 600, // UTC+10:00, no DST
                 IanaAustralia::LordHowe => 660, // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
                 IanaAustralia::Melbourne => 660, // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
                 IanaAustralia::Perth => 480,    // UTC+08:00, no DST
                 IanaAustralia::Sydney => 660,   // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::BrokenHill => 630, // UTC+10:30, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::Canberra => 660, // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::Currie => 660,   // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::LHI => 660,      // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::North => 570,    // UTC+09:30, no DST
+                IanaAustralia::NSW => 660,      // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::Queensland => 600, // UTC+10:00, no DST
+                IanaAustralia::South => 630,    // UTC+10:30, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::Tasmania => 660, // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::Victoria => 660, // UTC+11:00, DST active (Oct 5–Apr 6, 2025)
+                IanaAustralia::West => 480,     // UTC+08:00, no DST
+                IanaAustralia::Yancowinna => 630, // UTC+10:30, DST active (Oct 5–Apr 6, 2025)
             },
             IanaTimeZone::Indian(city) => match city {
                 IanaIndian::Antananarivo => 180, // UTC+03:00, no DST
@@ -349,6 +453,12 @@ impl IanaTimeZone {
                 IanaIndian::Mauritius => 240,    // UTC+04:00, no DST
                 IanaIndian::Mayotte => 180,      // UTC+03:00, no DST
                 IanaIndian::Reunion => 240,      // UTC+04:00, no DST
+            },
+            IanaTimeZone::Brazil(city) => match city {
+                IanaBrazil::Acre => -300,      // UTC-05:00, no DST
+                IanaBrazil::DeNoronha => -120, // UTC-02:00, no DST
+                IanaBrazil::East => -180,      // UTC-03:00, no DST
+                IanaBrazil::West => -240,      // UTC-04:00, no DST
             },
             IanaTimeZone::Pacific(city) => match city {
                 IanaPacific::Apia => 780,     // UTC+13:00, DST active (Sep 28–Apr 5, 2025)
@@ -379,6 +489,55 @@ impl IanaTimeZone {
                 IanaPacific::Tongatapu => 780, // UTC+13:00, no DST
                 IanaPacific::Wallis => 720,   // UTC+12:00, no DST
                 IanaPacific::PagoPago => -660, // UTC-11:00, no DST
+                IanaPacific::Bougainville => 660, // UTC+11:00, no DST
+                IanaPacific::Chatham => 780,  // UTC+13:00, no DST
+                IanaPacific::Chuuk => 600,    // UTC+10:00, no DST
+                IanaPacific::Easter => -360,  // UTC-06:00, no DST
+                IanaPacific::Enderbury => 780, // UTC+13:00, no DST
+                IanaPacific::Galapagos => -360, // UTC-06:00, no DST
+                IanaPacific::Gambier => -540, // UTC-09:00, no DST
+                IanaPacific::Johnston => -600, // UTC-10:00, no DST
+                IanaPacific::Kanton => 780,   // UTC+13:00, no DST
+                IanaPacific::Kosrae => 660,   // UTC+11:00, no DST
+                IanaPacific::Kwajalein => 720, // UTC+12:00, no DST
+                IanaPacific::Marquesas => -570, // UTC-09:30, no DST
+                IanaPacific::Samoa => 780,    // UTC+13:00, no DST
+                IanaPacific::Truk => 600,     // UTC+10:00, no DST
+                IanaPacific::Wake => 720,     // UTC+12:00, no DST
+                IanaPacific::Yap => 600,      // UTC+10:00, no DST
+            },
+            IanaTimeZone::Canada(city) => match city {
+                IanaCanada::Atlantic => -180, // UTC-03:00, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Central => -300,  // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Eastern => -240,  // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Mountain => -360, // UTC-06:00, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Newfoundland => -150, // UTC-02:30, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Pacific => -420,  // UTC-07:00, DST active (Mar 9–Nov 2, 2025)
+                IanaCanada::Saskatchewan => -360, // UTC-06:00, no DST
+                IanaCanada::Yukon => -420,    // UTC-07:00, no DST
+            },
+            IanaTimeZone::Chile(city) => match city {
+                IanaChile::Continental => -180, // UTC-03:00, DST active (Sep 7–Apr 5, 2025)
+                IanaChile::EasterIsland => -300, // UTC-05:00, DST active (Sep 7–Apr 5, 2025)
+            },
+            IanaTimeZone::Mexico(city) => match city {
+                IanaMexico::BajaNorte => -420, // UTC-07:00, DST active (Apr 6–Oct 26, 2025)
+                IanaMexico::BajaSur => -420,   // UTC-07:00, DST active (Apr 6–Oct 26, 2025)
+                IanaMexico::General => -360,   // UTC-06:00, DST active (Apr 6–Oct 26, 2025)
+            },
+            IanaTimeZone::US(city) => match city {
+                IanaUS::Alaska => -480,        // UTC-08:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Aleutian => -540,      // UTC-09:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Arizona => -420,       // UTC-07:00, no DST
+                IanaUS::Central => -300,       // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::EastIndiana => -240,   // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Eastern => -240,       // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Hawaii => -600,        // UTC-10:00, no DST
+                IanaUS::IndianaStarke => -300, // UTC-05:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Michigan => -240,      // UTC-04:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Mountain => -360,      // UTC-06:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Pacific => -420,       // UTC-07:00, DST active (Mar 9–Nov 2, 2025)
+                IanaUS::Samoa => -660,         // UTC-11:00, no DST
             },
         };
 

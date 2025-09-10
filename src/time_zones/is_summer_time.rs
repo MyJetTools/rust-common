@@ -19,7 +19,8 @@ pub fn is_day_saving_time(dt: DateTimeAsMicroseconds, country_code: CountryCode)
         // Europe: Last Sunday in March to Last Sunday in October
         GBR | FRA | DEU | ESP | ITA | NLD | BEL | CHE | AUT | DNK | NOR | SWE | FIN | IRL | PRT
         | POL | CZE | HUN | SVK | SVN | EST | LVA | LTU | GRC | ROU | BGR | HRV | CYP | MLT
-        | LUX | ISL => {
+        | LUX | ISL | AND | SRB | MDA | GIB | GGY | IMN | JEY | UKR | ALA | MCO | MNE | SMR
+        | BIH | MKD | ALB | LIE | VAT => {
             let dst_start = last_weekday_of_month(dt_struct.year, 3, 0); // 0=Sunday
             let dst_end = last_weekday_of_month(dt_struct.year, 10, 0);
             (dt >= dst_start) && (dt < dst_end)

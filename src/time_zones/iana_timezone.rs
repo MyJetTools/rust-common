@@ -5,6 +5,11 @@ use crate::time_zones::TimeZoneGmtOffset;
 
 const EUROPE_PREFIX: &str = "Europe/";
 const AFRICA_PREFIX: &str = "Africa/";
+const BRAZIL_PREFIX: &str = "Brazil/";
+const CANADA_PREFIX: &str = "Canada/";
+const CHILE_PREFIX: &str = "Chile/";
+const MEXICO_PREFIX: &str = "Mexico/";
+const US_PREFIX: &str = "US/";
 const ASIA_PREFIX: &str = "Asia/";
 const AMERICA_PREFIX: &str = "America/";
 const ANTARCTICA_PREFIX: &str = "Antarctica/";
@@ -19,6 +24,11 @@ use super::*;
 #[derive(Debug, Clone, Copy)]
 pub enum IanaTimeZone {
     Europe(IanaEurope),
+    Brazil(IanaBrazil),
+    Canada(IanaCanada),
+    Chile(IanaChile),
+    Mexico(IanaMexico),
+    US(IanaUS),
     Africa(IanaAfrica),
     Asia(IanaAsia),
     America(IanaAmerica),
@@ -49,6 +59,11 @@ impl IanaTimeZone {
             AUSTRALIA_PREFIX => Some(IanaTimeZone::Australia(IanaAustralia::try_from_str(
                 country,
             )?)),
+            BRAZIL_PREFIX => Some(IanaTimeZone::Brazil(IanaBrazil::try_from_str(country)?)),
+            CANADA_PREFIX => Some(IanaTimeZone::Canada(IanaCanada::try_from_str(country)?)),
+            CHILE_PREFIX => Some(IanaTimeZone::Chile(IanaChile::try_from_str(country)?)),
+            MEXICO_PREFIX => Some(IanaTimeZone::Mexico(IanaMexico::try_from_str(country)?)),
+            US_PREFIX => Some(IanaTimeZone::US(IanaUS::try_from_str(country)?)),
             INDIAN_PREFIX => Some(IanaTimeZone::Indian(IanaIndian::try_from_str(country)?)),
             PACIFIC_PREFIX => Some(IanaTimeZone::Pacific(IanaPacific::try_from_str(country)?)),
             _ => None,
@@ -84,7 +99,7 @@ impl IanaTimeZone {
             UTC_6 => IanaTimeZone::Asia(IanaAsia::Dhaka),
             UTC_7 => IanaTimeZone::Asia(IanaAsia::Jakarta),
             UTC_8 => IanaTimeZone::Asia(IanaAsia::Shanghai),
-            UTC_8_45 => IanaTimeZone::Australia(IanaAustralia::Ecula),
+            UTC_8_45 => IanaTimeZone::Australia(IanaAustralia::Eucla),
             UTC_9 => IanaTimeZone::Asia(IanaAsia::Tokyo),
             UTC_10 => IanaTimeZone::Australia(IanaAustralia::Brisbane),
             UTC_11 => IanaTimeZone::Pacific(IanaPacific::Noumea),
@@ -400,6 +415,11 @@ impl IanaTimeZone {
                 result.push_str(country.as_str());
                 result
             }
+            IanaTimeZone::Brazil(country) => {
+                let mut result = ShortString::from_str(BRAZIL_PREFIX).unwrap();
+                result.push_str(country.as_str());
+                result
+            }
             IanaTimeZone::Indian(country) => {
                 let mut result = ShortString::from_str(INDIAN_PREFIX).unwrap();
                 result.push_str(country.as_str());
@@ -407,6 +427,26 @@ impl IanaTimeZone {
             }
             IanaTimeZone::Pacific(country) => {
                 let mut result = ShortString::from_str(PACIFIC_PREFIX).unwrap();
+                result.push_str(country.as_str());
+                result
+            }
+            IanaTimeZone::Canada(country) => {
+                let mut result = ShortString::from_str(CANADA_PREFIX).unwrap();
+                result.push_str(country.as_str());
+                result
+            }
+            IanaTimeZone::Chile(country) => {
+                let mut result = ShortString::from_str(CHILE_PREFIX).unwrap();
+                result.push_str(country.as_str());
+                result
+            }
+            IanaTimeZone::Mexico(country) => {
+                let mut result = ShortString::from_str(MEXICO_PREFIX).unwrap();
+                result.push_str(country.as_str());
+                result
+            }
+            IanaTimeZone::US(country) => {
+                let mut result = ShortString::from_str(US_PREFIX).unwrap();
                 result.push_str(country.as_str());
                 result
             }
@@ -497,7 +537,7 @@ fn get_australia_time_zone(
     if is_day_light_saving {
         match time_zone.as_seconds() {
             UTC_8 => Some(IanaTimeZone::Australia(IanaAustralia::Perth)), // No DST
-            UTC_8_45 => Some(IanaTimeZone::Australia(IanaAustralia::Ecula)), // No DST
+            UTC_8_45 => Some(IanaTimeZone::Australia(IanaAustralia::Eucla)), // No DST
             UTC_10_30 => Some(IanaTimeZone::Australia(IanaAustralia::Adelaide)),
             UTC_11 => Some(IanaTimeZone::Australia(IanaAustralia::Sydney)), //Lord_Howe as well
             _ => None,
@@ -505,7 +545,7 @@ fn get_australia_time_zone(
     } else {
         match time_zone.as_seconds() {
             UTC_8 => Some(IanaTimeZone::Australia(IanaAustralia::Perth)), // No DST
-            UTC_8_45 => Some(IanaTimeZone::Australia(IanaAustralia::Ecula)), // No DST
+            UTC_8_45 => Some(IanaTimeZone::Australia(IanaAustralia::Eucla)), // No DST
             UTC_9_30 => Some(IanaTimeZone::Australia(IanaAustralia::Adelaide)),
             UTC_10 => Some(IanaTimeZone::Australia(IanaAustralia::Sydney)), // AEST (UTC+10)
             UTC_10_30 => Some(IanaTimeZone::Australia(IanaAustralia::LordHowe)), // LHST (UTC+10:30)
@@ -552,17 +592,14 @@ fn get_mexico_time_zone(
 
     if is_day_light_saving {
         match time_zone.as_seconds() {
-            UTC_MINUS_5 => Some(IanaTimeZone::America(IanaAmerica::Cancun)), // No DST
-            UTC_MINUS_6 => Some(IanaTimeZone::America(IanaAmerica::MexicoCity)), // No DST
-            UTC_MINUS_7 => Some(IanaTimeZone::America(IanaAmerica::Tijuana)),
+            UTC_MINUS_7 => Some(IanaTimeZone::Mexico(IanaMexico::BajaNorte)), // Baja Norte DST (UTC-7)
+            UTC_MINUS_6 => Some(IanaTimeZone::Mexico(IanaMexico::General)),   // General DST (UTC-6)
             _ => None,
         }
     } else {
         match time_zone.as_seconds() {
-            UTC_MINUS_5 => Some(IanaTimeZone::America(IanaAmerica::Cancun)), // No DST
-            UTC_MINUS_6 => Some(IanaTimeZone::America(IanaAmerica::MexicoCity)), // No DST
-            UTC_MINUS_7 => Some(IanaTimeZone::America(IanaAmerica::Mazatlan)),
-            UTC_MINUS_8 => Some(IanaTimeZone::America(IanaAmerica::Tijuana)),
+            UTC_MINUS_8 => Some(IanaTimeZone::Mexico(IanaMexico::BajaNorte)), // Baja Norte Standard Time (UTC-8)
+            UTC_MINUS_7 => Some(IanaTimeZone::Mexico(IanaMexico::General)), // General Standard Time (UTC-7)
             _ => None,
         }
     }
@@ -575,13 +612,14 @@ fn get_chile_time_zone(
     use crate::time_zones::*;
     if is_day_light_saving {
         match time_zone.as_seconds() {
-            UTC_MINUS_3 => Some(IanaTimeZone::America(IanaAmerica::PuntaArenas)), // No DST
+            UTC_MINUS_3 => Some(IanaTimeZone::Chile(IanaChile::Continental)), // Chile Continental DST
+            UTC_MINUS_5 => Some(IanaTimeZone::Chile(IanaChile::EasterIsland)), // Easter Island DST
             _ => None,
         }
     } else {
         match time_zone.as_seconds() {
-            UTC_MINUS_3 => Some(IanaTimeZone::America(IanaAmerica::PuntaArenas)), // No DST
-            UTC_MINUS_4 => Some(IanaTimeZone::America(IanaAmerica::Santiago)), // Chile Standard Time
+            UTC_MINUS_3 => Some(IanaTimeZone::Chile(IanaChile::Continental)), // Chile Continental Standard Time
+            UTC_MINUS_6 => Some(IanaTimeZone::Chile(IanaChile::EasterIsland)), // Easter Island Standard Time
             _ => None,
         }
     }
@@ -610,5 +648,146 @@ mod tests {
         }
 
         assert_eq!(time_zone.as_str().as_str(), "Asia/Dubai");
+    }
+
+    #[test]
+    fn test_canada_timezone() {
+        use super::*;
+
+        let time_zone = IanaTimeZone::try_from_str("Canada/Eastern").unwrap();
+        match time_zone {
+            IanaTimeZone::Canada(country) => assert_eq!(country.as_str(), "Eastern"),
+            _ => panic!("Expected Canada time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Canada/Eastern");
+    }
+
+    #[test]
+    fn test_chile_timezone() {
+        use super::*;
+
+        let time_zone = IanaTimeZone::try_from_str("Chile/Continental").unwrap();
+        match time_zone {
+            IanaTimeZone::Chile(country) => assert_eq!(country.as_str(), "Continental"),
+            _ => panic!("Expected Chile time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Chile/Continental");
+
+        let time_zone = IanaTimeZone::try_from_str("Chile/EasterIsland").unwrap();
+        match time_zone {
+            IanaTimeZone::Chile(country) => assert_eq!(country.as_str(), "EasterIsland"),
+            _ => panic!("Expected Chile time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Chile/EasterIsland");
+    }
+
+    #[test]
+    fn test_mexico_timezone() {
+        use super::*;
+
+        let time_zone = IanaTimeZone::try_from_str("Mexico/General").unwrap();
+        match time_zone {
+            IanaTimeZone::Mexico(country) => assert_eq!(country.as_str(), "General"),
+            _ => panic!("Expected Mexico time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Mexico/General");
+
+        let time_zone = IanaTimeZone::try_from_str("Mexico/BajaNorte").unwrap();
+        match time_zone {
+            IanaTimeZone::Mexico(country) => assert_eq!(country.as_str(), "BajaNorte"),
+            _ => panic!("Expected Mexico time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Mexico/BajaNorte");
+
+        let time_zone = IanaTimeZone::try_from_str("Mexico/BajaSur").unwrap();
+        match time_zone {
+            IanaTimeZone::Mexico(country) => assert_eq!(country.as_str(), "BajaSur"),
+            _ => panic!("Expected Mexico time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "Mexico/BajaSur");
+    }
+
+    #[test]
+    fn test_us_timezone() {
+        use super::*;
+
+        let time_zone = IanaTimeZone::try_from_str("US/Eastern").unwrap();
+        match time_zone {
+            IanaTimeZone::US(country) => assert_eq!(country.as_str(), "Eastern"),
+            _ => panic!("Expected US time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "US/Eastern");
+
+        let time_zone = IanaTimeZone::try_from_str("US/Pacific").unwrap();
+        match time_zone {
+            IanaTimeZone::US(country) => assert_eq!(country.as_str(), "Pacific"),
+            _ => panic!("Expected US time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "US/Pacific");
+
+        let time_zone = IanaTimeZone::try_from_str("US/Hawaii").unwrap();
+        match time_zone {
+            IanaTimeZone::US(country) => assert_eq!(country.as_str(), "Hawaii"),
+            _ => panic!("Expected US time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "US/Hawaii");
+
+        let time_zone = IanaTimeZone::try_from_str("US/Arizona").unwrap();
+        match time_zone {
+            IanaTimeZone::US(country) => assert_eq!(country.as_str(), "Arizona"),
+            _ => panic!("Expected US time zone"),
+        }
+
+        assert_eq!(time_zone.as_str().as_str(), "US/Arizona");
+    }
+
+    #[test]
+    fn test_pacific_missing_cases() {
+        use super::*;
+
+        // Test some of the previously missing Pacific timezone cases
+        let time_zone = IanaTimeZone::try_from_str("Pacific/Apia").unwrap();
+        match time_zone {
+            IanaTimeZone::Pacific(country) => assert_eq!(country.as_str(), "Apia"),
+            _ => panic!("Expected Pacific time zone"),
+        }
+        assert_eq!(time_zone.as_str().as_str(), "Pacific/Apia");
+
+        let time_zone = IanaTimeZone::try_from_str("Pacific/Auckland").unwrap();
+        match time_zone {
+            IanaTimeZone::Pacific(country) => assert_eq!(country.as_str(), "Auckland"),
+            _ => panic!("Expected Pacific time zone"),
+        }
+        assert_eq!(time_zone.as_str().as_str(), "Pacific/Auckland");
+
+        let time_zone = IanaTimeZone::try_from_str("Pacific/Chatham").unwrap();
+        match time_zone {
+            IanaTimeZone::Pacific(country) => assert_eq!(country.as_str(), "Chatham"),
+            _ => panic!("Expected Pacific time zone"),
+        }
+        assert_eq!(time_zone.as_str().as_str(), "Pacific/Chatham");
+
+        let time_zone = IanaTimeZone::try_from_str("Pacific/Fiji").unwrap();
+        match time_zone {
+            IanaTimeZone::Pacific(country) => assert_eq!(country.as_str(), "Fiji"),
+            _ => panic!("Expected Pacific time zone"),
+        }
+        assert_eq!(time_zone.as_str().as_str(), "Pacific/Fiji");
+
+        let time_zone = IanaTimeZone::try_from_str("Pacific/Tongatapu").unwrap();
+        match time_zone {
+            IanaTimeZone::Pacific(country) => assert_eq!(country.as_str(), "Tongatapu"),
+            _ => panic!("Expected Pacific time zone"),
+        }
+        assert_eq!(time_zone.as_str().as_str(), "Pacific/Tongatapu");
     }
 }

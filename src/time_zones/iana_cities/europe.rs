@@ -5,6 +5,7 @@ pub enum IanaEurope {
     Astrakhan,
     Athens,
     Belgrade,
+    Belfast,
     Berlin,
     Bratislava,
     Brussels,
@@ -50,7 +51,9 @@ pub enum IanaEurope {
     Stockholm,
     Tallinn,
     Tirane,
+    Tiraspol,
     Ulyanovsk,
+    Uzhgorod,
     Vaduz,
     Vatican,
     Vienna,
@@ -58,6 +61,7 @@ pub enum IanaEurope {
     Volgograd,
     Warsaw,
     Zagreb,
+    Zaporozhye,
     Zurich,
 }
 
@@ -69,6 +73,7 @@ impl IanaEurope {
             "Astrakhan" => Some(Self::Astrakhan),
             "Athens" => Some(Self::Athens),
             "Belgrade" => Some(Self::Belgrade),
+            "Belfast" => Some(Self::Belfast),
             "Berlin" => Some(Self::Berlin),
             "Bratislava" => Some(Self::Bratislava),
             "Brussels" => Some(Self::Brussels),
@@ -87,6 +92,7 @@ impl IanaEurope {
             "Kaliningrad" => Some(Self::Kaliningrad),
             "Kirov" => Some(Self::Kirov),
             "Kyiv" => Some(Self::Kyiv),
+            "Kiev" => Some(Self::Kyiv),
             "Lisbon" => Some(Self::Lisbon),
             "Ljubljana" => Some(Self::Ljubljana),
             "London" => Some(Self::London),
@@ -123,6 +129,9 @@ impl IanaEurope {
             "Warsaw" => Some(Self::Warsaw),
             "Zagreb" => Some(Self::Zagreb),
             "Zurich" => Some(Self::Zurich),
+            "Tiraspol" => Some(Self::Tiraspol),
+            "Uzhgorod" => Some(Self::Uzhgorod),
+            "Zaporozhye" => Some(Self::Zaporozhye),
             _ => None,
         }
     }
@@ -134,6 +143,7 @@ impl IanaEurope {
             Self::Astrakhan => "Astrakhan",
             Self::Athens => "Athens",
             Self::Belgrade => "Belgrade",
+            Self::Belfast => "Belfast",
             Self::Berlin => "Berlin",
             Self::Bratislava => "Bratislava",
             Self::Brussels => "Brussels",
@@ -179,7 +189,9 @@ impl IanaEurope {
             Self::Stockholm => "Stockholm",
             Self::Tallinn => "Tallinn",
             Self::Tirane => "Tirane",
+            Self::Tiraspol => "Tiraspol",
             Self::Ulyanovsk => "Ulyanovsk",
+            Self::Uzhgorod => "Uzhgorod",
             Self::Vaduz => "Vaduz",
             Self::Vatican => "Vatican",
             Self::Vienna => "Vienna",
@@ -187,6 +199,7 @@ impl IanaEurope {
             Self::Volgograd => "Volgograd",
             Self::Warsaw => "Warsaw",
             Self::Zagreb => "Zagreb",
+            Self::Zaporozhye => "Zaporozhye",
             Self::Zurich => "Zurich",
         }
     }

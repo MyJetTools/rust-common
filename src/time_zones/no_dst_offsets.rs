@@ -1,4 +1,4 @@
-use crate::time_zones::IanaTimeZone;
+use crate::time_zones::{IanaCanada, IanaChile, IanaMexico, IanaTimeZone, IanaUS};
 
 use super::*;
 
@@ -66,6 +66,10 @@ impl IanaTimeZone {
                 IanaEurope::Zagreb => 60,
                 IanaEurope::Zurich => 60,
                 IanaEurope::Nicosia => 120,
+                IanaEurope::Belfast => 0,
+                IanaEurope::Tiraspol => 60,
+                IanaEurope::Uzhgorod => 60,
+                IanaEurope::Zaporozhye => 60,
             },
             IanaTimeZone::Africa(city) => match city {
                 IanaAfrica::Abidjan => 0,
@@ -124,6 +128,8 @@ impl IanaTimeZone {
                 IanaAfrica::Tunis => 60,
                 IanaAfrica::Windhoek => 120,
                 IanaAfrica::Ouagadougou => 0,
+                IanaAfrica::Asmera => 0,
+                IanaAfrica::Timbuktu => 0,
             },
             IanaTimeZone::Asia(city) => match city {
                 IanaAsia::Aden => 180,
@@ -216,6 +222,15 @@ impl IanaTimeZone {
                 IanaAsia::Samarkand => 300,
                 IanaAsia::UstNera => 600,
                 IanaAsia::Calcutta => 330, // UTC+5:30, no DST (same as Kolkata)
+                IanaAsia::Chungking => 480, // UTC+08:00, no DST
+                IanaAsia::Dacca => 360,    // UTC+06:00, no DST
+                IanaAsia::Istanbul => 180, // UTC+03:00, no DST
+                IanaAsia::TelAviv => 120,  // UTC+02:00, no DST
+                IanaAsia::UjungPandang => 480, // UTC+08:00, no DST
+                IanaAsia::Katmandu => 345, // UTC+05:45, no DST
+                IanaAsia::Thimbu => 360,   // UTC+06:00, no DST
+                IanaAsia::Rangoon => 390,  // UTC+06:30, no DST
+                IanaAsia::Saigon => 420,   // UTC+07:00, no DST
             },
             IanaTimeZone::America(city) => match city {
                 IanaAmerica::Adak => -600,
@@ -292,6 +307,81 @@ impl IanaTimeZone {
                 IanaAmerica::Winnipeg => -360,
                 IanaAmerica::LowerPrinces => -240,
                 IanaAmerica::Tijuana => -480,
+                IanaAmerica::Araguaina => -180,
+                IanaAmerica::Atikokan => -300,
+                IanaAmerica::Atka => -600,
+                IanaAmerica::Bahia => -180,
+                IanaAmerica::BahiaBanderas => -360,
+                IanaAmerica::Belem => -180,
+                IanaAmerica::BlancSablon => -240,
+                IanaAmerica::BoaVista => -240,
+                IanaAmerica::BuenosAires => -180,
+                IanaAmerica::CambridgeBay => -420,
+                IanaAmerica::CampoGrande => -240,
+                IanaAmerica::Catamarca => -180,
+                IanaAmerica::Chihuahua => -420,
+                IanaAmerica::CiudadJuarez => -420,
+                IanaAmerica::CoralHarbour => -300,
+                IanaAmerica::Coyhaique => -180,
+                IanaAmerica::Creston => -480,
+                IanaAmerica::Cuiaba => -240,
+                IanaAmerica::Cordoba => -180,
+                IanaAmerica::Boise => -420,
+                IanaAmerica::Danmarkshavn => 0,   // UTC+00:00, no DST
+                IanaAmerica::Dawson => -480,      // UTC-08:00, no DST
+                IanaAmerica::DawsonCreek => -420, // UTC-07:00, no DST
+                IanaAmerica::Detroit => -300,     // UTC-05:00, no DST
+                IanaAmerica::Eirunepe => -300,    // UTC-05:00, no DST
+                IanaAmerica::Ensenada => -480,    // UTC-08:00, no DST
+                IanaAmerica::FortNelson => -420,  // UTC-07:00, no DST
+                IanaAmerica::FortWayne => -300,   // UTC-05:00, no DST
+                IanaAmerica::Fortaleza => -180,   // UTC-03:00, no DST
+                IanaAmerica::Hermosillo => -420,  // UTC-07:00, no DST
+                IanaAmerica::GlaceBay => -240,    // UTC-04:00, no DST
+                IanaAmerica::Godthab => -180,     // UTC-03:00, no DST
+                IanaAmerica::GooseBay => -240,    // UTC-04:00, no DST
+                IanaAmerica::Indiana(_) => -300,  // UTC-05:00, no DST
+                IanaAmerica::Indianapolis => -300, // UTC-05:00, no DST
+                IanaAmerica::Inuvik => -420,      // UTC-07:00, no DST
+                IanaAmerica::Iqaluit => -300,     // UTC-05:00, no DST
+                IanaAmerica::Juneau => -540,      // UTC-09:00, no DST
+                IanaAmerica::Jujuy => -180,       // UTC-03:00, no DST
+                IanaAmerica::KnoxIN => -300,      // UTC-05:00, no DST
+                IanaAmerica::Louisville => -300,  // UTC-05:00, no DST
+                IanaAmerica::Maceio => -180,      // UTC-03:00, no DST
+                IanaAmerica::Matamoros => -360,   // UTC-06:00, no DST
+                IanaAmerica::Mendoza => -180,     // UTC-03:00, no DST
+                IanaAmerica::Menominee => -300,   // UTC-05:00, no DST
+                IanaAmerica::Merida => -300,      // UTC-05:00, no DST
+                IanaAmerica::Metlakatla => -540,  // UTC-09:00, no DST
+                IanaAmerica::Moncton => -240,     // UTC-04:00, no DST
+                IanaAmerica::Monterrey => -360,   // UTC-06:00, no DST
+                IanaAmerica::Montreal => -300,    // UTC-05:00, no DST
+                IanaAmerica::Nipigon => -300,     // UTC-05:00, no DST
+                IanaAmerica::Nome => -540,        // UTC-09:00, no DST
+                IanaAmerica::Ojinaga => -360,     // UTC-06:00, no DST
+                IanaAmerica::Pangnirtung => -300, // UTC-05:00, no DST
+                IanaAmerica::PortoAcre => -300,   // UTC-05:00, no DST
+                IanaAmerica::PortoVelho => -240,  // UTC-04:00, no DST
+                IanaAmerica::RainyRiver => -360,  // UTC-06:00, no DST
+                IanaAmerica::RankinInlet => -360, // UTC-06:00, no DST
+                IanaAmerica::Recife => -180,      // UTC-03:00, no DST
+                IanaAmerica::Resolute => -360,    // UTC-06:00, no DST
+                IanaAmerica::Rosario => -180,     // UTC-03:00, no DST
+                IanaAmerica::SantaIsabel => -480, // UTC-08:00, no DST
+                IanaAmerica::Santarem => -180,    // UTC-03:00, no DST
+                IanaAmerica::Scoresbysund => -180, // UTC-03:00, no DST
+                IanaAmerica::Shiprock => -420,    // UTC-07:00, no DST
+                IanaAmerica::Sitka => -540,       // UTC-09:00, no DST
+                IanaAmerica::SwiftCurrent => -360, // UTC-06:00, no DST
+                IanaAmerica::Thule => -180,       // UTC-03:00, no DST
+                IanaAmerica::ThunderBay => -300,  // UTC-05:00, no DST
+                IanaAmerica::Virgin => -240,      // UTC-04:00, no DST
+                IanaAmerica::Whitehorse => -420,  // UTC-07:00, no DST
+                IanaAmerica::Yakutat => -540,     // UTC-09:00, no DST
+                IanaAmerica::Yellowknife => -360, // UTC-06:00, no DST
+                IanaAmerica::Kentucky(_) => -360, // UTC-06:00, no DST
+                IanaAmerica::NorthDakota(_) => -360, // UTC-06:00, no DST
             },
             IanaTimeZone::Antarctica(city) => match city {
                 IanaAntarctica::McMurdo => 720,
@@ -322,18 +412,31 @@ impl IanaTimeZone {
                 IanaAtlantic::Canary => 0,
                 IanaAtlantic::Madeira => 0,
                 IanaAtlantic::Faroe => 0,
+                IanaAtlantic::JanMayen => 0, // UTC+00:00, no DST
             },
             IanaTimeZone::Australia(city) => match city {
                 IanaAustralia::Adelaide => 570,
                 IanaAustralia::Brisbane => 600,
                 IanaAustralia::Darwin => 570,
-                IanaAustralia::Ecula => 525,
+                IanaAustralia::Eucla => 525,
                 IanaAustralia::Hobart => 600,
                 IanaAustralia::Lindeman => 600,
                 IanaAustralia::LordHowe => 630,
                 IanaAustralia::Melbourne => 600,
                 IanaAustralia::Perth => 480,
                 IanaAustralia::Sydney => 600,
+                IanaAustralia::BrokenHill => 570,
+                IanaAustralia::Canberra => 600,
+                IanaAustralia::Currie => 600,
+                IanaAustralia::LHI => 600,
+                IanaAustralia::North => 570,
+                IanaAustralia::NSW => 600,
+                IanaAustralia::Queensland => 600,
+                IanaAustralia::South => 570,
+                IanaAustralia::Tasmania => 600,
+                IanaAustralia::Victoria => 600,
+                IanaAustralia::West => 480,
+                IanaAustralia::Yancowinna => 570,
             },
             IanaTimeZone::Indian(city) => match city {
                 IanaIndian::Antananarivo => 180,
@@ -347,6 +450,12 @@ impl IanaTimeZone {
                 IanaIndian::Mauritius => 240,
                 IanaIndian::Mayotte => 180,
                 IanaIndian::Reunion => 240,
+            },
+            IanaTimeZone::Brazil(city) => match city {
+                IanaBrazil::Acre => -300,      // UTC-05:00, no DST
+                IanaBrazil::DeNoronha => -120, // UTC-02:00, no DST
+                IanaBrazil::East => -180,      // UTC-03:00, no DST
+                IanaBrazil::West => -240,      // UTC-04:00, no DST
             },
             IanaTimeZone::Pacific(city) => match city {
                 IanaPacific::Apia => 780,
@@ -377,6 +486,60 @@ impl IanaTimeZone {
                 IanaPacific::Tongatapu => 780,
                 IanaPacific::Wallis => 720,
                 IanaPacific::PagoPago => -660,
+                IanaPacific::Bougainville => 660,
+                IanaPacific::Chatham => 780,
+                IanaPacific::Chuuk => 600,
+                IanaPacific::Easter => -360,
+                IanaPacific::Enderbury => 780,
+                IanaPacific::Galapagos => -360,
+                IanaPacific::Gambier => -540,
+                IanaPacific::Johnston => -600,
+                IanaPacific::Kanton => 780,
+
+                IanaPacific::Kosrae => 660,
+                IanaPacific::Kwajalein => 720,
+
+                IanaPacific::Marquesas => -570,
+
+                IanaPacific::Samoa => 780,
+
+                IanaPacific::Truk => 600,
+                IanaPacific::Wake => 720,
+
+                IanaPacific::Yap => 600,
+            },
+            IanaTimeZone::Canada(city) => match city {
+                IanaCanada::Atlantic => -240,     // UTC-04:00, no DST
+                IanaCanada::Central => -360,      // UTC-06:00, no DST
+                IanaCanada::Eastern => -300,      // UTC-05:00, no DST
+                IanaCanada::Mountain => -420,     // UTC-07:00, no DST
+                IanaCanada::Newfoundland => -210, // UTC-03:30, no DST
+                IanaCanada::Pacific => -480,      // UTC-08:00, no DST
+                IanaCanada::Saskatchewan => -360, // UTC-06:00, no DST
+                IanaCanada::Yukon => -420,        // UTC-07:00, no DST
+            },
+            IanaTimeZone::Chile(city) => match city {
+                IanaChile::Continental => -240,  // UTC-04:00, no DST
+                IanaChile::EasterIsland => -360, // UTC-06:00, no DST
+            },
+            IanaTimeZone::Mexico(city) => match city {
+                IanaMexico::BajaNorte => -480, // UTC-08:00, no DST
+                IanaMexico::BajaSur => -480,   // UTC-08:00, no DST
+                IanaMexico::General => -420,   // UTC-07:00, no DST
+            },
+            IanaTimeZone::US(city) => match city {
+                IanaUS::Alaska => -540,        // UTC-09:00, no DST
+                IanaUS::Aleutian => -600,      // UTC-10:00, no DST
+                IanaUS::Arizona => -420,       // UTC-07:00, no DST
+                IanaUS::Central => -360,       // UTC-06:00, no DST
+                IanaUS::EastIndiana => -300,   // UTC-05:00, no DST
+                IanaUS::Eastern => -300,       // UTC-05:00, no DST
+                IanaUS::Hawaii => -600,        // UTC-10:00, no DST
+                IanaUS::IndianaStarke => -360, // UTC-06:00, no DST
+                IanaUS::Michigan => -300,      // UTC-05:00, no DST
+                IanaUS::Mountain => -420,      // UTC-07:00, no DST
+                IanaUS::Pacific => -480,       // UTC-08:00, no DST
+                IanaUS::Samoa => -660,         // UTC-11:00, no DST
             },
         };
 

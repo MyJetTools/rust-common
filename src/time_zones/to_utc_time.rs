@@ -220,7 +220,7 @@ mod test {
     #[test]
     fn test_eucla_utc_plus8_45() {
         let local_time = DateTimeAsMicroseconds::from_str("2025-01-20T12:00:00").unwrap();
-        let utc_time = super::to_utc_time(local_time, "Australia/Ecula");
+        let utc_time = super::to_utc_time(local_time, "Australia/Eucla");
         assert_eq!(&utc_time.to_rfc3339()[..19], "2025-01-20T03:15:00");
     }
 

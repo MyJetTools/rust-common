@@ -28,6 +28,7 @@ pub fn create_country_code_nanp() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+1-721", CountryCode::SXM.into()),
         ("+1-649", CountryCode::TCA.into()),
         ("+1-340", CountryCode::VIR.into()),
+        ("+1-808", CountryCode::UMI.into()), // United States Minor Outlying Islands
     ]
 }
 
@@ -35,6 +36,7 @@ pub fn create_2_3() -> Vec<(&'static str, PhoneCountryCode)> {
     vec![
         ("+211", CountryCode::SSD.into()),
         ("+212", CountryCode::MAR.into()),
+        ("+212", CountryCode::ESH.into()), // Western Sahara (disputed territory, uses Morocco's code)
         ("+213", CountryCode::DZA.into()),
         ("+216", CountryCode::TUN.into()),
         ("+218", CountryCode::LBY.into()),
@@ -80,6 +82,7 @@ pub fn create_2_3() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+260", CountryCode::ZMB.into()),
         ("+261", CountryCode::MDG.into()),
         ("+262", CountryCode::REU.into()),
+        ("+262", CountryCode::ATF.into()), // French Southern Territories
         ("+263", CountryCode::ZWE.into()),
         ("+264", CountryCode::NAM.into()),
         ("+265", CountryCode::MWI.into()),
@@ -113,6 +116,7 @@ pub fn create_3_3() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+356", CountryCode::MLT.into()),
         ("+357", CountryCode::CYP.into()),
         ("+358", CountryCode::FIN.into()),
+        ("+358", CountryCode::ALA.into()), // Åland Islands
         ("+359", CountryCode::BGR.into()),
         ("+370", CountryCode::LTU.into()),
         ("+371", CountryCode::LVA.into()),
@@ -161,9 +165,13 @@ pub fn create_4_2() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+41", CountryCode::CHE.into()),
         ("+43", CountryCode::AUT.into()),
         ("+44", CountryCode::GBR.into()),
+        ("+44", CountryCode::GGY.into()), // Guernsey
+        ("+44", CountryCode::JEY.into()), // Jersey
+        ("+44", CountryCode::IMN.into()), // Isle of Man
         ("+45", CountryCode::DNK.into()),
         ("+46", CountryCode::SWE.into()),
         ("+47", CountryCode::NOR.into()),
+        ("+47", CountryCode::SJM.into()), // Svalbard and Jan Mayen
         ("+48", CountryCode::POL.into()),
         ("+49", CountryCode::DEU.into()),
     ]
@@ -172,6 +180,7 @@ pub fn create_4_2() -> Vec<(&'static str, PhoneCountryCode)> {
 pub fn create_5_3() -> Vec<(&'static str, PhoneCountryCode)> {
     vec![
         ("+500", CountryCode::FLK.into()),
+        ("+500", CountryCode::SGS.into()), // South Georgia and the South Sandwich Islands
         ("+501", CountryCode::BLZ.into()),
         ("+502", CountryCode::GTM.into()),
         ("+503", CountryCode::SLV.into()),
@@ -182,6 +191,8 @@ pub fn create_5_3() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+508", CountryCode::SPM.into()),
         ("+509", CountryCode::HTI.into()),
         ("+590", CountryCode::GLP.into()),
+        ("+590", CountryCode::MAF.into()), // Saint Martin
+        ("+590", CountryCode::BLM.into()), // Saint Barthélemy
         ("+591", CountryCode::BOL.into()),
         ("+592", CountryCode::GUY.into()),
         ("+593", CountryCode::ECU.into()),
@@ -191,6 +202,7 @@ pub fn create_5_3() -> Vec<(&'static str, PhoneCountryCode)> {
         ("+597", CountryCode::SUR.into()),
         ("+598", CountryCode::URY.into()),
         ("+599", CountryCode::CUW.into()),
+        ("+599", CountryCode::BES.into()), // Bonaire, Sint Eustatius and Saba
     ]
 }
 
@@ -237,9 +249,12 @@ pub fn create_6_2() -> Vec<(&'static str, PhoneCountryCode)> {
     vec![
         ("+60", CountryCode::MYS.into()),
         ("+61", CountryCode::AUS.into()),
+        ("+61", CountryCode::CXR.into()), // Christmas Island
+        ("+61", CountryCode::CCK.into()), // Cocos Islands
         ("+62", CountryCode::IDN.into()),
         ("+63", CountryCode::PHL.into()),
         ("+64", CountryCode::NZL.into()),
+        ("+64", CountryCode::PCN.into()), // Pitcairn Islands
         ("+65", CountryCode::SGP.into()),
         ("+66", CountryCode::THA.into()),
     ]
