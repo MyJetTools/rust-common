@@ -300,11 +300,11 @@ impl CountryCode {
     }
 
     #[deprecated(note = "please use `as_iso2_str` instead")]
-    pub fn to_string_as_iso2(&self) -> &str {
+    pub fn to_string_as_iso2(&self) -> &'static str {
         self.as_iso2_str()
     }
 
-    pub fn as_iso2_str(&self) -> &str {
+    pub fn as_iso2_str(&self) -> &'static str {
         for (key, value) in COUNTRIES_ISO_2_CODES.iter() {
             if self.equals_to(*value) {
                 return key;
@@ -315,6 +315,13 @@ impl CountryCode {
             "Somehow we can not find iso2 code for country code: {:?}",
             self
         );
+    }
+
+    pub fn as_country_name_en(&self) -> &'static str {
+        match super::names::EN_NAMES.get(self) {
+            Some(name) => name,
+            None => self.as_iso3_str(),
+        }
     }
 
     #[cfg(feature = "time-zones")]
