@@ -7,7 +7,7 @@ const WINDOWS: &'static str = "windows";
 const ANDROID: &'static str = "android";
 const LINUX: &'static str = "linux";
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub enum PlatformBrand {
     Apple,
     Windows,

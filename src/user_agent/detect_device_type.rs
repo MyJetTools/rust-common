@@ -5,7 +5,7 @@ use crate::user_agent::UserAgentString;
 const MOBILE: &'static str = "mobile";
 const TABLET: &'static str = "tablet";
 const DESKTOP: &'static str = "desktop";
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub enum DeviceType {
     Mobile,
     Tablet,
