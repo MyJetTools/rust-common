@@ -35,7 +35,6 @@ impl PlatformBrand {
         }
 
         if user_agent.as_str().contains("macintosh")
-            || user_agent.as_str().contains("apple")
             || user_agent.as_str().contains("mac os x")
             || user_agent.as_str().contains("iphone")
             || user_agent.as_str().contains("ipod")
