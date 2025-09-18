@@ -4,15 +4,25 @@ mod detect_platform_brand;
 pub use detect_platform_brand::*;
 mod detect_browser;
 pub use detect_browser::*;
+use rust_extensions::ShortString;
 
-pub struct UserAgentString(String);
+pub enum UserAgentString {
+    AsString(String),
+    AsShortString(ShortString),
+}
 
 impl UserAgentString {
     pub fn new(src: &str) -> Self {
-        Self(src.to_lowercase())
+        match ShortString::from_str_convert_to_lower_case(src) {
+            Some(value) => Self::AsShortString(value),
+            None => Self::AsString(src.to_lowercase()),
+        }
     }
     pub fn as_str(&self) -> &str {
-        self.0.as_str()
+        match self {
+            UserAgentString::AsString(value) => value.as_str(),
+            UserAgentString::AsShortString(value) => value.as_str(),
+        }
     }
 
     pub fn get_browser(&self) -> Option<Browser> {
