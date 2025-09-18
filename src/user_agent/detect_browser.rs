@@ -15,7 +15,7 @@ pub enum Browser {
     Edge,
 }
 impl Browser {
-    pub fn from_user_agent(src: &str) -> Self {
+    pub fn from_str(src: &str) -> Self {
         match src {
             OPERA => Self::Opera,
             CHROME => Self::Chrome,
@@ -37,7 +37,7 @@ impl Browser {
         }
     }
 
-    pub fn detect_from_user_agent(user_agent_lower_case: &str) -> Self {
+    pub fn from_user_agent(user_agent_lower_case: &str) -> Self {
         if user_agent_lower_case.contains("edg/") {
             return Self::Edge;
         }

@@ -1,4 +1,10 @@
 use serde::*;
+
+const APPLE: &'static str = "apple";
+const WINDOWS: &'static str = "windows";
+const ANDROID: &'static str = "android";
+const LINUX: &'static str = "linux";
+
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum PlatformBrand {
     Apple,
@@ -8,6 +14,15 @@ pub enum PlatformBrand {
 }
 
 impl PlatformBrand {
+    pub fn from_str(src: &str) -> Option<Self> {
+        match src {
+            APPLE => Self::Apple.into(),
+            WINDOWS => Self::Windows.into(),
+            ANDROID => Self::Android.into(),
+            LINUX => Self::Linux.into(),
+            _ => None,
+        }
+    }
     pub fn from_user_agent(src: &str) -> Option<Self> {
         if src.contains("android") {
             return Some(PlatformBrand::Android);
@@ -36,10 +51,10 @@ impl PlatformBrand {
 
     pub fn as_str(&self) -> &'static str {
         match self {
-            PlatformBrand::Apple => "apple",
-            PlatformBrand::Windows => "windows",
-            PlatformBrand::Android => "android",
-            PlatformBrand::Linux => "linux",
+            PlatformBrand::Apple => APPLE,
+            PlatformBrand::Windows => WINDOWS,
+            PlatformBrand::Android => ANDROID,
+            PlatformBrand::Linux => LINUX,
         }
     }
 }

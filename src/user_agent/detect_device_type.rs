@@ -1,5 +1,8 @@
 use serde::*;
 
+const MOBILE: &'static str = "mobile";
+const TABLET: &'static str = "tablet";
+const DESKTOP: &'static str = "desktop";
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum DeviceType {
     Mobile,
@@ -8,7 +11,15 @@ pub enum DeviceType {
 }
 
 impl DeviceType {
-    pub fn from_user_agent(ua: &str) -> DeviceType {
+    pub fn from_str(src: &str) -> Option<Self> {
+        match src {
+            MOBILE => Self::Mobile.into(),
+            TABLET => Self::Tablet.into(),
+            DESKTOP => Self::Desktop.into(),
+            _ => None,
+        }
+    }
+    pub fn from_user_agent(ua: &str) -> Self {
         // Mobile detection
         if ua.contains("mobile")
             || ua.contains("android")
@@ -44,9 +55,9 @@ impl DeviceType {
     }
     pub fn as_str(&self) -> &'static str {
         match self {
-            DeviceType::Mobile => "mobile",
-            DeviceType::Tablet => "tablet",
-            DeviceType::Desktop => "desktop",
+            DeviceType::Mobile => MOBILE,
+            DeviceType::Tablet => TABLET,
+            DeviceType::Desktop => DESKTOP,
         }
     }
 }
