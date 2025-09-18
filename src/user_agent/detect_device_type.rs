@@ -13,6 +13,26 @@ pub enum DeviceType {
 }
 
 impl DeviceType {
+    pub fn is_desktop(&self) -> bool {
+        match self {
+            DeviceType::Desktop => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_mobile(&self) -> bool {
+        match self {
+            DeviceType::Mobile => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_tablet(&self) -> bool {
+        match self {
+            DeviceType::Tablet => true,
+            _ => false,
+        }
+    }
     pub fn from_str(src: &str) -> Option<Self> {
         match src {
             MOBILE => Self::Mobile.into(),
