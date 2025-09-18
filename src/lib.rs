@@ -17,6 +17,7 @@ pub mod markdown_segments;
 #[cfg(feature = "placeholders")]
 pub mod placeholders;
 
+#[cfg(feature = "user_agent")]
 pub mod user_agent;
 
 #[cfg(feature = "phone-code")]

@@ -1,4 +1,6 @@
-#[derive(Debug, Clone, Copy)]
+use serde::*;
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum DeviceType {
     Mobile,
     Tablet,

@@ -11,6 +11,7 @@ country-code = ["dep:lazy_static"]
 phone-code = ["country-code"]
 time-zones = ["dep:lazy_static", "chrono", "chrono-tz", "country-code"]
 validators = []
+user_agent = []
 fuzzy_data = []
 placeholders = []
 markdown = []
@@ -19,6 +20,6 @@ markdown = []
 [dependencies]
 lazy_static = { version = "*", optional = true }
 rust-extensions = { tag = "0.1.5", git = "https://github.com/MyJetTools/rust-extensions.git" }
-
+serde = "*"
 chrono = { version = "*", optional = true }
 chrono-tz = { version = "*", optional = true }
