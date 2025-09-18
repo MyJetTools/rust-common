@@ -14,4 +14,16 @@ impl UserAgentString {
     pub fn as_str(&self) -> &str {
         self.0.as_str()
     }
+
+    pub fn get_browser(&self) -> Option<Browser> {
+        Browser::from_user_agent(self)
+    }
+
+    pub fn get_platform_brand(&self) -> Option<PlatformBrand> {
+        PlatformBrand::from_user_agent(self)
+    }
+
+    pub fn get_device_type(&self) -> DeviceType {
+        DeviceType::from_user_agent(self)
+    }
 }
