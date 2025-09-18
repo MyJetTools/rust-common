@@ -8,7 +8,7 @@ pub enum PlatformBrand {
 }
 
 impl PlatformBrand {
-    pub fn new(src: &str) -> Option<Self> {
+    pub fn from_user_agent(src: &str) -> Option<Self> {
         if src.contains("android") {
             return Some(PlatformBrand::Android);
         }
@@ -18,6 +18,7 @@ impl PlatformBrand {
         }
 
         if src.contains("macintosh")
+            || src.contains("apple")
             || src.contains("mac os x")
             || src.contains("iphone")
             || src.contains("ipod")
@@ -31,5 +32,14 @@ impl PlatformBrand {
         }
 
         None
+    }
+
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            PlatformBrand::Apple => "apple",
+            PlatformBrand::Windows => "windows",
+            PlatformBrand::Android => "android",
+            PlatformBrand::Linux => "linux",
+        }
     }
 }

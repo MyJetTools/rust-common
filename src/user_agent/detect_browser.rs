@@ -15,7 +15,7 @@ pub enum Browser {
     Edge,
 }
 impl Browser {
-    pub fn from_str(src: &str) -> Self {
+    pub fn from_user_agent(src: &str) -> Self {
         match src {
             OPERA => Self::Opera,
             CHROME => Self::Chrome,
