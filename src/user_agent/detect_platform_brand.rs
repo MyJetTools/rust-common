@@ -1,5 +1,7 @@
 use serde::*;
 
+use crate::user_agent::UserAgentString;
+
 const APPLE: &'static str = "apple";
 const WINDOWS: &'static str = "windows";
 const ANDROID: &'static str = "android";
@@ -23,26 +25,26 @@ impl PlatformBrand {
             _ => None,
         }
     }
-    pub fn from_user_agent(src: &str) -> Option<Self> {
-        if src.contains("android") {
+    pub fn from_user_agent(user_agent: &UserAgentString) -> Option<Self> {
+        if user_agent.as_str().contains("android") {
             return Some(PlatformBrand::Android);
         }
 
-        if src.contains("windows") || src.contains("win") {
+        if user_agent.as_str().contains("windows") || user_agent.as_str().contains("win") {
             return Some(PlatformBrand::Windows);
         }
 
-        if src.contains("macintosh")
-            || src.contains("apple")
-            || src.contains("mac os x")
-            || src.contains("iphone")
-            || src.contains("ipod")
-            || src.contains("ipad")
+        if user_agent.as_str().contains("macintosh")
+            || user_agent.as_str().contains("apple")
+            || user_agent.as_str().contains("mac os x")
+            || user_agent.as_str().contains("iphone")
+            || user_agent.as_str().contains("ipod")
+            || user_agent.as_str().contains("ipad")
         {
             return Some(PlatformBrand::Apple);
         }
 
-        if src.contains("linux") || src.contains("x11") {
+        if user_agent.as_str().contains("linux") || user_agent.as_str().contains("x11") {
             return Some(PlatformBrand::Linux);
         }
 

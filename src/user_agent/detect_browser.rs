@@ -1,5 +1,7 @@
 use serde::*;
 
+use crate::user_agent::UserAgentString;
+
 pub const CHROME: &'static str = "chrome";
 pub const FIREFOX: &'static str = "firefox";
 pub const OPERA: &'static str = "opera";
@@ -35,21 +37,21 @@ impl Browser {
         }
     }
 
-    pub fn from_user_agent(user_agent_lower_case: &str) -> Option<Self> {
-        if user_agent_lower_case.contains("edg/") {
+    pub fn from_user_agent(user_agent: &UserAgentString) -> Option<Self> {
+        if user_agent.as_str().contains("edg/") {
             return Self::Edge.into();
         }
-        if user_agent_lower_case.contains("opr/") || user_agent_lower_case.contains("opera") {
+        if user_agent.as_str().contains("opr/") || user_agent.as_str().contains("opera") {
             return Self::Opera.into();
         }
-        if user_agent_lower_case.contains("firefox") {
+        if user_agent.as_str().contains("firefox") {
             return Self::Firefox.into();
         }
 
-        if user_agent_lower_case.contains("chrome") {
+        if user_agent.as_str().contains("chrome") {
             return Self::Chrome.into();
         }
-        if user_agent_lower_case.contains("safari") {
+        if user_agent.as_str().contains("safari") {
             return Self::Safari.into();
         }
 

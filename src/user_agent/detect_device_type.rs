@@ -1,5 +1,7 @@
 use serde::*;
 
+use crate::user_agent::UserAgentString;
+
 const MOBILE: &'static str = "mobile";
 const TABLET: &'static str = "tablet";
 const DESKTOP: &'static str = "desktop";
@@ -19,33 +21,33 @@ impl DeviceType {
             _ => None,
         }
     }
-    pub fn from_user_agent(ua: &str) -> Self {
+    pub fn from_user_agent(user_agent: &UserAgentString) -> Self {
         // Mobile detection
-        if ua.contains("mobile")
-            || ua.contains("android")
-            || ua.contains("iphone")
-            || ua.contains("ipod")
-            || ua.contains("windows phone")
-            || ua.contains("blackberry")
+        if user_agent.as_str().contains("mobile")
+            || user_agent.as_str().contains("android")
+            || user_agent.as_str().contains("iphone")
+            || user_agent.as_str().contains("ipod")
+            || user_agent.as_str().contains("windows phone")
+            || user_agent.as_str().contains("blackberry")
         {
             return DeviceType::Mobile;
         }
 
         // Tablet detection
-        if ua.contains("ipad")
-            || ua.contains("tablet")
-            || ua.contains("kindle")
-            || ua.contains("surface")
-            || ua.contains("playbook")
+        if user_agent.as_str().contains("ipad")
+            || user_agent.as_str().contains("tablet")
+            || user_agent.as_str().contains("kindle")
+            || user_agent.as_str().contains("surface")
+            || user_agent.as_str().contains("playbook")
         {
             return DeviceType::Tablet;
         }
 
         // Desktop detection
-        if ua.contains("windows nt")
-            || ua.contains("macintosh")
-            || ua.contains("linux") && !ua.contains("android")
-            || ua.contains("x11")
+        if user_agent.as_str().contains("windows nt")
+            || user_agent.as_str().contains("macintosh")
+            || user_agent.as_str().contains("linux") && !user_agent.as_str().contains("android")
+            || user_agent.as_str().contains("x11")
         {
             return DeviceType::Desktop;
         }
