@@ -64,4 +64,14 @@ mod tests {
             Some(PlatformBrand::Android)
         );
     }
+
+    #[test]
+    fn test_user_agent_02() {
+        let user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_8_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Safari));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
 }

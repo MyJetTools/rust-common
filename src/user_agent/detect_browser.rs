@@ -38,6 +38,12 @@ impl Browser {
     }
 
     pub fn from_user_agent(user_agent: &UserAgentString) -> Option<Self> {
+        if user_agent.as_str().contains("mobile/") {
+            if user_agent.as_str().contains("iphone") {
+                return Some(Self::Safari);
+            }
+        }
+
         if user_agent.as_str().contains("edg/") {
             return Self::Edge.into();
         }
