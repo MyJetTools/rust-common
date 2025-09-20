@@ -37,3 +37,18 @@ impl UserAgentString {
         DeviceType::from_user_agent(self)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::user_agent::*;
+
+    #[test]
+    fn test_iphone_chrome() {
+        let user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 26_0_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/141.0.7390.26 Mobile/15E148 Safari/604.1";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Chrome));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+}

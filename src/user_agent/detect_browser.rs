@@ -48,7 +48,7 @@ impl Browser {
             return Self::Firefox.into();
         }
 
-        if user_agent.as_str().contains("chrome") {
+        if user_agent.as_str().contains("chrome") || user_agent.as_str().contains("crios/") {
             return Self::Chrome.into();
         }
         if user_agent.as_str().contains("safari") {
