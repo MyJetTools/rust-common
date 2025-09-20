@@ -51,4 +51,17 @@ mod tests {
         assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
         assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
     }
+
+    #[test]
+    fn test_01() {
+        let user_agent = "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.5431.1356 Mobile Safari/537.36";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Chrome));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(
+            user_agent.get_platform_brand(),
+            Some(PlatformBrand::Android)
+        );
+    }
 }
