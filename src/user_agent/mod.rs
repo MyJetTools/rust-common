@@ -74,4 +74,17 @@ mod tests {
         assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
         assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
     }
+
+    #[test]
+    fn test_user_agent_03() {
+        let user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Chrome));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Desktop);
+        assert_eq!(
+            user_agent.get_platform_brand(),
+            Some(PlatformBrand::Windows)
+        );
+    }
 }
