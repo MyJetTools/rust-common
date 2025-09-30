@@ -3,10 +3,6 @@ use crate::{country_code::*, phone_codes::dicts::USA_PREFIX};
 use super::*;
 use rust_extensions::ShortString;
 
-pub fn find_by_phone_number(number: &str) -> Option<PhoneNumber> {
-    PHONE_CODES.find_by_phone_number(number)
-}
-
 lazy_static::lazy_static! {
     pub static ref PHONE_CODES: PhoneCodes = PhoneCodes::new();
 }
@@ -59,7 +55,7 @@ impl PhoneCodes {
         }
     }
 
-    pub fn find_by_phone_number(&self, number: &str) -> Option<PhoneNumber> {
+    pub fn find_by_phone_number(&self, number: &str) -> Option<PhoneCode> {
         if number.len() < 7 {
             return None;
         }
@@ -70,13 +66,13 @@ impl PhoneCodes {
             USA_PREFIX => {
                 let nanp_prefix = &the_number.as_str()[..6];
                 if let Some(code) = find(self.nanp.iter(), nanp_prefix) {
-                    return Some(PhoneNumber {
+                    return Some(PhoneCode {
                         country_code: code.1.clone(),
                         phone_code: code.0,
                     });
                 }
 
-                return Some(PhoneNumber {
+                return Some(PhoneCode {
                     country_code: CountryCode::USA.into(),
                     phone_code: super::dicts::USA_PREFIX,
                 });
@@ -117,7 +113,7 @@ impl PhoneCodes {
                 );
             }
             "+7" => {
-                return Some(PhoneNumber {
+                return Some(PhoneCode {
                     country_code: CountryCode::RUS.into(),
                     phone_code: "+7",
                 });
@@ -146,12 +142,25 @@ impl PhoneCodes {
     }
 }
 
-pub struct PhoneNumber {
+#[derive(Debug, Clone, Copy)]
+pub struct PhoneCode {
     pub country_code: PhoneCountryCode,
     pub phone_code: &'static str,
 }
 
-impl PhoneNumber {
+impl PhoneCode {
+    pub fn from_country_code(country_code: CountryCode) -> Self {
+        let code = PhoneCountryCode::CountryCode(country_code);
+        Self {
+            country_code: PhoneCountryCode::CountryCode(country_code),
+            phone_code: code.get_phone_prefix(),
+        }
+    }
+
+    pub fn from_phone_number(number: &str) -> Option<Self> {
+        PHONE_CODES.find_by_phone_number(number)
+    }
+
     pub fn as_str(&self) -> ShortString {
         let mut result = match self.country_code {
             PhoneCountryCode::CountryCode(cc) => {
@@ -189,10 +198,10 @@ fn find_3_or_2<'s>(
     src_3: impl IntoIterator<Item = &'s (&'static str, PhoneCountryCode)>,
     src_2: impl IntoIterator<Item = &'s (&'static str, PhoneCountryCode)>,
     the_number: &str,
-) -> Option<PhoneNumber> {
+) -> Option<PhoneCode> {
     let prefix_3 = &the_number[..4];
     if let Some(code) = find(src_3, prefix_3) {
-        return Some(PhoneNumber {
+        return Some(PhoneCode {
             country_code: code.1.clone(),
             phone_code: code.0,
         });
@@ -200,7 +209,7 @@ fn find_3_or_2<'s>(
 
     let prefix_2 = &the_number[..3];
     if let Some(code) = find(src_2, prefix_2) {
-        return Some(PhoneNumber {
+        return Some(PhoneCode {
             country_code: code.1.clone(),
             phone_code: code.0,
         });
