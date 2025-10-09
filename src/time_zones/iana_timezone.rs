@@ -454,6 +454,11 @@ impl IanaTimeZone {
     }
 }
 
+impl std::fmt::Display for IanaTimeZone {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
+}
 #[cfg(feature = "time-zones")]
 fn get_rus_time_zone(time_zone: TimeZoneGmtOffset) -> Option<IanaTimeZone> {
     use crate::time_zones::*;
