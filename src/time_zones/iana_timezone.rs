@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use rust_extensions::ShortString;
 
 #[cfg(feature = "time-zones")]
@@ -38,6 +40,14 @@ pub enum IanaTimeZone {
     Australia(IanaAustralia),
     Indian(IanaIndian),
     Pacific(IanaPacific),
+}
+
+impl FromStr for IanaTimeZone {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from_str(s).ok_or_else(|| format!("Invalid IanaTimeZone: {}", s))
+    }
 }
 
 impl IanaTimeZone {

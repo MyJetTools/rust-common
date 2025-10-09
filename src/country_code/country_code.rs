@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, fmt::Display, str::FromStr};
 
 use super::ErrorParsingCountryCode;
 
@@ -851,6 +851,20 @@ lazy_static::lazy_static! {
 
         m
     };
+}
+
+impl Display for CountryCode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_iso2_str())
+    }
+}
+
+impl FromStr for CountryCode {
+    type Err = ErrorParsingCountryCode;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::parse(s)
+    }
 }
 
 #[cfg(test)]
