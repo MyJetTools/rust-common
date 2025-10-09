@@ -21,7 +21,7 @@ const PACIFIC_PREFIX: &str = "Pacific/";
 
 use super::*;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IanaTimeZone {
     Europe(IanaEurope),
     Brazil(IanaBrazil),

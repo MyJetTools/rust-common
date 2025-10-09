@@ -1,7 +1,7 @@
 use crate::time_zones::iana_cities::NorthDakota;
 use crate::time_zones::IanaArgentina;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IanaAmerica {
     Adak,
     Anchorage,
