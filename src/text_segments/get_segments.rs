@@ -11,6 +11,7 @@ pub enum Segment<'s> {
 
 #[derive(Debug)]
 pub struct SegmentData<'s> {
+    pub segment_name: &'s str,
     pub params: HashMap<&'s str, &'s str>,
     pub text: &'s str,
 }
@@ -35,7 +36,32 @@ impl<'s> Segment<'s> {
     }
 }
 
-pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec<Segment<'s>> {
+pub fn get_markdown_segments<'s>(src: &'s str, segment_names: &[&'s str]) -> Vec<Segment<'s>> {
+    let mut result = Vec::new();
+
+    for segment_name in segment_names {
+        if result.len() == 0 {
+            result = split_to_segments(src, segment_name);
+        } else {
+            let to_iterate = std::mem::take(&mut result);
+
+            for segment in to_iterate {
+                match segment {
+                    Segment::Text(text) => {
+                        result.extend(split_to_segments(text, segment_name));
+                    }
+                    Segment::Segment(segment) => {
+                        result.push(Segment::Segment(segment));
+                    }
+                }
+            }
+        }
+    }
+
+    result
+}
+
+pub fn split_to_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec<Segment<'s>> {
     let mut result = vec![];
 
     let segment_to_search1 = format!("[{}]", segment_name);
@@ -73,6 +99,7 @@ pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec
 
         let Some(end_index) = src.find(&end_marker) else {
             result.push(Segment::Segment(SegmentData {
+                segment_name,
                 params,
                 text: &src[segment_text_start_index..],
             }));
@@ -80,6 +107,7 @@ pub fn get_markdown_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec
         };
 
         result.push(Segment::Segment(SegmentData {
+            segment_name,
             params,
             text: &src[segment_text_start_index..end_index],
         }));
@@ -215,7 +243,7 @@ mod test {
     fn test_no_segments() {
         let src = "This is my text";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -228,7 +256,7 @@ mod test {
     fn test_only_segment_not_finished() {
         let src = "[PITCH]PitchText";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -243,7 +271,7 @@ mod test {
     fn test_only_segment() {
         let src = "[PITCH]PitchText[/PITCH]";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -258,7 +286,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full() {
         let src = "Before pitch[PITCH id";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -273,7 +301,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_2() {
         let src = "Before pitch[PITCH id=";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -288,7 +316,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_3() {
         let src = "Before pitch[PITCH id=\"";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -303,7 +331,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_4() {
         let src = "Before pitch[PITCH id=\"sss";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -318,7 +346,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_5() {
         let src = "Before pitch[PITCH id=\"sss\"";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -333,7 +361,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_6() {
         let src = "Before pitch[PITCH";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -348,7 +376,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_7() {
         let src = "Before pitch[PIT";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -363,7 +391,7 @@ mod test {
     fn test_when_pitch_is_loaded_not_full_8() {
         let src = "Before pitch[";
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -378,7 +406,7 @@ mod test {
     fn test_only_segment_two_parameters() {
         let src = r#"[PITCH param1="value 1" param2='value 2' param3=value3 param4=value4]PitchText[/PITCH]"#;
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
 
@@ -397,7 +425,7 @@ mod test {
     fn test_two_segments_no_params() {
         let src = r#"BeforeText[PITCH id="15"]PitchText[/PITCH][PITCH]PitchText2[/PITCH]AfterText"#;
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 4);
         let itm = result.remove(0);
@@ -422,10 +450,40 @@ mod test {
     fn test_example_from_real_life() {
         let src = r#"I'm here to offer you a personalized experience with our luxurious properties. Could you please share your preferred location or budget? This will help me tailor the best options for you."#;
 
-        let mut result = super::get_markdown_segments(src, "PITCH");
+        let mut result = super::get_markdown_segments(src, &["PITCH"]);
 
         assert_eq!(result.len(), 1);
         let itm = result.remove(0);
         assert_eq!(src, itm.unwrap_as_text());
+    }
+
+    #[test]
+    fn test_two_segments() {
+        let src = r#"BeforeText[PITCH]PitchText[/PITCH]Text[PITCH2]PitchText2[/PITCH2]AfterText"#;
+
+        let mut result = super::get_markdown_segments(src, &["PITCH", "PITCH2"]);
+
+        assert_eq!(result.len(), 5);
+
+        let itm = result.remove(0);
+        assert_eq!("BeforeText", itm.unwrap_as_text());
+
+        let itm = result.remove(0);
+        let segment = itm.unwrap_as_segment();
+        assert_eq!(segment.segment_name, "PITCH");
+        assert_eq!(segment.params.len(), 0);
+        assert_eq!(segment.text, "PitchText");
+
+        let itm = result.remove(0);
+        assert_eq!("Text", itm.unwrap_as_text());
+
+        let itm = result.remove(0);
+        let segment = itm.unwrap_as_segment();
+        assert_eq!(segment.segment_name, "PITCH2");
+        assert_eq!(segment.params.len(), 0);
+        assert_eq!(segment.text, "PitchText2");
+
+        let itm = result.remove(0);
+        assert_eq!("AfterText", itm.unwrap_as_text());
     }
 }
