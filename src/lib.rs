@@ -4,7 +4,6 @@ pub mod country_code;
 mod markdown_applier;
 #[cfg(feature = "time-zones")]
 pub mod time_zones;
-#[cfg(feature = "validators")]
 pub mod validators;
 #[cfg(feature = "markdown")]
 pub use markdown_applier::*;
@@ -22,3 +21,6 @@ pub mod user_agent;
 
 #[cfg(feature = "phone-code")]
 pub mod phone_codes;
+
+mod object_id;
+pub use object_id::*;
