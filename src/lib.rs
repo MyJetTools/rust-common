@@ -22,5 +22,4 @@ pub mod user_agent;
 #[cfg(feature = "phone-code")]
 pub mod phone_codes;
 
-mod object_id;
-pub use object_id::*;
+pub mod object_id;
