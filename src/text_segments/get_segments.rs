@@ -14,6 +14,7 @@ pub struct SegmentData<'s> {
     pub segment_name: &'s str,
     pub params: HashMap<&'s str, &'s str>,
     pub text: &'s str,
+    pub full_segment: bool,
 }
 
 impl<'s> Segment<'s> {
@@ -102,6 +103,7 @@ pub fn split_to_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec<Seg
                 segment_name,
                 params,
                 text: &src[segment_text_start_index..],
+                full_segment: false,
             }));
             return result;
         };
@@ -110,6 +112,7 @@ pub fn split_to_segments<'s>(mut src: &'s str, segment_name: &'s str) -> Vec<Seg
             segment_name,
             params,
             text: &src[segment_text_start_index..end_index],
+            full_segment: true,
         }));
 
         src = &src[end_index..];
@@ -265,6 +268,7 @@ mod test {
         let result = itm.unwrap_as_segment();
         assert_eq!(result.params.len(), 0);
         assert_eq!("PitchText", result.text);
+        assert_eq!(false, result.full_segment);
     }
 
     #[test]
@@ -280,6 +284,8 @@ mod test {
         let result = itm.unwrap_as_segment();
         assert_eq!(result.params.len(), 0);
         assert_eq!("PitchText", result.text);
+
+        assert_eq!(true, result.full_segment);
     }
 
     #[test]
