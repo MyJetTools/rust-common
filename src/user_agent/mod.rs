@@ -53,6 +53,26 @@ mod tests {
     }
 
     #[test]
+    fn test_iphone_firefox() {
+        let user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/34.0 Mobile/15E148 Safari/605.1.15";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Firefox));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+
+    #[test]
+    fn test_iphone_edge() {
+        let user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 EdgiOS/46.3.13 Mobile/15E148 Safari/605.1.15";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Edge));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+
+    #[test]
     fn test_01() {
         let user_agent = "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.5431.1356 Mobile Safari/537.36";
         let user_agent = UserAgentString::new(user_agent);

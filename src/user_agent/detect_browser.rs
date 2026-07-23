@@ -38,26 +38,42 @@ impl Browser {
     }
 
     pub fn from_user_agent(user_agent: &UserAgentString) -> Option<Self> {
-        if user_agent.as_str().contains("mobile/") {
-            if user_agent.as_str().contains("iphone") {
-                return Some(Self::Safari);
-            }
-        }
+        let src = user_agent.as_str();
 
-        if user_agent.as_str().contains("edg/") {
+        // On iOS every browser renders through WebKit and appends "Safari/..." to its
+        // user agent, so the vendor token has to be matched before anything else.
+        if src.contains("crios/") {
+            return Self::Chrome.into();
+        }
+        if src.contains("fxios/") {
+            return Self::Firefox.into();
+        }
+        if src.contains("edgios/") {
             return Self::Edge.into();
         }
-        if user_agent.as_str().contains("opr/") || user_agent.as_str().contains("opera") {
+        if src.contains("opios/") {
             return Self::Opera.into();
         }
-        if user_agent.as_str().contains("firefox") {
+
+        if src.contains("edg/") {
+            return Self::Edge.into();
+        }
+        if src.contains("opr/") || src.contains("opera") {
+            return Self::Opera.into();
+        }
+        if src.contains("firefox") {
             return Self::Firefox.into();
         }
 
-        if user_agent.as_str().contains("chrome") || user_agent.as_str().contains("crios/") {
+        if src.contains("chrome") {
             return Self::Chrome.into();
         }
-        if user_agent.as_str().contains("safari") {
+        if src.contains("safari") {
+            return Self::Safari.into();
+        }
+
+        // iOS web views drop the "Safari/..." token but still carry "Mobile/<build>"
+        if src.contains("mobile/") && src.contains("iphone") {
             return Self::Safari.into();
         }
 
