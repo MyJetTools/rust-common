@@ -239,6 +239,22 @@ mod test {
     }
 
     #[test]
+    fn test_lhi_dst_plus11() {
+        // DST is active on Jan 20, 2025 for Lord Howe Island (Australia/LHI).
+        let local_time = DateTimeAsMicroseconds::from_str("2025-01-20T12:00:00").unwrap();
+        let utc_time = super::to_utc_time(local_time, "Australia/LHI");
+        assert_eq!(&utc_time.to_rfc3339()[..19], "2025-01-20T01:00:00");
+    }
+
+    #[test]
+    fn test_lhi_no_dst_plus10_30() {
+        // DST is inactive on May 20, 2025 for Lord Howe Island (Australia/LHI).
+        let local_time = DateTimeAsMicroseconds::from_str("2025-05-20T12:00:00").unwrap();
+        let utc_time = super::to_utc_time(local_time, "Australia/LHI");
+        assert_eq!(&utc_time.to_rfc3339()[..19], "2025-05-20T01:30:00");
+    }
+
+    #[test]
     fn test_noumea_utc_plus11() {
         let local_time = DateTimeAsMicroseconds::from_str("2025-01-20T12:00:00").unwrap();
         let utc_time = super::to_utc_time(local_time, "Pacific/Noumea");

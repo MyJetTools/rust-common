@@ -428,7 +428,7 @@ impl IanaTimeZone {
                 IanaAustralia::BrokenHill => 570,
                 IanaAustralia::Canberra => 600,
                 IanaAustralia::Currie => 600,
-                IanaAustralia::LHI => 600,
+                IanaAustralia::LHI => 630,
                 IanaAustralia::North => 570,
                 IanaAustralia::NSW => 600,
                 IanaAustralia::Queensland => 600,
