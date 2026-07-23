@@ -15,7 +15,7 @@ lazy_static::lazy_static! {
         //result.insert(CountryCode::ASM, "American Samoa");
         result.insert(CountryCode::AND, "Andorra");
         result.insert(CountryCode::AGO, "Angola");
-        //result.insert(CountryCode::AIA, "Anguilla");
+        result.insert(CountryCode::AIA, "Anguilla");
         result.insert(CountryCode::ATA, "Antarctica");
         result.insert(CountryCode::ATG, "Antigua and Barbuda");
         result.insert(CountryCode::ABW, "Aruba");
@@ -147,7 +147,7 @@ lazy_static::lazy_static! {
         //result.insert(CountryCode::MTQ, "Martinique");
         result.insert(CountryCode::MRT, "Mauritania");
         result.insert(CountryCode::MUS, "Mauritius");
-        //result.insert(CountryCode::MYT, "Mayotte");
+        result.insert(CountryCode::MYT, "Mayotte");
         result.insert(CountryCode::MEX, "Mexico");
         result.insert(CountryCode::FSM, "Micronesia (Federated States of)");
         result.insert(CountryCode::MCO, "Monaco");
@@ -219,7 +219,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::SDN, "Sudan");
         result.insert(CountryCode::SUR, "Suriname");
         //result.insert(CountryCode::SJM, "Svalbard and Jan Mayen Islands");
-        //result.insert(CountryCode::SWZ, "Swaziland");
+        result.insert(CountryCode::SWZ, "Swaziland");
         result.insert(CountryCode::SWE, "Sweden");
         result.insert(CountryCode::CHE, "Switzerland");
         result.insert(CountryCode::SYR, "Syrian Arab Republic");
@@ -236,7 +236,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::TUR, "Turkey");
         result.insert(CountryCode::TKM, "Turkmenistan");
         //result.insert(CountryCode::TCA, "Turks and Caicos Islands");
-        //result.insert(CountryCode::TUV, "Tuvalu");
+        result.insert(CountryCode::TUV, "Tuvalu");
         result.insert(CountryCode::UGA, "Uganda");
         result.insert(CountryCode::UKR, "Ukraine");
         result.insert(CountryCode::ARE, "United Arab Emirates");
