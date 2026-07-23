@@ -42,32 +42,43 @@ impl DeviceType {
         }
     }
     pub fn from_user_agent(user_agent: &UserAgentString) -> Self {
-        // Mobile detection
-        if user_agent.as_str().contains("mobile")
-            || user_agent.as_str().contains("android")
-            || user_agent.as_str().contains("iphone")
-            || user_agent.as_str().contains("ipod")
-            || user_agent.as_str().contains("windows phone")
-            || user_agent.as_str().contains("blackberry")
-        {
-            return DeviceType::Mobile;
-        }
+        let src = user_agent.as_str();
 
-        // Tablet detection
-        if user_agent.as_str().contains("ipad")
-            || user_agent.as_str().contains("tablet")
-            || user_agent.as_str().contains("kindle")
-            || user_agent.as_str().contains("surface")
-            || user_agent.as_str().contains("playbook")
+        // Tablet detection has to run first: an iPad carries "Mobile/<build>" and every
+        // Android tablet carries "Android", so the mobile rules below would swallow both.
+        if src.contains("ipad")
+            || src.contains("tablet")
+            || src.contains("kindle")
+            || src.contains("surface")
+            || src.contains("playbook")
         {
             return DeviceType::Tablet;
         }
 
+        // Android phones put "Mobile" into the user agent, Android tablets do not.
+        if src.contains("android") {
+            if src.contains("mobile") {
+                return DeviceType::Mobile;
+            }
+
+            return DeviceType::Tablet;
+        }
+
+        // Mobile detection
+        if src.contains("mobile")
+            || src.contains("iphone")
+            || src.contains("ipod")
+            || src.contains("windows phone")
+            || src.contains("blackberry")
+        {
+            return DeviceType::Mobile;
+        }
+
         // Desktop detection
-        if user_agent.as_str().contains("windows nt")
-            || user_agent.as_str().contains("macintosh")
-            || user_agent.as_str().contains("linux") && !user_agent.as_str().contains("android")
-            || user_agent.as_str().contains("x11")
+        if src.contains("windows nt")
+            || src.contains("macintosh")
+            || src.contains("linux")
+            || src.contains("x11")
         {
             return DeviceType::Desktop;
         }

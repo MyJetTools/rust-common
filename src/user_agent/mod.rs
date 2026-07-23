@@ -73,6 +73,49 @@ mod tests {
     }
 
     #[test]
+    fn test_iphone_opera() {
+        let user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) OPT/4.4.0 Mobile/15E148 Safari/605.1.15";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Opera));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Mobile);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+
+    #[test]
+    fn test_ipad_is_a_tablet() {
+        // An iPad user agent carries "Mobile/<build>" - it must not be taken for a phone
+        let user_agent = "Mozilla/5.0 (iPad; CPU OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.8 Mobile/15E148 Safari/604.1";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Safari));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Tablet);
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+
+    #[test]
+    fn test_android_tablet_has_no_mobile_token() {
+        let user_agent = "Mozilla/5.0 (Linux; Android 10; SM-T860) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_browser(), Some(Browser::Chrome));
+        assert_eq!(user_agent.get_device_type(), DeviceType::Tablet);
+        assert_eq!(
+            user_agent.get_platform_brand(),
+            Some(PlatformBrand::Android)
+        );
+    }
+
+    #[test]
+    fn test_apple_native_app_is_not_windows() {
+        // CFNetwork sends "Darwin/<version>", which used to be matched as "win"
+        let user_agent = "MyApp/1.0 CFNetwork/1333.0.4 Darwin/21.6.0";
+        let user_agent = UserAgentString::new(user_agent);
+
+        assert_eq!(user_agent.get_platform_brand(), Some(PlatformBrand::Apple));
+    }
+
+    #[test]
     fn test_01() {
         let user_agent = "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.5431.1356 Mobile Safari/537.36";
         let user_agent = UserAgentString::new(user_agent);

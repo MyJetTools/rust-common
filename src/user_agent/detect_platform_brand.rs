@@ -26,24 +26,29 @@ impl PlatformBrand {
         }
     }
     pub fn from_user_agent(user_agent: &UserAgentString) -> Option<Self> {
-        if user_agent.as_str().contains("android") {
+        let src = user_agent.as_str();
+
+        if src.contains("android") {
             return Some(PlatformBrand::Android);
         }
 
-        if user_agent.as_str().contains("windows") || user_agent.as_str().contains("win") {
+        // "win" on its own also matches "Darwin", which every native Apple app sends
+        // through CFNetwork, so only the unambiguous Windows tokens are matched here.
+        if src.contains("windows") || src.contains("win64") || src.contains("win32") {
             return Some(PlatformBrand::Windows);
         }
 
-        if user_agent.as_str().contains("macintosh")
-            || user_agent.as_str().contains("mac os x")
-            || user_agent.as_str().contains("iphone")
-            || user_agent.as_str().contains("ipod")
-            || user_agent.as_str().contains("ipad")
+        if src.contains("macintosh")
+            || src.contains("mac os x")
+            || src.contains("darwin")
+            || src.contains("iphone")
+            || src.contains("ipod")
+            || src.contains("ipad")
         {
             return Some(PlatformBrand::Apple);
         }
 
-        if user_agent.as_str().contains("linux") || user_agent.as_str().contains("x11") {
+        if src.contains("linux") || src.contains("x11") {
             return Some(PlatformBrand::Linux);
         }
 

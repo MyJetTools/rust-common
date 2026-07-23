@@ -51,7 +51,11 @@ impl Browser {
         if src.contains("edgios/") {
             return Self::Edge.into();
         }
-        if src.contains("opios/") {
+        // Opera on iOS reports "OPT/", which is short enough to show up by accident,
+        // so it only counts when the user agent really is an Apple device.
+        if src.contains("opios/")
+            || (src.contains("opt/") && (src.contains("iphone") || src.contains("ipad")))
+        {
             return Self::Opera.into();
         }
 
