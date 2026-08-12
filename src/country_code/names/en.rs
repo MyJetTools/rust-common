@@ -126,6 +126,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::KAZ, "Kazakhstan");
         result.insert(CountryCode::KEN, "Kenya");
         result.insert(CountryCode::KIR, "Kiribati");
+        result.insert(CountryCode::XKX, "Kosovo");
         result.insert(CountryCode::KWT, "Kuwait");
         result.insert(CountryCode::KGZ, "Kyrgyzstan");
         result.insert(CountryCode::LAO, "Lao People's Democratic Republic");
@@ -167,7 +168,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::NER, "Niger");
         result.insert(CountryCode::NGA, "Nigeria");
         //result.insert(CountryCode::NIU, "Niue");
-        //result.insert(CountryCode::NFK, "Norfolk Island");
+        result.insert(CountryCode::NFK, "Norfolk Island");
         //result.insert(CountryCode::MNP, "Northern Mariana Islands");
         result.insert(CountryCode::NOR, "Norway");
         result.insert(CountryCode::OMN, "Oman");

@@ -180,7 +180,6 @@ impl CountryCode {
             CountryCode::TTO => false, // Trinidad and Tobago
             CountryCode::ESH => false, // Western Sahara
             CountryCode::YEM => false, // Yemen
-            CountryCode::XKX => false, // Kosovo
             CountryCode::BMU => false, // Bermuda
             CountryCode::PCN => false, // Pitcairn
             CountryCode::TKL => false, // Tokelau
@@ -254,6 +253,7 @@ impl CountryCode {
             CountryCode::SMR => true,  // San Marino
             CountryCode::STP => false, // Sao Tome and Principe
             CountryCode::SRB => true,  // Serbia
+            CountryCode::XKX => true,  // Kosovo (CET/CEST, same schedule as Serbia)
             CountryCode::SYC => false, // Seychelles
             CountryCode::SXM => false, // Sint Maarten (Dutch part)
             CountryCode::SLB => false, // Solomon Islands

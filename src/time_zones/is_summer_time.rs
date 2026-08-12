@@ -20,7 +20,7 @@ pub fn is_day_saving_time(dt: DateTimeAsMicroseconds, country_code: CountryCode)
         GBR | FRA | DEU | ESP | ITA | NLD | BEL | CHE | AUT | DNK | NOR | SWE | FIN | IRL | PRT
         | POL | CZE | HUN | SVK | SVN | EST | LVA | LTU | GRC | ROU | BGR | HRV | CYP | MLT
         | LUX | ISL | AND | SRB | MDA | GIB | GGY | IMN | JEY | UKR | ALA | MCO | MNE | SMR
-        | BIH | MKD | ALB | LIE | VAT => {
+        | BIH | MKD | ALB | LIE | VAT | XKX => {
             let dst_start = last_weekday_of_month(dt_struct.year, 3, 0); // 0=Sunday
             let dst_end = last_weekday_of_month(dt_struct.year, 10, 0);
             (dt >= dst_start) && (dt < dst_end)
@@ -103,6 +103,24 @@ mod test {
         let result = super::is_day_saving_time(
             DateTimeAsMicroseconds::create(2025, 5, 30, 10, 0, 0, 0),
             super::CountryCode::DEU,
+        );
+
+        assert_eq!(result, true);
+    }
+
+    #[test]
+    fn is_summer_time_kosovo() {
+        // Kosovo follows CET/CEST with the EU schedule, same as Serbia.
+        let result = super::is_day_saving_time(
+            DateTimeAsMicroseconds::create(2025, 2, 26, 2, 0, 0, 0),
+            super::CountryCode::XKX,
+        );
+
+        assert_eq!(result, false);
+
+        let result = super::is_day_saving_time(
+            DateTimeAsMicroseconds::create(2025, 5, 30, 10, 0, 0, 0),
+            super::CountryCode::XKX,
         );
 
         assert_eq!(result, true);
