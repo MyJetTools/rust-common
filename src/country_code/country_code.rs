@@ -881,7 +881,11 @@ mod test {
 
     #[test]
     pub fn test_amounts() {
-        assert!(COUNTRIES_ISO_3_CODES.len() == COUNTRIES_ISO_3_CODES.len())
+        assert_eq!(
+            COUNTRIES_ISO_3_CODES.len(),
+            COUNTRIES_ISO_2_CODES.len(),
+            "the two ISO maps must describe the same set of countries"
+        );
     }
 
     #[test]
@@ -901,5 +905,127 @@ mod test {
         }
 
         false
+    }
+
+    /// The reverse of [`check_if_we_have_whatever_in_iso3_in_iso2`], which on its
+    /// own only proves one direction.
+    #[test]
+    fn every_iso2_country_is_also_in_iso3() {
+        for code in COUNTRIES_ISO_2_CODES.values() {
+            let found = COUNTRIES_ISO_3_CODES
+                .values()
+                .any(|other| code.equals_to(*other));
+
+            assert!(found, "Can not find code {:?} in ISO3", code);
+        }
+    }
+
+    /// Each country must own exactly one key in each map. `as_iso2_str` and
+    /// `as_iso3_str` return the first key whose value matches while scanning the
+    /// map in sorted key order, so a second key would silently shadow the
+    /// canonical one.
+    #[test]
+    fn each_country_owns_exactly_one_key_per_map() {
+        for (map_name, keys) in [
+            ("ISO3", COUNTRIES_ISO_3_CODES.iter().collect::<Vec<_>>()),
+            ("ISO2", COUNTRIES_ISO_2_CODES.iter().collect::<Vec<_>>()),
+        ] {
+            for country_code in COUNTRIES_ISO_3_CODES.values() {
+                let owned: Vec<&str> = keys
+                    .iter()
+                    .filter(|(_, value)| country_code.equals_to(**value))
+                    .map(|(key, _)| **key)
+                    .collect();
+
+                assert_eq!(
+                    owned.len(),
+                    1,
+                    "{:?} has {} keys in {}: {:?}",
+                    country_code,
+                    owned.len(),
+                    map_name,
+                    owned
+                );
+            }
+        }
+    }
+
+    /// Guards the canonical output of `as_iso3_str` / `as_iso2_str`: both scan in
+    /// sorted key order, so a shorter key such as an ICAO `"D"` would sort ahead
+    /// of `"DEU"` and become the value the crate reports for Germany. Alias
+    /// tables must therefore live outside these two maps.
+    #[test]
+    fn iso_map_keys_have_the_right_width() {
+        for key in COUNTRIES_ISO_3_CODES.keys() {
+            assert_eq!(key.len(), 3, "{:?} is not a 3 letter code", key);
+            assert!(
+                key.chars().all(|c| c.is_ascii_uppercase()),
+                "{:?} is not upper case ascii",
+                key
+            );
+        }
+
+        for key in COUNTRIES_ISO_2_CODES.keys() {
+            assert_eq!(key.len(), 2, "{:?} is not a 2 letter code", key);
+            assert!(
+                key.chars().all(|c| c.is_ascii_uppercase()),
+                "{:?} is not upper case ascii",
+                key
+            );
+        }
+    }
+
+    /// Catches a crossed alpha-2 -> alpha-3 pairing, which resolves a client to
+    /// the wrong country and is otherwise invisible: swapping `"KY" => COM` with
+    /// `"KM" => CYM` keeps every count, every bijection and every lookup intact.
+    ///
+    /// In ISO 3166-1 the alpha-2 and alpha-3 codes of a country start with the
+    /// same letter, with exactly these eight exceptions. Anything else that
+    /// disagrees is a typo, so add to this list only against the published
+    /// standard.
+    #[test]
+    fn alpha2_and_alpha3_agree_on_the_first_letter() {
+        const KNOWN_EXCEPTIONS: [(&str, &str); 8] = [
+            ("GS", "SGS"),
+            ("KM", "COM"),
+            ("KP", "PRK"),
+            ("KY", "CYM"),
+            ("PM", "SPM"),
+            ("RS", "SRB"),
+            ("TF", "ATF"),
+            ("YT", "MYT"),
+        ];
+
+        for (iso2, country_code) in COUNTRIES_ISO_2_CODES.iter() {
+            let iso3 = country_code.as_iso3_str();
+
+            if iso2.as_bytes()[0] == iso3.as_bytes()[0] {
+                continue;
+            }
+
+            assert!(
+                KNOWN_EXCEPTIONS.contains(&(iso2, iso3)),
+                "{:?} -> {:?} is not a known ISO 3166-1 first letter mismatch - crossed pairing?",
+                iso2,
+                iso3
+            );
+        }
+    }
+
+    /// `as_iso3_str` / `as_iso2_str` panic when a variant is absent from a map,
+    /// and `as_country_name_en` falls back through `as_iso3_str`. Drive every
+    /// variant so the panic can never reach a caller.
+    #[test]
+    fn every_country_round_trips_through_its_codes_and_name() {
+        for country_code in COUNTRIES_ISO_3_CODES.values() {
+            let iso3 = country_code.as_iso3_str();
+            let iso2 = country_code.as_iso2_str();
+
+            assert_eq!(CountryCode::parse(iso3).unwrap(), *country_code);
+            assert_eq!(CountryCode::parse(iso2).unwrap(), *country_code);
+
+            let name = country_code.as_country_name_en();
+            assert_ne!(name, iso3, "{:?} has no English name", country_code);
+        }
     }
 }

@@ -118,6 +118,16 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::PSE, &["Palestine"]);
         result.insert(CountryCode::XKX, &["Kosova"]);
 
+        // territories whose formal name is not what anybody types
+        result.insert(CountryCode::VAT, &["Vatican", "Vatican City"]);
+        result.insert(CountryCode::BLM, &["St Barts", "St Barthelemy"]);
+        result.insert(CountryCode::MAF, &["St Martin"]);
+        result.insert(CountryCode::SXM, &["St Maarten"]);
+        result.insert(CountryCode::BES, &["Caribbean Netherlands"]);
+        result.insert(CountryCode::VIR, &["US Virgin Islands"]);
+        result.insert(CountryCode::SHN, &["Ascension", "Tristan da Cunha"]);
+        result.insert(CountryCode::SJM, &["Spitsbergen"]);
+
         result
     };
 }

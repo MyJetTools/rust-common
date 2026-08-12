@@ -12,7 +12,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::ARM, "Armenia");
         result.insert(CountryCode::ARG, "Argentina");
         result.insert(CountryCode::DZA, "Algeria");
-        //result.insert(CountryCode::ASM, "American Samoa");
+        result.insert(CountryCode::ASM, "American Samoa");
         result.insert(CountryCode::AND, "Andorra");
         result.insert(CountryCode::AGO, "Angola");
         result.insert(CountryCode::AIA, "Anguilla");
@@ -30,15 +30,15 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::BEL, "Belgium");
         result.insert(CountryCode::BLZ, "Belize");
         result.insert(CountryCode::BEN, "Benin");
-        //result.insert(CountryCode::BMU, "Bermuda");
+        result.insert(CountryCode::BMU, "Bermuda");
         result.insert(CountryCode::BTN, "Bhutan");
         result.insert(CountryCode::BOL, "Bolivia (Plurinational State of)");
-        //result.insert(CountryCode::BES, "Bonaire, Sint Eustatius and Saba");
+        result.insert(CountryCode::BES, "Bonaire, Sint Eustatius and Saba");
         result.insert(CountryCode::BIH, "Bosnia and Herzegovina");
         result.insert(CountryCode::BWA, "Botswana");
-        //result.insert(CountryCode::BVT, "Bouvet Island");
+        result.insert(CountryCode::BVT, "Bouvet Island");
         result.insert(CountryCode::BRA, "Brazil");
-        //result.insert(CountryCode::IOT, "British Indian Ocean Territory");
+        result.insert(CountryCode::IOT, "British Indian Ocean Territory");
         result.insert(CountryCode::VGB, "British Virgin Islands");
         result.insert(CountryCode::BRN, "Brunei Darussalam");
         result.insert(CountryCode::BGR, "Bulgaria");
@@ -55,8 +55,8 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::CHN, "China");
         result.insert(CountryCode::HKG, "Hong Kong Special Administrative Region, China");
         result.insert(CountryCode::MAC, "Macao Special Administrative Region, China");
-        //result.insert(CountryCode::CXR, "Christmas Island");
-        //result.insert(CountryCode::CCK, "Cocos (Keeling) Islands");
+        result.insert(CountryCode::CXR, "Christmas Island");
+        result.insert(CountryCode::CCK, "Cocos (Keeling) Islands");
         result.insert(CountryCode::COL, "Colombia");
         result.insert(CountryCode::COM, "Comoros");
         result.insert(CountryCode::COG, "Congo");
@@ -96,7 +96,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::GHA, "Ghana");
         result.insert(CountryCode::GIB, "Gibraltar");
         result.insert(CountryCode::GRC, "Greece");
-        //result.insert(CountryCode::GRL, "Greenland");
+        result.insert(CountryCode::GRL, "Greenland");
         result.insert(CountryCode::GRD, "Grenada");
         result.insert(CountryCode::GLP, "Guadeloupe");
         result.insert(CountryCode::GUM, "Guam");
@@ -106,8 +106,8 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::GNB, "Guinea-Bissau");
         result.insert(CountryCode::GUY, "Guyana");
         result.insert(CountryCode::HTI, "Haiti");
-        //result.insert(CountryCode::HMD, "Heard Island and McDonald Islands");
-        //result.insert(CountryCode::VAT, "Holy See");
+        result.insert(CountryCode::HMD, "Heard Island and McDonald Islands");
+        result.insert(CountryCode::VAT, "Holy See");
         result.insert(CountryCode::HND, "Honduras");
         result.insert(CountryCode::HUN, "Hungary");
         result.insert(CountryCode::ISL, "Iceland");
@@ -145,7 +145,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::MLI, "Mali");
         result.insert(CountryCode::MLT, "Malta");
         result.insert(CountryCode::MHL, "Marshall Islands");
-        //result.insert(CountryCode::MTQ, "Martinique");
+        result.insert(CountryCode::MTQ, "Martinique");
         result.insert(CountryCode::MRT, "Mauritania");
         result.insert(CountryCode::MUS, "Mauritius");
         result.insert(CountryCode::MYT, "Mayotte");
@@ -154,7 +154,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::MCO, "Monaco");
         result.insert(CountryCode::MNG, "Mongolia");
         result.insert(CountryCode::MNE, "Montenegro");
-        //result.insert(CountryCode::MSR, "Montserrat");
+        result.insert(CountryCode::MSR, "Montserrat");
         result.insert(CountryCode::MAR, "Morocco");
         result.insert(CountryCode::MOZ, "Mozambique");
         result.insert(CountryCode::MMR, "Myanmar");
@@ -162,14 +162,14 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::NRU, "Nauru");
         result.insert(CountryCode::NPL, "Nepal");
         result.insert(CountryCode::NLD, "Netherlands");
-        //result.insert(CountryCode::NCL, "New Caledonia");
+        result.insert(CountryCode::NCL, "New Caledonia");
         result.insert(CountryCode::NZL, "New Zealand");
         result.insert(CountryCode::NIC, "Nicaragua");
         result.insert(CountryCode::NER, "Niger");
         result.insert(CountryCode::NGA, "Nigeria");
-        //result.insert(CountryCode::NIU, "Niue");
+        result.insert(CountryCode::NIU, "Niue");
         result.insert(CountryCode::NFK, "Norfolk Island");
-        //result.insert(CountryCode::MNP, "Northern Mariana Islands");
+        result.insert(CountryCode::MNP, "Northern Mariana Islands");
         result.insert(CountryCode::NOR, "Norway");
         result.insert(CountryCode::OMN, "Oman");
         result.insert(CountryCode::PAK, "Pakistan");
@@ -179,7 +179,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::PRY, "Paraguay");
         result.insert(CountryCode::PER, "Peru");
         result.insert(CountryCode::PHL, "Philippines");
-        //result.insert(CountryCode::PCN, "Pitcairn");
+        result.insert(CountryCode::PCN, "Pitcairn");
         result.insert(CountryCode::POL, "Poland");
         result.insert(CountryCode::PRT, "Portugal");
         result.insert(CountryCode::PRI, "Puerto Rico");
@@ -190,12 +190,12 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::ROU, "Romania");
         result.insert(CountryCode::RUS, "Russian Federation");
         result.insert(CountryCode::RWA, "Rwanda");
-        //result.insert(CountryCode::BLM, "Saint Barthélemy");
-        //result.insert(CountryCode::SHN, "Saint Helena");
+        result.insert(CountryCode::BLM, "Saint Barthélemy");
+        result.insert(CountryCode::SHN, "Saint Helena");
         result.insert(CountryCode::KNA, "Saint Kitts and Nevis");
         result.insert(CountryCode::LCA, "Saint Lucia");
-        //result.insert(CountryCode::MAF, "Saint Martin (French Part)");
-        //result.insert(CountryCode::SPM, "Saint Pierre and Miquelon");
+        result.insert(CountryCode::MAF, "Saint Martin (French Part)");
+        result.insert(CountryCode::SPM, "Saint Pierre and Miquelon");
         result.insert(CountryCode::VCT, "Saint Vincent and the Grenadines");
         result.insert(CountryCode::WSM, "Samoa");
         result.insert(CountryCode::SMR, "San Marino");
@@ -206,7 +206,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::SYC, "Seychelles");
         result.insert(CountryCode::SLE, "Sierra Leone");
         result.insert(CountryCode::SGP, "Singapore");
-        //result.insert(CountryCode::SXM, "Sint Maarten (Dutch part)");
+        result.insert(CountryCode::SXM, "Sint Maarten (Dutch part)");
         result.insert(CountryCode::SVK, "Slovakia");
         result.insert(CountryCode::SVN, "Slovenia");
         result.insert(CountryCode::SLB, "Solomon Islands");
@@ -219,7 +219,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::PSE, "State of Palestine");
         result.insert(CountryCode::SDN, "Sudan");
         result.insert(CountryCode::SUR, "Suriname");
-        //result.insert(CountryCode::SJM, "Svalbard and Jan Mayen Islands");
+        result.insert(CountryCode::SJM, "Svalbard and Jan Mayen Islands");
         result.insert(CountryCode::SWZ, "Swaziland");
         result.insert(CountryCode::SWE, "Sweden");
         result.insert(CountryCode::CHE, "Switzerland");
@@ -230,32 +230,71 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::MKD, "North Macedonia");
         result.insert(CountryCode::TLS, "Timor-Leste");
         result.insert(CountryCode::TGO, "Togo");
-        //result.insert(CountryCode::TKL, "Tokelau");
+        result.insert(CountryCode::TKL, "Tokelau");
         result.insert(CountryCode::TON, "Tonga");
         result.insert(CountryCode::TTO, "Trinidad and Tobago");
         result.insert(CountryCode::TUN, "Tunisia");
         result.insert(CountryCode::TUR, "Turkey");
         result.insert(CountryCode::TKM, "Turkmenistan");
-        //result.insert(CountryCode::TCA, "Turks and Caicos Islands");
+        result.insert(CountryCode::TCA, "Turks and Caicos Islands");
         result.insert(CountryCode::TUV, "Tuvalu");
         result.insert(CountryCode::UGA, "Uganda");
         result.insert(CountryCode::UKR, "Ukraine");
         result.insert(CountryCode::ARE, "United Arab Emirates");
         result.insert(CountryCode::GBR, "United Kingdom of Great Britain and Northern Ireland");
         result.insert(CountryCode::TZA, "United Republic of Tanzania");
-        //result.insert(CountryCode::UMI, "United States Minor Outlying Islands");
+        result.insert(CountryCode::UMI, "United States Minor Outlying Islands");
         result.insert(CountryCode::USA, "United States of America");
-        //result.insert(CountryCode::VIR, "United States Virgin Islands");
+        result.insert(CountryCode::VIR, "United States Virgin Islands");
         result.insert(CountryCode::URY, "Uruguay");
         result.insert(CountryCode::UZB, "Uzbekistan");
         result.insert(CountryCode::VUT, "Vanuatu");
         result.insert(CountryCode::VEN, "Venezuela (Bolivarian Republic of)");
         result.insert(CountryCode::VNM, "Viet Nam");
-        //result.insert(CountryCode::WLF, "Wallis and Futuna Islands");
-        //result.insert(CountryCode::ESH, "Western Sahara");
+        result.insert(CountryCode::WLF, "Wallis and Futuna Islands");
+        result.insert(CountryCode::ESH, "Western Sahara");
         result.insert(CountryCode::YEM, "Yemen");
         result.insert(CountryCode::ZMB, "Zambia");
         result.insert(CountryCode::ZWE, "Zimbabwe");
         result
     };
+}
+
+#[cfg(test)]
+mod test {
+    use crate::country_code::{CountryCode, COUNTRIES_ISO_3_CODES};
+
+    /// Every country must carry an English name, so `as_country_name_en()` never
+    /// degrades to returning a raw ISO code and `PhoneCode::as_str()` never emits
+    /// a bare dial prefix.
+    #[test]
+    fn every_country_code_has_an_english_name() {
+        let missing: Vec<CountryCode> = COUNTRIES_ISO_3_CODES
+            .values()
+            .filter(|country_code| !super::EN_NAMES.contains_key(country_code))
+            .copied()
+            .collect();
+
+        assert!(
+            missing.is_empty(),
+            "these country codes have no EN_NAMES entry: {:?}",
+            missing
+        );
+
+        assert_eq!(super::EN_NAMES.len(), COUNTRIES_ISO_3_CODES.len());
+    }
+
+    #[test]
+    fn english_names_are_unique() {
+        let mut seen = std::collections::BTreeMap::new();
+
+        for (country_code, name) in super::EN_NAMES.iter() {
+            if let Some(other) = seen.insert(*name, *country_code) {
+                panic!(
+                    "name {:?} is used by both {:?} and {:?}",
+                    name, other, country_code
+                );
+            }
+        }
+    }
 }
