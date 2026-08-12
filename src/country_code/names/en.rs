@@ -186,7 +186,7 @@ lazy_static::lazy_static! {
         result.insert(CountryCode::QAT, "Qatar");
         result.insert(CountryCode::KOR, "Republic of Korea");
         result.insert(CountryCode::MDA, "Republic of Moldova");
-        //result.insert(CountryCode::REU, "Réunion");
+        result.insert(CountryCode::REU, "Réunion");
         result.insert(CountryCode::ROU, "Romania");
         result.insert(CountryCode::RUS, "Russian Federation");
         result.insert(CountryCode::RWA, "Rwanda");
