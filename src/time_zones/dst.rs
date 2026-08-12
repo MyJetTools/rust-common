@@ -241,7 +241,7 @@ impl CountryCode {
             CountryCode::NRU => false, // Nauru
             CountryCode::NCL => false, // New Caledonia
             CountryCode::NIU => false, // Niue
-            CountryCode::NFK => false, // Norfolk Island
+            CountryCode::NFK => true, // Norfolk Island (observes DST since 2019, same schedule as NSW)
             CountryCode::MNP => false, // Northern Mariana Islands
             CountryCode::PLW => false, // Palau
             CountryCode::PSE => false, // Palestine

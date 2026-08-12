@@ -27,8 +27,8 @@ pub fn is_day_saving_time(dt: DateTimeAsMicroseconds, country_code: CountryCode)
         }
         // UK (BST): Last Sunday in March to Last Sunday in October
         // Already covered by GBR
-        // Australia (AEDT/ACDT): 1st Sunday in October to 1st Sunday in April
-        AUS => {
+        // Australia (AEDT/ACDT) and Norfolk Island: 1st Sunday in October to 1st Sunday in April
+        AUS | NFK => {
             let dst_start = nth_weekday_of_month(dt_struct.year, 10, 0, 1); // 0=Sunday, 1st occurrence
             let dst_end = nth_weekday_of_month(dt_struct.year + 1, 4, 0, 1); // 0=Sunday, 1st occurrence (next year)
             if dt_struct.month >= 10 {

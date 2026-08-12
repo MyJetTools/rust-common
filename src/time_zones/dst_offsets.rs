@@ -476,7 +476,7 @@ impl IanaTimeZone {
                 IanaPacific::Midway => -660,  // UTC-11:00, no DST
                 IanaPacific::Nauru => 720,    // UTC+12:00, no DST
                 IanaPacific::Niue => -660,    // UTC-11:00, no DST
-                IanaPacific::Norfolk => 660,  // UTC+11:00, no DST
+                IanaPacific::Norfolk => 720,  // UTC+12:00, DST active (Oct 5–Apr 6, 2025)
                 IanaPacific::Noumea => 660,   // UTC+11:00, no DST
                 IanaPacific::Palau => 540,    // UTC+09:00, no DST
                 IanaPacific::Pitcairn => -480, // UTC-08:00, no DST
